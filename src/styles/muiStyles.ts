@@ -34,6 +34,17 @@ export const theme = createTheme({
           minHeight: '48px',
         },
       }
+    },
+    MuiAppBar: {
+      styleOverrides:{
+        root: {
+          borderRadius: '8px',
+          minHeight: '48px',
+          maxHeight: '320px',
+          backgroundColor: '#00A79F',
+          position: "inherit"
+        }
+      }
     }
   },
 });

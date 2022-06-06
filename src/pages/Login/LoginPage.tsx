@@ -6,11 +6,19 @@ import {
   LoginLayout,
   LoginTitle,
 } from "./styles"
+import {NavBar} from "../../components/NavBar";
+
 
 export const LoginPage = () => {
   return (
     <LoginLayout>
       <LoginContainer>
+       /*
+        El navBar no va en aca
+        Esto solo es un prueba
+        Hay que refactorizar
+        */
+        <NavBar />
         <LoginTitle>Ingresá a tu cuenta</LoginTitle>
         <LoginField
           label='Email'
