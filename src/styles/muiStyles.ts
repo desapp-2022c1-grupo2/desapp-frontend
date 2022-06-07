@@ -42,7 +42,11 @@ export const theme = createTheme({
           minHeight: '48px',
           maxHeight: '320px',
           backgroundColor: '#00A79F',
-          position: "inherit"
+          position: "static",
+          title:{
+            flexGrow: 1,
+            textAlign: "center",
+          }
         }
       }
     }

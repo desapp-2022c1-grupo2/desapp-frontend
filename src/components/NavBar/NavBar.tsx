@@ -1,27 +1,30 @@
 import * as React from 'react';
-import AppBar, { AppBarProps } from '@mui/material/AppBar';
+import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
+import Toolbar, {ToolbarProps} from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import {IconButton} from "@mui/material";
+import { Menu } from "@mui/icons-material/";
 
-export const NavBar = ({...props }: AppBarProps ) => {
+type AppToolbarProps = Omit<ToolbarProps,"children">
+
+export const NavBar = ({...props }: AppToolbarProps ): JSX.Element => {
+    
     return (
         <Box sx={{ flexGrow: 1 }}>
-        <AppBar className={ props.className }>
+        <AppBar className={props.className} >
             <Toolbar>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <IconButton
+                    color="inherit"
+                    edge='start'
+                >
+                    <Menu />
+                </IconButton>
+                <Typography variant="h4" component="div" sx={{ flexGrow: 1, fontSize: '1.5rem' }}>
                     Diseño Industrial
                 </Typography>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Usuarios
-                </Typography>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Trabajos Practicos
-                </Typography>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Mi cuenta
-                </Typography>
+                
                 <Button color="inherit">Login</Button>
             </Toolbar>
         </AppBar>
