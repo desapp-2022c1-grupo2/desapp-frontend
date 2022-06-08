@@ -14,7 +14,8 @@ createRoot(document.getElementById('root')!)
     <StrictMode>
       <ThemeProvider theme={theme}>
         <LoginLayout>
-            <CustomTable label={"Trabajos practicos"}/>
+            <LoginPage/>
+            {/*<CustomTable label={"Trabajos practicos"}/>*/}
         </LoginLayout>
       </ThemeProvider>
     </StrictMode>

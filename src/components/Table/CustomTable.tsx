@@ -1,33 +1,37 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import {Input} from '../Input'
 import {FieldProps} from './props'
 import {
-    alpha,
-    Checkbox,
-    IconButton,
+    Box, Divider,
+    IconButton, Paper,
     Table,
     TableBody,
     TableCell,
     TableContainer,
-    TableHead,
+    TableHead, TableHeadProps,
     TablePagination,
-    TableRow,
-    Toolbar, Tooltip, Typography
+    TableRow, TableSortLabel,
+    Toolbar, ToolbarProps, Tooltip, Typography
 } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
+import EditIcon from '@mui/icons-material/Edit';
+import {visuallyHidden} from '@mui/utils';
 
-import {render} from "react-dom";
+
+const rows = [
+    createData(1, "TP1", "05/06", "Wed Jul 06 2022 01:00:00 GMT-0300 (Argentina Standard Time)", "started", 85),
+    createData(2, "TP2", "03/06", "04/06", "disabled", 0),
+];
 
 type Order = 'asc' | 'desc';
 
 const CustomTableContainer = styled(TableContainer)`
-  border-radius: 20px;
+   // display: flex;
+   // flex-direction: column;
+  // border-radius: 20px;
 `
-
-const StyledTable = styled(Table)`
-background-color: white;
+const StyledToolbar = styled(Toolbar)`
+justify-content: space-between;
 `
 
 interface TrabajoPractico {
@@ -39,6 +43,17 @@ interface TrabajoPractico {
     completedPercentage: number
 }
 
+interface CustomToolbarProps extends ToolbarProps {
+    numSelected: number
+}
+
+interface CustomTableHeadProps extends TableHeadProps {
+    numSelected: number,
+    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof TrabajoPractico) => void,
+    order: Order,
+    orderBy: string,
+    rowCount: number
+}
 
 function createData(
     id: number,
@@ -58,70 +73,63 @@ function createData(
     };
 }
 
-// TODO: Fix toolbar
-const CustomToolbar = (numSelected: number) => {
-    return (<Toolbar sx={{
-        pl: {sm: 2},
-        pr: {
-            xs: 1,
-            sm: 1
-        }, ...(numSelected > 0 && {bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),}),
-    }}
-    >
+const CustomToolbar = (props: CustomToolbarProps) => {
+    let numSelected = props.numSelected
+    return (<StyledToolbar>
         {numSelected > 0 ? (
-            <Typography
-                sx={{flex: '1 1 100%'}}
-                color="inherit"
-                variant="subtitle1"
-                component="div">
-                {numSelected} selected
-            </Typography>
+            <>
+                <Typography color="inherit" variant="subtitle1" component="div">
+                    Seleccionado {rows[numSelected - 1].title}
+                </Typography>
+                <Divider>
+                    <Tooltip title="Editar">
+                        <IconButton>
+                            <EditIcon/>
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Eliminar">
+                        <IconButton>
+                            <DeleteIcon/>
+                        </IconButton>
+                    </Tooltip>
+                </Divider>
+            </>
         ) : (
-            <Typography
-                sx={{flex: '1 1 100%'}}
-                variant="h6"
-                id="tableTitle"
-                component="div"
-            >
-                Trabajos Practicos
-            </Typography>
+            <Typography variant="h6" id="tableTitle" component="div">Trabajos Practicos</Typography>
         )}
-        {numSelected > 0 ? (
-            <Tooltip title="Delete">
-                <IconButton>
-                    <DeleteIcon/>
-                </IconButton>
-            </Tooltip>
-        ) : (
-            <Tooltip title="Filter list">
-                <IconButton>
-                    <FilterListIcon/>
-                </IconButton>
-            </Tooltip>
-        )}
-    </Toolbar>)
+    </StyledToolbar>)
 }
 
 //TODO: Implement functionality over the parameters
-const CustomTableHead = (numSelected: number,
-                         onRequestSort: (event: React.MouseEvent<unknown>, property: keyof TrabajoPractico) => void,
-                         order: Order,
-                         orderBy: string,
-                         rowCount: number) => {
+const CustomTableHead = (props: CustomTableHeadProps) => {
+    let {onRequestSort, orderBy, order} = props;
+    const createSortHandler =
+        (property: keyof TrabajoPractico) => (event: React.MouseEvent<unknown>) => {
+            onRequestSort(event, property);
+        };
     return (
         <TableHead>
             <TableRow>
+                {/*TODO: esto es horrible y está mal, hace falta que sea dinamico o se puede hardcodear y hacer distintas tables?*/}
                 {rows.length > 0 && Object.keys(rows[1]).map(key => {
-                    return (<TableCell key={key}>{key}</TableCell>);
+                    return (<TableCell key={key}>
+                        <TableSortLabel
+                            active={orderBy === key}
+                            direction={orderBy === key ? order : 'asc'}
+                            // TODO: Fix key used by the sort handler
+                            onClick={createSortHandler(key)}>
+                            {key}
+                            {orderBy === key ? (
+                                <Box component="span" sx={visuallyHidden}>
+                                    {order === 'desc' ? 'descendente' : 'ascendente'}
+                                </Box>
+                            ) : null}
+                        </TableSortLabel>
+                    </TableCell>);
                 })}
             </TableRow>
         </TableHead>);
 }
-
-const rows = [
-    createData(1, "TP1", "Wed Jul 06 2022 00:00:00 GMT-0300 (Argentina Standard Time)", "Wed Jul 06 2022 01:00:00 GMT-0300 (Argentina Standard Time)", "started", 85),
-    createData(2, "TP2", "Wed Jul 08 2022 00:00:00 GMT-0300 (Argentina Standard Time)", "Wed Jul 08 2022 01:00:00 GMT-0300 (Argentina Standard Time)", "disabled", 0),
-];
 
 /*https://mui.com/material-ui/react-table/#sorting-amp-selecting*/
 
@@ -129,7 +137,10 @@ export const CustomTable = ({label, ...props}: FieldProps) => {
     const [selected, setSelected] = useState<number>(-1);
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof TrabajoPractico>('title');
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const isSelected = (id: number) => selected === id;
+
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
         property: keyof TrabajoPractico,
@@ -138,34 +149,60 @@ export const CustomTable = ({label, ...props}: FieldProps) => {
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
+
+    function setItemSelectedSelected(id: number) {
+        setSelected((id === selected) ? -1 : id);
+    }
+
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+
     return (
-        <>
-            <CustomToolbar numSelected={selected}/>
-            <CustomTableContainer>
-                <StyledTable>
-                    <CustomTableHead numSelected={selected}
-                                     order={order}
-                                     orderBy={orderBy}
-                                     onRequestSort={handleRequestSort}
-                                     rowCount={rows.length}/>
-                    <TableBody>
-                        {rows.length > 0 && rows.map(row => {
-                            const isItemSelected = isSelected(row.id);
-                            return (<TableRow hover
-                                              onClick={(event) => setSelected(row.id)}
-                                              role="checkbox"
-                                              aria-checked={isItemSelected}
-                                              tabIndex={-1}
-                                              key={row.id}
-                                              selected={isItemSelected}>
-                                {Object.entries(row).map(key => {
-                                    // let value = (key[1].includes("percentage")) ? key[1] + "%" : key[1]
-                                    return <TableCell key={key[1]}>{key[1]}</TableCell>
-                                })}
-                            </TableRow>);
-                        })}
-                    </TableBody>
-                </StyledTable>
-            </CustomTableContainer>
-        </>);
+        <Box>
+            <Paper>
+                <CustomTableContainer>
+                    <CustomToolbar numSelected={selected}/>
+                    <Table>
+                        <CustomTableHead numSelected={selected}
+                                         order={order}
+                                         orderBy={orderBy}
+                                         onRequestSort={handleRequestSort}
+                                         rowCount={rows.length}/>
+                        <TableBody>
+                            {rows.length > 0 && rows.map(row => {
+                                const isItemSelected = isSelected(row.id);
+                                return (<TableRow hover
+                                                  onClick={(event) => setItemSelectedSelected(row.id)}
+                                                  role="checkbox"
+                                                  aria-checked={isItemSelected}
+                                                  tabIndex={-1}
+                                                  key={row.id}
+                                                  selected={isItemSelected}>
+                                    {Object.entries(row).map(key => {
+                                        let value = (key[0].toLowerCase().includes("percentage")) ? key[1] + "%" : key[1]
+                                        return <TableCell key={key[1]}>{value}</TableCell>
+                                    })}
+                                </TableRow>);
+                            })}
+                        </TableBody>
+                    </Table>
+                </CustomTableContainer>
+                <TablePagination
+                    labelRowsPerPage="Items por página"
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+            </Paper>
+        </Box>);
 };
