@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import {FieldProps} from './props'
+import {CustomTableHeadProps, CustomToolbarProps, FieldProps, Order, TrabajoPractico} from './props'
 import {
     Box, Divider,
     IconButton, Paper,
@@ -10,20 +10,21 @@ import {
     TableContainer,
     TableHead, TableHeadProps,
     TablePagination,
-    TableRow, TableSortLabel,
+    TableRow, TableSortLabel, TextField,
     Toolbar, ToolbarProps, Tooltip, Typography
 } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {visuallyHidden} from '@mui/utils';
+import {Field} from "../Field";
+import {Filter, FilterAlt} from "@mui/icons-material";
+import {CustomButton} from "../Button/Button";
 
 
 const rows = [
     createData(1, "TP1", "05/06", "Wed Jul 06 2022 01:00:00 GMT-0300 (Argentina Standard Time)", "started", 85),
     createData(2, "TP2", "03/06", "04/06", "disabled", 0),
 ];
-
-type Order = 'asc' | 'desc';
 
 const CustomTableContainer = styled(TableContainer)`
    // display: flex;
@@ -33,27 +34,6 @@ const CustomTableContainer = styled(TableContainer)`
 const StyledToolbar = styled(Toolbar)`
 justify-content: space-between;
 `
-
-interface TrabajoPractico {
-    id: number,
-    title: string,
-    startDate: string, //TODO: Use date instead of string
-    endDate: string, //TODO: Use date instead of string
-    status: string //TODO: Create status object
-    completedPercentage: number
-}
-
-interface CustomToolbarProps extends ToolbarProps {
-    numSelected: number
-}
-
-interface CustomTableHeadProps extends TableHeadProps {
-    numSelected: number,
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof TrabajoPractico) => void,
-    order: Order,
-    orderBy: string,
-    rowCount: number
-}
 
 function createData(
     id: number,
@@ -95,12 +75,15 @@ const CustomToolbar = (props: CustomToolbarProps) => {
                 </Divider>
             </>
         ) : (
-            <Typography variant="h6" id="tableTitle" component="div">Trabajos Practicos</Typography>
+            <>
+                <Typography variant="h6" id="tableTitle" component="div">Trabajos Practicos</Typography>
+                {/*<Field label={"Search"} variant={"search"}></Field>*/}
+                {/*<CustomButton startIcon={<FilterAlt/>}></CustomButton>*/}
+            </>
         )}
     </StyledToolbar>)
 }
 
-//TODO: Implement functionality over the parameters
 const CustomTableHead = (props: CustomTableHeadProps) => {
     let {onRequestSort, orderBy, order} = props;
     const createSortHandler =
