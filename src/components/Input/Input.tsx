@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import OutlinedInput from '@mui/material/OutlinedInput'
+import MuiInput from '@mui/material/OutlinedInput'
 import { InputProps } from './props'
 
 import {
@@ -8,6 +8,11 @@ import {
   LockOutlined,
   SearchOutlined,
 } from '../Icon'
+
+const OutlinedInput = styled(MuiInput)`
+  gap: 8px;
+  background-color: #F1F1F1;
+`
 
 const SearchInput = ({ hideIcon = false, ...props } : InputProps) => (
   <OutlinedInput
