@@ -6,12 +6,17 @@ import { theme } from './styles/muiStyles'
 import './styles/styles.css'
 
 import { LoginPage } from './pages'
+import {LoginContainer, LoginLayout} from "./pages/Login/styles";
+import {CustomTable} from "./components/Table/CustomTable"
 
 createRoot(document.getElementById('root')!)
   .render(
     <StrictMode>
       <ThemeProvider theme={theme}>
-        <LoginPage />
+        <LoginLayout>
+            <LoginPage/>
+            {/*<CustomTable label={"Trabajos practicos"}/>*/}
+        </LoginLayout>
       </ThemeProvider>
     </StrictMode>
   )

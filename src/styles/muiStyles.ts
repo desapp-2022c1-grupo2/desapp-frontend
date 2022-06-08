@@ -8,7 +8,6 @@ export const theme = createTheme({
     secondary: { main: '#00A79F' },
     success: { main: '#56A42C' },
     warning: { main: '#F08100' },
-
     contrastThreshold: 3,
     tonalOffset: 0.2,
   },
