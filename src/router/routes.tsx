@@ -2,6 +2,8 @@ import React from 'react';
 import {
   LoginPage,
 } from "../pages";
+import {CustomTable, TrabajoPractico} from "../components/Table";
+import {AssignmentTable, UserTable} from "../components/Table";
 
 export const paths = {
   login: '/login',
@@ -12,11 +14,15 @@ export const paths = {
   },
 };
 
+function getUserRows() {
+  return [];
+}
+
 export const routes = {
   login: {
     path: paths.login,
     exact: true,
-    element: <LoginPage />,
+    element: <LoginPage/>,
   },
   admin: {
     home: {
@@ -27,12 +33,13 @@ export const routes = {
     usersList: {
       path: paths.admin.usersList,
       exact: true,
-      element: <></>,
+      element: <UserTable/>,
     },
     assignmentsList: {
       path: paths.admin.assignmentsList,
       exact: true,
-      element: <></>,
+      element: <AssignmentTable/>,
     },
-  }
+  },
+  table: {}
 };

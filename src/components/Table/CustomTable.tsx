@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import {CustomTableHeadProps, CustomToolbarProps, FieldProps, Order, TrabajoPractico} from './props'
+import {CustomTableHeadProps, CustomToolbarProps, CustomTableProps, Order, Listable} from './props'
 import {
     Box, Divider,
     IconButton, Paper,
@@ -8,23 +8,15 @@ import {
     TableBody,
     TableCell,
     TableContainer,
-    TableHead, TableHeadProps,
+    TableHead,
     TablePagination,
-    TableRow, TableSortLabel, TextField,
-    Toolbar, ToolbarProps, Tooltip, Typography
+    TableRow, TableSortLabel,
+    Toolbar, Tooltip, Typography
 } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {visuallyHidden} from '@mui/utils';
 import {Field} from "../Field";
-import {Filter, FilterAlt} from "@mui/icons-material";
-import {CustomButton} from "../Button/Button";
-
-
-const rows = [
-    createData(1, "TP1", "05/06", "Wed Jul 06 2022 01:00:00 GMT-0300 (Argentina Standard Time)", "started", 85),
-    createData(2, "TP2", "03/06", "04/06", "disabled", 0),
-];
 
 const CustomTableContainer = styled(TableContainer)`
    // display: flex;
@@ -35,31 +27,14 @@ const StyledToolbar = styled(Toolbar)`
 justify-content: space-between;
 `
 
-function createData(
-    id: number,
-    title: string,
-    startDate: string,
-    endDate: string,
-    status: string,
-    completedPercentage: number
-): TrabajoPractico {
-    return {
-        id,
-        title,
-        startDate,
-        endDate,
-        status,
-        completedPercentage
-    };
-}
-
-const CustomToolbar = (props: CustomToolbarProps) => {
-    let numSelected = props.numSelected
+const CustomToolbar = <T extends Listable>(props: CustomToolbarProps<T>) => {
+    const {numSelected, rows, label} = props;
+    const row = rows[numSelected - 1];
     return (<StyledToolbar>
         {numSelected > 0 ? (
             <>
                 <Typography color="inherit" variant="subtitle1" component="div">
-                    Seleccionado {rows[numSelected - 1].title}
+                    Seleccionado item con id {row.id}
                 </Typography>
                 <Divider>
                     <Tooltip title="Editar">
@@ -76,25 +51,23 @@ const CustomToolbar = (props: CustomToolbarProps) => {
             </>
         ) : (
             <>
-                <Typography variant="h6" id="tableTitle" component="div">Trabajos Practicos</Typography>
-                {/*<Field label={"Search"} variant={"search"}></Field>*/}
-                {/*<CustomButton startIcon={<FilterAlt/>}></CustomButton>*/}
+                <Typography variant="h6" id="tableTitle" component="div">{label}</Typography>
+                {/*TODO: Fix search bar placement*/}
+                <Field label={"Search"} variant={"search"}></Field>
             </>
         )}
     </StyledToolbar>)
 }
 
-const CustomTableHead = (props: CustomTableHeadProps) => {
-    let {onRequestSort, orderBy, order} = props;
-    const createSortHandler =
-        (property: keyof TrabajoPractico) => (event: React.MouseEvent<unknown>) => {
+const CustomTableHead = <T extends Listable>(props: CustomTableHeadProps<T>) => {
+    let {onRequestSort, orderBy, order, headers} = props;
+    const createSortHandler = (property: keyof T) => (event: React.MouseEvent<unknown>) => {
             onRequestSort(event, property);
         };
     return (
         <TableHead>
             <TableRow>
-                {/*TODO: esto es horrible y está mal, hace falta que sea dinamico o se puede hardcodear y hacer distintas tables?*/}
-                {rows.length > 0 && Object.keys(rows[1]).map(key => {
+                {headers && headers.map(key => {
                     return (<TableCell key={key}>
                         <TableSortLabel
                             active={orderBy === key}
@@ -116,17 +89,18 @@ const CustomTableHead = (props: CustomTableHeadProps) => {
 
 /*https://mui.com/material-ui/react-table/#sorting-amp-selecting*/
 
-export const CustomTable = ({label, ...props}: FieldProps) => {
+export const CustomTable = <T extends Listable>(props: CustomTableProps<T>) => {
+    const {label, rows, headers} = props
     const [selected, setSelected] = useState<number>(-1);
     const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof TrabajoPractico>('title');
+    const [orderBy, setOrderBy] = React.useState<keyof T>('id');
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const isSelected = (id: number) => selected === id;
 
     const handleRequestSort = (
-        event: React.MouseEvent<unknown>,
-        property: keyof TrabajoPractico,
+        _event: React.MouseEvent<unknown>,
+        property: keyof T,
     ) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -137,7 +111,7 @@ export const CustomTable = ({label, ...props}: FieldProps) => {
         setSelected((id === selected) ? -1 : id);
     }
 
-    const handleChangePage = (event: unknown, newPage: number) => {
+    const handleChangePage = (_event: unknown, newPage: number) => {
         setPage(newPage);
     };
 
@@ -145,20 +119,22 @@ export const CustomTable = ({label, ...props}: FieldProps) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-
     return (
         <Box>
             <Paper>
                 <CustomTableContainer>
-                    <CustomToolbar numSelected={selected}/>
+                    <CustomToolbar<T> numSelected={selected} rows={rows} label={label}/>
                     <Table>
-                        <CustomTableHead numSelected={selected}
-                                         order={order}
-                                         orderBy={orderBy}
-                                         onRequestSort={handleRequestSort}
-                                         rowCount={rows.length}/>
+                        <CustomTableHead<T> numSelected={selected}
+                                            order={order}
+                                            orderBy={orderBy as string}
+                                            onRequestSort={handleRequestSort}
+                                            rowCount={rows.length}
+                                            headers={headers}/>
                         <TableBody>
-                            {rows.length > 0 && rows.map(row => {
+                            {rows.length > 0 && rows
+                              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                              .map(row => {
                                 const isItemSelected = isSelected(row.id);
                                 return (<TableRow hover
                                                   onClick={(event) => setItemSelectedSelected(row.id)}
@@ -168,8 +144,9 @@ export const CustomTable = ({label, ...props}: FieldProps) => {
                                                   key={row.id}
                                                   selected={isItemSelected}>
                                     {Object.entries(row).map(key => {
+                                        //TODO: crear un convertidor de elementos (ej, si es lista de TP, que haga las referencias)
                                         let value = (key[0].toLowerCase().includes("percentage")) ? key[1] + "%" : key[1]
-                                        return <TableCell key={key[1]}>{value}</TableCell>
+                                        return <TableCell key={value + row.id}>{value}</TableCell>
                                     })}
                                 </TableRow>);
                             })}
