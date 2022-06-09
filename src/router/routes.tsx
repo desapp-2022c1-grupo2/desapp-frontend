@@ -2,13 +2,14 @@ import React from 'react';
 import {
   LoginPage,
 } from "../pages";
+import {AdminPage} from "../pages";
 
 export const paths = {
   login: '/login',
   admin: {
-    home: '/admin',
-    usersList: '/admin/users',
-    assignmentsList: '/admin/assignments',
+    home: '/Admin',
+    usersList: '/Admin/users',
+    assignmentsList: '/Admin/assignments',
   },
 };
 
