@@ -2,7 +2,6 @@ import React from 'react';
 import {
   LoginPage,
 } from "../pages";
-import {CustomTable, TrabajoPractico} from "../components/Table";
 import {AssignmentTable, UserTable} from "../components/Table";
 
 export const paths = {
@@ -13,10 +12,6 @@ export const paths = {
     assignmentsList: '/admin/assignments',
   },
 };
-
-function getUserRows() {
-  return [];
-}
 
 export const routes = {
   login: {
@@ -41,5 +36,4 @@ export const routes = {
       element: <AssignmentTable/>,
     },
   },
-  table: {}
 };
