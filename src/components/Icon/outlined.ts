@@ -4,4 +4,5 @@ export {
     VisibilityOffOutlined,
     LockOutlined,
     SearchOutlined,
+    ArrowRightAltOutlined,
 } from '@mui/icons-material'
