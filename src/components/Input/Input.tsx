@@ -12,7 +12,9 @@ import {
 const OutlinedInput = styled(MuiInput)`
   gap: 8px;
   background-color: #F1F1F1;
-  height: 12px;
+  minHeight: '52px';
+  minWidth: '192px';
+  padding: '8px 16px';
 `
 
 const SearchInput = ({ hideIcon = false, ...props } : InputProps) => (

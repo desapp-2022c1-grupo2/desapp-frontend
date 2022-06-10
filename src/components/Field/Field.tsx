@@ -7,13 +7,12 @@ const FieldLabel = styled.label`
   display: block;
   text-align: left;
   width: 100%;
-  margin: 8px 0 8px 0;
 `
 
 const FieldContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 12px;
+  margin: 8px;
 `
 
 export const Field = ({ label, ...props}: FieldProps) => {

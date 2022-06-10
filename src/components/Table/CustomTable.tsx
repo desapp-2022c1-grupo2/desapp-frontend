@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import {CustomTableHeadProps, CustomToolbarProps, CustomTableProps, Order, Listable} from './props'
 import {
-    Box, Divider,
+    Box, ButtonGroup, Divider,
     IconButton, Paper,
     Table,
     TableBody,
@@ -17,46 +17,40 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {visuallyHidden} from '@mui/utils';
 import {Field} from "../Field";
+import {Button} from "../index";
+import {CustomButton} from "../Button/Button";
+import {FilterAlt} from "@mui/icons-material";
 
-const CustomTableContainer = styled(TableContainer)`
-   // display: flex;
-   // flex-direction: column;
-  // border-radius: 20px;
-`
-const StyledToolbar = styled(Toolbar)`
-justify-content: space-between;
+const StyledDivider = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
 `
 
 const CustomToolbar = <T extends Listable>(props: CustomToolbarProps<T>) => {
     const {numSelected, rows, label} = props;
-    const row = rows[numSelected - 1];
-    return (<StyledToolbar>
+    {/*TODO: Fix search bar placement*/}
+    return (<Toolbar>
+        <StyledDivider>
+            <Typography variant="h6" id="tableTitle" component="div">{label}</Typography>
+            <Field variant={"search"} placeholder={"Buscar"}/>
+        </StyledDivider>
         {numSelected > 0 ? (
             <>
-                <Typography color="inherit" variant="subtitle1" component="div">
-                    Seleccionado item con id {row.id}
-                </Typography>
                 <Divider>
-                    <Tooltip title="Editar">
-                        <IconButton>
-                            <EditIcon/>
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Eliminar">
-                        <IconButton>
-                            <DeleteIcon/>
-                        </IconButton>
-                    </Tooltip>
+                    <CustomButton color={'info'} title={'Editar'} endIcon={<EditIcon />}>Editar</CustomButton>
+                    <CustomButton color={'error'} title={'Eliminar'} endIcon={<DeleteIcon />}>Eliminar</CustomButton>
                 </Divider>
             </>
         ) : (
-            <>
-                <Typography variant="h6" id="tableTitle" component="div">{label}</Typography>
-                {/*TODO: Fix search bar placement*/}
-                <Field label={"Search"} variant={"search"}></Field>
-            </>
+          <>
+              <Divider>
+                    <CustomButton title={'Filtrar'} endIcon={<FilterAlt/>}>Filtrar</CustomButton>
+              </Divider>
+          </>
         )}
-    </StyledToolbar>)
+    </Toolbar>)
 }
 
 const CustomTableHead = <T extends Listable>(props: CustomTableHeadProps<T>) => {
@@ -89,8 +83,7 @@ const CustomTableHead = <T extends Listable>(props: CustomTableHeadProps<T>) => 
 
 /*https://mui.com/material-ui/react-table/#sorting-amp-selecting*/
 
-export const CustomTable = <T extends Listable>(props: CustomTableProps<T>) => {
-    const {label, rows, headers} = props
+export const CustomTable = <T extends Listable>({label, rows, headers, ...props}: CustomTableProps<T>) => {
     const [selected, setSelected] = useState<number>(-1);
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof T>('id');
@@ -122,7 +115,7 @@ export const CustomTable = <T extends Listable>(props: CustomTableProps<T>) => {
     return (
         <Box>
             <Paper>
-                <CustomTableContainer>
+                <TableContainer>
                     <CustomToolbar<T> numSelected={selected} rows={rows} label={label}/>
                     <Table>
                         <CustomTableHead<T> numSelected={selected}
@@ -152,7 +145,7 @@ export const CustomTable = <T extends Listable>(props: CustomTableProps<T>) => {
                             })}
                         </TableBody>
                     </Table>
-                </CustomTableContainer>
+                </TableContainer>
                 <TablePagination
                     labelRowsPerPage="Items por página"
                     rowsPerPageOptions={[5, 10, 25]}

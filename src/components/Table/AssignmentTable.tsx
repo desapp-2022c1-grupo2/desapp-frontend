@@ -37,7 +37,7 @@ function getAssignmentsRows(): Array<TrabajoPractico> {
     createData(2, "TP2", "03/06", "04/06", "disabled", 0),
     createData(3, "TP2", "03/06", "04/06", "disabled", 0),
     createData(4, "TP2", "03/06", "04/06", "disabled", 0),
-    createData(5, "TP2", "03/06", "04/06", "disabled", 0),
+    createData(5, "TP2", "03/06", "04/06", "finished", 100),
     createData(6, "TP2", "03/06", "04/06", "disabled", 0),
   ];
 }
