@@ -2,13 +2,14 @@ import React from 'react';
 import {
   LoginPage,
 } from "../pages";
+import {CustomTabs} from "../components/Tab";
 
 export const paths = {
   login: '/login',
   admin: {
     home: '/admin',
-    usersList: '/admin/users',
-    assignmentsList: '/admin/assignments',
+    users: '/admin/users',
+    assignments: '/admin/assignments',
   },
 };
 
@@ -22,15 +23,15 @@ export const routes = {
     home: {
       path: paths.admin.home,
       exact: true,
-      element: <></>,
+      element: <CustomTabs/>,
     },
-    usersList: {
-      path: paths.admin.usersList,
+    users: {
+      path: paths.admin.users,
       exact: true,
       element: <></>,
     },
-    assignmentsList: {
-      path: paths.admin.assignmentsList,
+    assignments: {
+      path: paths.admin.assignments,
       exact: true,
       element: <></>,
     },
