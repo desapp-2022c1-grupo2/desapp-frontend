@@ -3,13 +3,14 @@ import {
   LoginPage,
 } from "../pages";
 import {CustomTabs} from "../components/Tab";
+import {AssignmentTable, UserTable} from "../components/Table";
 
 export const paths = {
   login: '/login',
   admin: {
     home: '/admin',
-    users: '/admin/users',
-    assignments: '/admin/assignments',
+    usersList: '/admin/users',
+    assignmentsList: '/admin/assignments',
   },
 };
 
@@ -25,15 +26,15 @@ export const routes = {
       exact: true,
       element: <CustomTabs/>,
     },
-    users: {
-      path: paths.admin.users,
+    usersList: {
+      path: paths.admin.usersList,
       exact: true,
-      element: <></>,
+      element: <UserTable/>,
     },
-    assignments: {
-      path: paths.admin.assignments,
+    assignmentsList: {
+      path: paths.admin.assignmentsList,
       exact: true,
-      element: <></>,
+      element: <AssignmentTable/>,
     },
   }
 };

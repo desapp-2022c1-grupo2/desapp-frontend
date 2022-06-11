@@ -12,6 +12,7 @@ const FieldLabel = styled.label`
 const FieldContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 8px;
 `
 
 export const Field = ({ label, ...props}: FieldProps) => {
