@@ -1,13 +1,13 @@
 import React from 'react';
 import {
+  Admin,
   LoginPage,
 } from "../pages";
-import {AssignmentTable, UserTable} from "../components/Table";
 
 export const paths = {
   login: '/login',
   admin: {
-    home: '/admin',
+    account: '/admin/account',
     usersList: '/admin/users',
     assignmentsList: '/admin/assignments',
   },
@@ -17,23 +17,23 @@ export const routes = {
   login: {
     path: paths.login,
     exact: true,
-    element: <LoginPage/>,
+    element: <LoginPage />,
   },
   admin: {
-    home: {
-      path: paths.admin.home,
+    account: {
+      path: paths.admin.account,
       exact: true,
-      element: <></>,
-    },
-    usersList: {
-      path: paths.admin.usersList,
-      exact: true,
-      element: <UserTable/>,
+      element: <Admin.AccountPage />,
     },
     assignmentsList: {
       path: paths.admin.assignmentsList,
       exact: true,
-      element: <AssignmentTable/>,
+      element: <Admin.AssignmentsPage/>,
     },
-  },
+    usersList: {
+      path: paths.admin.usersList,
+      exact: true,
+      element: <Admin.UsersPage />,
+    },
+  }
 };
