@@ -1,11 +1,8 @@
 import React from "react"
-
-
+import {MuiNavBar} from "../../components/AppBar/MuiNavBar";
 
 export const AdminPage = () => {
     return (
-        <div>
-        
-        </div>
+        <MuiNavBar></MuiNavBar>
     )
 }
