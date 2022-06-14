@@ -1,5 +1,5 @@
 import React from "react"
-import {AppBar, Toolbar, IconButton, Typography} from "@mui/material";
+import {AppBar, Toolbar, IconButton, Typography, Stack, Button} from "@mui/material";
 import {AvatarMenu} from "./AvatarMenu";
 
 export const MuiNavBar = () => {
@@ -11,13 +11,23 @@ export const MuiNavBar = () => {
                     color='inherit'
                     aria-label='logo'
                 >
-                    <AvatarMenu  name={'Diseño Industrial'}/>
+                    <AvatarMenu />
                 </IconButton>
-                <Typography variant='h6' component='div'>
+                <Typography
+                    color='white'
+                    variant='h6'
+                    component='div'
+                    sx={{ flexGrow: 1 }}
+                >
                     DISEÑO INDUSTRIAL
                 </Typography>
+                <Stack direction='row' spacing={ 2 } color='white'>
+                    <Button color='inherit'>Usuarios</Button>
+                    <Button color='inherit'>Trabajos Practicos</Button>
+                    <Button color='inherit'>Mi Cuenta</Button>
+                
+                </Stack>
             </Toolbar>
-        
         </AppBar>
     )
 }
