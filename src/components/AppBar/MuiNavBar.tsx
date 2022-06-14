@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import {AppBar, Toolbar, IconButton, Typography, Stack, Button, Menu, MenuItem} from "@mui/material";
 import {AvatarMenu} from "./AvatarMenu";
+import {KeyboardArrowDown} from "@mui/icons-material";
 
 
 export const MuiNavBar = () => {
@@ -35,18 +36,19 @@ export const MuiNavBar = () => {
                     DISEÑO INDUSTRIAL
                 </Typography>
                 <Stack direction='row' spacing={3} color='white'>
-                    <Button color='inherit'>Usuarios</Button>
-                    <Button color='inherit'>Trabajos Practicos</Button>
-                    <Button color='inherit'>Mi Cuenta</Button>
+                    <Button color='inherit'>USUARIOS</Button>
+                    <Button color='inherit'>TRABAJOS PRACTICOS</Button>
+                    <Button color='inherit'>MI CUENTA</Button>
                     <Button
                         color='inherit'
                         id='resources-button'
                         onClick={handleClick}
-                        aria-controls={open ? 'resources-menu' : undefined}
+                        aria-controls={ open ? 'resources-menu' : undefined }
                         aria-haspopup='true'
-                        aria-expanded={open ? 'true' : undefined}
+                        aria-expanded={ open ? 'true' : undefined }
+                        endIcon={<KeyboardArrowDown></KeyboardArrowDown>}
                     >
-                        Menu
+                        MENU
                     </Button>
                 </Stack>
                 <Menu
@@ -57,6 +59,14 @@ export const MuiNavBar = () => {
                         'aria-labelledby': 'resources-button',
                     }}
                     onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                        vertical:'top',
+                        horizontal:'right'
+                    }}
                 >
                     <MenuItem onClick={handleClose}> Items 1</MenuItem>
                     <MenuItem onClick={handleClose}> Items 2</MenuItem>
