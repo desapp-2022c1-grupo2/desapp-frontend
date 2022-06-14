@@ -1,6 +1,7 @@
 import React from "react"
 import {AppBar, Toolbar, IconButton, Typography, Stack, Button} from "@mui/material";
 import {AvatarMenu} from "./AvatarMenu";
+import {MuiMenu} from "./MuiMenu";
 
 export const MuiNavBar = () => {
     return(
@@ -27,6 +28,7 @@ export const MuiNavBar = () => {
                     <Button color='inherit'>Mi Cuenta</Button>
                 
                 </Stack>
+                <MuiMenu></MuiMenu>
             </Toolbar>
         </AppBar>
     )
