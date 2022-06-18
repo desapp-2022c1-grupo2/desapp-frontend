@@ -113,49 +113,47 @@ export const CustomTable = <T extends Listable>({label, rows, headers, ...props}
         setPage(0);
     };
     return (
-        <Box>
-            <Paper>
-                <TableContainer>
-                    <CustomToolbar<T> numSelected={selected} rows={rows} label={label}/>
-                    <Table>
-                        <CustomTableHead<T> numSelected={selected}
-                                            order={order}
-                                            orderBy={orderBy as string}
-                                            onRequestSort={handleRequestSort}
-                                            rowCount={rows.length}
-                                            headers={headers}/>
-                        <TableBody>
-                            {rows.length > 0 && rows
-                              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                              .map(row => {
-                                const isItemSelected = isSelected(row.id);
-                                return (<TableRow hover
-                                                  onClick={(event) => setItemSelectedSelected(row.id)}
-                                                  role="checkbox"
-                                                  aria-checked={isItemSelected}
-                                                  tabIndex={-1}
-                                                  key={row.id}
-                                                  selected={isItemSelected}>
-                                    {Object.entries(row).map(key => {
-                                        //TODO: crear un convertidor de elementos (ej, si es lista de TP, que haga las referencias)
-                                        let value = (key[0].toLowerCase().includes("percentage")) ? key[1] + "%" : key[1]
-                                        return <TableCell key={value + row.id}>{value}</TableCell>
-                                    })}
-                                </TableRow>);
-                            })}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    labelRowsPerPage="Items por página"
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-            </Paper>
-        </Box>);
+        <>
+            <TableContainer>
+                <CustomToolbar<T> numSelected={selected} rows={rows} label={label}/>
+                <Table>
+                    <CustomTableHead<T> numSelected={selected}
+                                        order={order}
+                                        orderBy={orderBy as string}
+                                        onRequestSort={handleRequestSort}
+                                        rowCount={rows.length}
+                                        headers={headers}/>
+                    <TableBody>
+                        {rows.length > 0 && rows
+                          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                          .map(row => {
+                              const isItemSelected = isSelected(row.id);
+                              return (<TableRow hover
+                                                onClick={(event) => setItemSelectedSelected(row.id)}
+                                                role="checkbox"
+                                                aria-checked={isItemSelected}
+                                                tabIndex={-1}
+                                                key={row.id}
+                                                selected={isItemSelected}>
+                                  {Object.entries(row).map(key => {
+                                      //TODO: crear un convertidor de elementos (ej, si es lista de TP, que haga las referencias)
+                                      let value = (key[0].toLowerCase().includes("percentage")) ? key[1] + "%" : key[1]
+                                      return <TableCell key={value + row.id}>{value}</TableCell>
+                                  })}
+                              </TableRow>);
+                          })}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <TablePagination
+              labelRowsPerPage="Items por página"
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+        </>);
 };
