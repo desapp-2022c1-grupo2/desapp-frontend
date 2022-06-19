@@ -1,15 +1,16 @@
 import React from 'react';
 import {
-  Admin,
+  AdminPage,
   LoginPage,
 } from "../pages";
 
 export const paths = {
   login: '/login',
   admin: {
-    account: '/admin/account',
+    home: '/admin',
     usersList: '/admin/users',
     assignmentsList: '/admin/assignments',
+    account: '/admin/account',
   },
 };
 
@@ -23,17 +24,17 @@ export const routes = {
     account: {
       path: paths.admin.account,
       exact: true,
-      element: <Admin.AccountPage />,
+      element: <AdminPage/>,
     },
     assignmentsList: {
       path: paths.admin.assignmentsList,
       exact: true,
-      element: <Admin.AssignmentsPage/>,
+      // element: <Admin.AssignmentsPage/>,
     },
     usersList: {
       path: paths.admin.usersList,
       exact: true,
-      element: <Admin.UsersPage />,
+      // element: <Admin.UsersPage />,
     },
   }
 };

@@ -8,10 +8,12 @@ import {
   LoginLogo,
   LoginTitle,
 } from "./styles"
+import {AppBar} from "@mui/material";
 
 export const LoginPage = () => {
   return (
     <LoginLayout>
+      <AppBar> </AppBar>
       <LoginContainer>
         <LoginLogo src={logo} alt="logo-unahur"/>
         <LoginTitle>Ingresá a tu cuenta</LoginTitle>

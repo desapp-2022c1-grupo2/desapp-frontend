@@ -46,6 +46,13 @@ export const theme = createTheme({
           minHeight: '48px',
         },
       }
+    },
+    MuiAppBar:{
+      styleOverrides: {
+        root: {
+            backgroundColor: 'secondary',
+        }
+      }
     }
   },
 });
