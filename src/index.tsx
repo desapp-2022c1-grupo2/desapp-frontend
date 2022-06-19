@@ -6,9 +6,6 @@ import { theme } from './styles/muiStyles'
 import './styles/styles.css'
 
 import { Router } from './router'
-import { LoginPage } from './pages'
-import {LoginContainer, LoginLayout} from "./pages/Login/styles";
-import {CustomTable} from "./components/Table/CustomTable"
 
 createRoot(document.getElementById('root')!)
   .render(

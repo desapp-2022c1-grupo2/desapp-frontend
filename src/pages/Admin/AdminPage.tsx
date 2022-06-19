@@ -1,22 +1,37 @@
 import React from "react"
-import logo from "../../assets/LogoUnahur.svg"
 import {
   AdminContainer,
   AdminLayout,
 } from "./styles"
 import {routes} from "../../router";
 import {CustomTabs} from "../../components/Tab";
+import {MuiNavBar} from "../../components/AppBar";
+import {IconButtonLogoUnahur} from "../../assets";
 
 interface AdminPageProps {
-  element: JSX.Element;
+  content: JSX.Element;
 }
 
-export const AdminPage = ({element}: AdminPageProps) => {
+function getCurrentUserName() {
+  return "Diseño industrial";
+}
+
+function getCurrentUserProfilePicture() {
+  return "https://randomuser.me/api/portraits/men/17.jpg";
+}
+
+export const AdminPage = ({content}: AdminPageProps) => {
   return (
     <AdminLayout>
-      <CustomTabs routes={routes.admin}/>
+      {/*TODO: Actualizar dinamicamente avatar src y name*/}
+      <MuiNavBar pages={["Logout"]}
+                 icon={<IconButtonLogoUnahur/>}
+                 avatarSrc={getCurrentUserProfilePicture()}
+                 name={getCurrentUserName()}>
+        <CustomTabs routes={routes.admin}/>
+      </MuiNavBar>
       <AdminContainer>
-        {element}
+        {content}
       </AdminContainer>
     </AdminLayout>
   )

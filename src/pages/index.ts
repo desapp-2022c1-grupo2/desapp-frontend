@@ -1,2 +1,2 @@
 export * from './Login'
-export * as Admin from './Admin'
+export * from './Admin'

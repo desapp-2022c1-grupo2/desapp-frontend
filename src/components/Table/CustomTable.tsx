@@ -26,6 +26,7 @@ const StyledDivider = styled.div`
   flex-direction: row;
   align-items: center;
   width: 100%;
+  justify-content: space-between;
 `
 
 const CustomToolbar = <T extends Listable>(props: CustomToolbarProps<T>) => {
