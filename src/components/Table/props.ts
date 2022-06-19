@@ -1,28 +1,46 @@
-import {InputProps} from "../Input"
-import {TableHeadProps, ToolbarProps} from "@mui/material";
+import {TableHeadProps, TableProps, ToolbarProps} from "@mui/material";
 import React from "react";
 
 
 export type Order = 'asc' | 'desc';
 
 
-export interface CustomToolbarProps extends ToolbarProps {
-    numSelected: number
+export interface CustomToolbarProps<T> extends ToolbarProps {
+  numSelected: number,
+  rows: Array<T>,
+  label: string,
 }
 
-export interface CustomTableHeadProps extends TableHeadProps {
+export interface CustomTableProps<T> extends TableProps {
+  label: string,
+  rows: Array<T>,
+  headers: string[],
+}
+
+export interface CustomTableHeadProps<T> extends TableHeadProps {
     numSelected: number,
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof TrabajoPractico) => void,
+    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof T) => void,
     order: Order,
     orderBy: string,
-    rowCount: number
+    rowCount: number,
+    headers: string[],
 }
 
-export interface TrabajoPractico {
-    id: number,
+export interface TrabajoPractico extends Listable {
     title: string,
     startDate: string, //TODO: Use date instead of string
     endDate: string, //TODO: Use date instead of string
-    status: string //TODO: Create status object
+    status: string
     completedPercentage: number
+}
+
+export interface User extends Listable {
+  nombre: string
+  email: string
+  materias: number[]
+  trabajosPracticos: number[]
+}
+
+export interface Listable {
+  id: number
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import {
+  Admin,
   LoginPage,
 } from "../pages";
-import {MuiNavBar} from "../components/AppBar/MuiNavBar";
 
 export const paths = {
   login: '/login',
@@ -10,6 +10,7 @@ export const paths = {
     home: '/admin',
     usersList: '/admin/users',
     assignmentsList: '/admin/assignments',
+    account: '/admin/account',
   },
 };
 
@@ -20,20 +21,20 @@ export const routes = {
     element: <LoginPage />,
   },
   admin: {
-    home: {
-      path: paths.admin.home,
+    account: {
+      path: paths.admin.account,
       exact: true,
-      element: <MuiNavBar/>,
-    },
-    usersList: {
-      path: paths.admin.usersList,
-      exact: true,
-      element: <></>,
+      element: <Admin.AccountPage />,
     },
     assignmentsList: {
       path: paths.admin.assignmentsList,
       exact: true,
-      element: <></>,
+      element: <Admin.AssignmentsPage/>,
+    },
+    usersList: {
+      path: paths.admin.usersList,
+      exact: true,
+      element: <Admin.UsersPage />,
     },
   }
 };
