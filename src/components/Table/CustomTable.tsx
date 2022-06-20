@@ -26,6 +26,7 @@ const StyledDivider = styled.div`
   flex-direction: row;
   align-items: center;
   width: 100%;
+  justify-content: space-between;
 `
 
 const CustomToolbar = <T extends Listable>(props: CustomToolbarProps<T>) => {
@@ -113,8 +114,7 @@ export const CustomTable = <T extends Listable>({label, rows, headers, ...props}
         setPage(0);
     };
     return (
-        <Box>
-            <Paper>
+      <>
                 <TableContainer>
                     <CustomToolbar<T> numSelected={selected} rows={rows} label={label}/>
                     <Table>
@@ -156,6 +156,5 @@ export const CustomTable = <T extends Listable>({label, rows, headers, ...props}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
-            </Paper>
-        </Box>);
+          </>);
 };

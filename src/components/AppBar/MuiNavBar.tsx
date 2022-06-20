@@ -62,6 +62,7 @@ export const MuiNavBar = ({pages, icon, avatarSrc, name, ...props} : CustomAppBa
                   ))}
                 </Menu>
             </StyledToolbar>
+          {props.children}
         </AppBar>
     )
 }

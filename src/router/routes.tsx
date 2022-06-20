@@ -3,6 +3,8 @@ import {
   AdminPage,
   LoginPage,
 } from "../pages";
+import {CustomTabs} from "../components/Tab";
+import {AssignmentTable, UserTable} from "../components/Table";
 
 export const paths = {
   login: '/login',
@@ -10,7 +12,7 @@ export const paths = {
     home: '/admin',
     usersList: '/admin/users',
     assignmentsList: '/admin/assignments',
-    account: '/admin/account',
+    account: '/admin/account'
   },
 };
 
@@ -21,20 +23,30 @@ export const routes = {
     element: <LoginPage />,
   },
   admin: {
-    account: {
-      path: paths.admin.account,
+    home: {
+      path: paths.admin.home,
       exact: true,
-      element: <AdminPage/>,
+      element: <AdminPage content={<UserTable/>}/>,
+      label: "Remover esta tab"
+    },
+    usersList: {
+      path: paths.admin.usersList,
+      exact: false,
+      element: <AdminPage content={<UserTable/>}/>,
+      label: "Usuarios"
     },
     assignmentsList: {
       path: paths.admin.assignmentsList,
       exact: true,
-      // element: <Admin.AssignmentsPage/>,
+      element: <AdminPage content={<AssignmentTable/>}/>,
+      label: "Trabajos Practicos"
     },
-    usersList: {
-      path: paths.admin.usersList,
+    account: {
+      path: paths.admin.account,
       exact: true,
-      // element: <Admin.UsersPage />,
+      //TODO: Implement mi cuenta page
+      element: <AdminPage content={<p>Mi Cuenta Page</p>}/>,
+      label: "Mi cuenta"
     },
   }
 };
