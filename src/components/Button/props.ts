@@ -9,4 +9,5 @@ export interface CustomButtonProps extends ButtonProps {
     endIcon?: React.ReactNode,
     value?: string,
     variant?: OverridableStringUnion<'text' | 'outlined' | 'contained', ButtonPropsVariantOverrides>;
+    href?: string
 }

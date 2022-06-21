@@ -28,7 +28,7 @@ export const AdminPage = ({content}: AdminPageProps) => {
                  icon={<IconButtonLogoUnahur/>}
                  avatarSrc={getCurrentUserProfilePicture()}
                  name={getCurrentUserName()}>
-        <CustomTabs routes={routes.admin}/>
+        <CustomTabs routes={[routes.admin.users, routes.admin.assignments, routes.admin.account]}/>
       </MuiNavBar>
       <AdminContainer>
         {content}

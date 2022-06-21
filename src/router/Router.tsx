@@ -6,16 +6,22 @@ import {
 } from 'react-router-dom'
 
 import {routes} from './routes'
-import {CustomTabs} from "../components/Tab";
 
 export const Router = () => (
   <BrowserRouter>
     <Routes>
       <Route {...routes.login}/>
       <Route {...routes.admin.home}/>
-      <Route {...routes.admin.usersList}/>
-      <Route {...routes.admin.assignmentsList}/>
-      <Route {...routes.admin.account}/>
+      <Route {...routes.admin.account.home}/>
+
+
+      {/*Users*/}
+      <Route {...routes.admin.users.home}/>
+      <Route {...routes.admin.users.create}/>
+
+      {/*Assignments*/}
+      <Route {...routes.admin.assignments.home}/>
+
     </Routes>
   </BrowserRouter>
 );
