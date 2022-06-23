@@ -2,26 +2,26 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import {CustomTableHeadProps, CustomTableProps, CustomToolbarProps, Listable, Order} from './props'
 import {
-    Box,
-    Divider,
-    InputAdornment,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TablePagination,
-    TableRow,
-    TableSortLabel,
-    Toolbar,
-    Typography
+  Box,
+  Divider,
+  InputAdornment,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+  Toolbar,
+  Typography
 } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {visuallyHidden} from '@mui/utils';
 import {Field} from "../Field";
 import {CustomButton} from "../Button/Button";
 import {Add, FilterAlt, Search} from "@mui/icons-material";
+import {BasicModal} from '../BasicModal';
 
 const StyledDivider = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ const StyledDivider = styled.div`
 `
 
 const CustomToolbar = <T extends Listable>(props: CustomToolbarProps<T>) => {
-    const {numSelected, rows, label} = props;
+    const {numSelected, label} = props;
     {/*TODO: Fix search bar placement*/}
     return (<Toolbar>
         <StyledDivider>
@@ -47,10 +47,10 @@ const CustomToolbar = <T extends Listable>(props: CustomToolbarProps<T>) => {
         </StyledDivider>
         {numSelected > 0 ? (
             <>
-                <Divider>
                     <CustomButton color={'info'} title={'Editar'} endIcon={<EditIcon />}>Editar</CustomButton>
-                    <CustomButton color={'error'} title={'Eliminar'} endIcon={<DeleteIcon />}>Eliminar</CustomButton>
-                </Divider>
+              {/*      TODO: Replace with modal component*/}
+              <BasicModal/>
+                    {/*<CustomButton color={'error'} title={'Eliminar'} endIcon={<DeleteIcon />}>Eliminar</CustomButton>*/}
             </>
         ) : (
           <>
