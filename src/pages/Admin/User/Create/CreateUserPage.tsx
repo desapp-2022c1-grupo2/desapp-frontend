@@ -2,7 +2,7 @@ import React from "react"
 import {GoToBack} from "../../../../components/GoTo";
 import {Container} from "@mui/material";
 import {Field} from "../../../../components";
-import CheckboxesSearch from "../../../../components/CheckboxesSearch/CheckboxesSearch";
+import AutocompleteField from "../../../../components/AutocompleteField/AutocompleteField";
 import {CustomButton} from "../../../../components/Button/Button";
 import {CheckOutlined, Clear} from "@mui/icons-material";
 
@@ -26,8 +26,8 @@ export const CreateUserPage = (props: CreateUserPageProps) => {
         <Field label={"Apellido"} placeholder={"Ingresá el apellido"}/>
         <Field label={"Email"} placeholder={"Ingresá el email"}/>
         <Field label={"DNI"} placeholder={"Ingresá el DNI"}/>
-        <CheckboxesSearch data={getRoles()} label={"Roles"} placeholder={"Ingresá los roles"}/>
-        <CheckboxesSearch data={getMaterias()} label={"Materias"} placeholder={"Ingresá las materias"}/>
+        <AutocompleteField data={getRoles()} label={"Roles"} placeholder={"Ingresá los roles"}/>
+        <AutocompleteField data={getMaterias()} label={"Materias"} placeholder={"Ingresá las materias"}/>
         <>
           <CustomButton color={'info'} title={'Limpiar datos'} endIcon={<Clear/>} href={"/admin/users/create"}>Limpiar datos</CustomButton>
           <CustomButton color={'primary'} title={'Crear'} endIcon={<CheckOutlined color={"primary"}/>} href={"/admin/users/create"}>Crear</CustomButton>
