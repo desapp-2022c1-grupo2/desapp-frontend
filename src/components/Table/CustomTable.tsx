@@ -1,25 +1,27 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import {CustomTableHeadProps, CustomToolbarProps, CustomTableProps, Order, Listable} from './props'
+import {CustomTableHeadProps, CustomTableProps, CustomToolbarProps, Listable, Order} from './props'
 import {
-    Box, ButtonGroup, Divider,
-    IconButton, Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TablePagination,
-    TableRow, TableSortLabel,
-    Toolbar, Tooltip, Typography
+  Box,
+  Divider,
+  InputAdornment,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+  Toolbar,
+  Typography
 } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {visuallyHidden} from '@mui/utils';
 import {Field} from "../Field";
-import {Button} from "../index";
 import {CustomButton} from "../Button/Button";
-import {FilterAlt} from "@mui/icons-material";
+import {Add, FilterAlt, Search} from "@mui/icons-material";
+import {BasicModal} from '../BasicModal';
 
 const StyledDivider = styled.div`
   display: flex;
@@ -30,24 +32,32 @@ const StyledDivider = styled.div`
 `
 
 const CustomToolbar = <T extends Listable>(props: CustomToolbarProps<T>) => {
-    const {numSelected, rows, label} = props;
+    const {numSelected, label} = props;
     {/*TODO: Fix search bar placement*/}
     return (<Toolbar>
         <StyledDivider>
             <Typography variant="h6" id="tableTitle" component="div">{label}</Typography>
-            <Field variant={"search"} placeholder={"Buscar"}/>
+            <Field InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                      <Search />
+                  </InputAdornment>
+                )
+            }} placeholder={"Buscar"}/>
         </StyledDivider>
         {numSelected > 0 ? (
             <>
-                <Divider>
                     <CustomButton color={'info'} title={'Editar'} endIcon={<EditIcon />}>Editar</CustomButton>
-                    <CustomButton color={'error'} title={'Eliminar'} endIcon={<DeleteIcon />}>Eliminar</CustomButton>
-                </Divider>
+              {/*      TODO: Replace with modal component*/}
+              <BasicModal/>
+                    {/*<CustomButton color={'error'} title={'Eliminar'} endIcon={<DeleteIcon />}>Eliminar</CustomButton>*/}
             </>
         ) : (
           <>
               <Divider>
-                    <CustomButton title={'Filtrar'} endIcon={<FilterAlt/>}>Filtrar</CustomButton>
+                    {/*TODO: Implementar filtrar button*/}
+                    <CustomButton color={'secondary'} title={'Filtrar'} endIcon={<FilterAlt/>}>Filtrar</CustomButton>
+                    <CustomButton color={'primary'} title={'Crear'} endIcon={<Add/>} href={"/admin/users/create"}>Crear</CustomButton>
               </Divider>
           </>
         )}

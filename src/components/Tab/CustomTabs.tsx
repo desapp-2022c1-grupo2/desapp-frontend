@@ -21,7 +21,7 @@ export const CustomTabs = ({routes, ...props}: CustomTabsProps) => {
     <StyledTabs value={value} onChange={handleChange} textColor="primary" indicatorColor="primary"
           aria-label="secondary tabs example">
       {Object.keys(routes).map(route => {
-        return <Tab key={route} component={Link} to={routes[route].path} label={routes[route].label}></Tab>
+        return <Tab key={route} component={Link} to={routes[route].home.path} label={routes[route].home.label}></Tab>
       })}
     </StyledTabs>
   );
