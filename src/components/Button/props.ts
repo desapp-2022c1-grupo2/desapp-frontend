@@ -1,8 +1,7 @@
-import {IconProps} from "@mui/material/Icon/Icon";
 import {ButtonProps, Icon} from "@mui/material";
 import React from "react";
 import {OverridableStringUnion} from "@mui/types";
-import {ButtonPropsColorOverrides, ButtonPropsVariantOverrides} from "@mui/material/Button/Button";
+import {ButtonPropsVariantOverrides} from "@mui/material/Button/Button";
 
 export interface CustomButtonProps extends ButtonProps {
     startIcon?: React.ReactNode,

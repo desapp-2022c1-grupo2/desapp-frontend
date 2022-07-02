@@ -22,6 +22,7 @@ import {Field} from "../Field";
 import {CustomButton} from "../Button/Button";
 import {Add, FilterAlt, Search} from "@mui/icons-material";
 import {BasicModal} from '../BasicModal';
+import {CustomToolbar} from "./CustomToolbar";
 
 const StyledDivider = styled.div`
   display: flex;
@@ -30,39 +31,6 @@ const StyledDivider = styled.div`
   width: 100%;
   justify-content: space-between;
 `
-
-const CustomToolbar = <T extends Listable>(props: CustomToolbarProps<T>) => {
-    const {numSelected, label} = props;
-    {/*TODO: Fix search bar placement*/}
-    return (<Toolbar>
-        <StyledDivider>
-            <Typography variant="h6" id="tableTitle" component="div">{label}</Typography>
-            <Field InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                      <Search />
-                  </InputAdornment>
-                )
-            }} placeholder={"Buscar"}/>
-        </StyledDivider>
-        {numSelected > 0 ? (
-            <>
-                    <CustomButton color={'info'} title={'Editar'} endIcon={<EditIcon />}>Editar</CustomButton>
-              {/*      TODO: Replace with modal component*/}
-              <BasicModal/>
-                    {/*<CustomButton color={'error'} title={'Eliminar'} endIcon={<DeleteIcon />}>Eliminar</CustomButton>*/}
-            </>
-        ) : (
-          <>
-              <Divider>
-                    {/*TODO: Implementar filtrar button*/}
-                    <CustomButton color={'secondary'} title={'Filtrar'} endIcon={<FilterAlt/>}>Filtrar</CustomButton>
-                    <CustomButton color={'primary'} title={'Crear'} endIcon={<Add/>} href={"/admin/users/create"}>Crear</CustomButton>
-              </Divider>
-          </>
-        )}
-    </Toolbar>)
-}
 
 const CustomTableHead = <T extends Listable>(props: CustomTableHeadProps<T>) => {
     let {onRequestSort, orderBy, order, headers} = props;
@@ -94,7 +62,7 @@ const CustomTableHead = <T extends Listable>(props: CustomTableHeadProps<T>) => 
 
 /*https://mui.com/material-ui/react-table/#sorting-amp-selecting*/
 
-export const CustomTable = <T extends Listable>({label, rows, headers, ...props}: CustomTableProps<T>) => {
+export const CustomTable = <T extends Listable>({label, rows, headers, readOnly, ...props}: CustomTableProps<T>) => {
     const [selected, setSelected] = useState<number>(-1);
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof T>('id');
@@ -126,7 +94,7 @@ export const CustomTable = <T extends Listable>({label, rows, headers, ...props}
     return (
       <>
                 <TableContainer>
-                    <CustomToolbar<T> numSelected={selected} rows={rows} label={label}/>
+                    <CustomToolbar<T> readOnly={readOnly} numSelected={selected} rows={rows} label={label}/>
                     <Table>
                         <CustomTableHead<T> numSelected={selected}
                                             order={order}

@@ -42,6 +42,21 @@ export const theme = createTheme({
             backgroundColor: 'secondary',
         }
       }
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          margin: '8px',
+        }
+      }
+    },
+    MuiButtonGroup: {
+      styleOverrides: {
+        root: {
+          minHeight: '52px',
+          minWidth: '192px',
+        }
+      }
     }
   },
 });

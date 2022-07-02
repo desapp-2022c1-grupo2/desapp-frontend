@@ -1,6 +1,7 @@
 import {CustomTableProps, TrabajoPractico, User} from "./props";
 import {CustomTable} from "./CustomTable";
 import React from "react";
+import {CustomToolbar} from "./CustomToolbar";
 
 function getUserHeaders() {
   return [
@@ -38,5 +39,5 @@ function getUserRows(): Array<User> {
 
 
 export const UserTable = () => {
-  return <CustomTable<User> rows={getUserRows()} headers={getUserHeaders()} label={"Usuarios"}/>
+  return <CustomTable<User> rows={getUserRows()} headers={getUserHeaders()} label={"Usuarios"} readOnly={false}/>
 }

@@ -44,5 +44,5 @@ function getAssignmentsRows(): Array<TrabajoPractico> {
 
 
 export const AssignmentTable = () => {
-  return <CustomTable<TrabajoPractico> rows={getAssignmentsRows()} headers={getAssignmentHeaders()} label={"Trabajos Prácticos"}/>
+  return <CustomTable<TrabajoPractico> rows={getAssignmentsRows()} headers={getAssignmentHeaders()} label={"Trabajos Prácticos"} readOnly={true}/>
 }
