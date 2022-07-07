@@ -1,43 +1,20 @@
-import {CustomTableProps, TrabajoPractico, User} from "./props";
 import {CustomTable} from "./CustomTable";
-import React from "react";
-import {CustomToolbar} from "./CustomToolbar";
-
-function getUserHeaders() {
-  return [
-    "Id",
-    "Nombre",
-    "Email",
-    "Materias",
-    "Trabajos Practicos"
-  ]
-}
-
-function getUserRows(): Array<User> {
-  function createData(
-    id: number,
-    nombre: string,
-    email: string,
-    materias: number[],
-    trabajosPracticos: number[],
-  ): User {
-    return {
-      id,
-      nombre,
-      email,
-      materias,
-      trabajosPracticos
-    };
-  }
-
-  return [
-    createData(1, "JTP 1", "jtp1@unahur.edu.ar", [1], [1, 2]),
-    createData(2, "JTP 2", "jtp2@unahur.edu.ar", [2], [3, 4]),
-
-  ];
-}
-
+import React, {useEffect, useState} from "react";
+import {getAllJtp} from "../../service";
+import {User} from "../../models";
 
 export const UserTable = () => {
-  return <CustomTable<User> rows={getUserRows()} headers={getUserHeaders()} label={"Usuarios"} readOnly={false}/>
+  const [users, setUsers] = useState<User[]>([]);
+  const [headers, setHeaders] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchAllUsers = async () => {
+      const obtainedData = await getAllJtp();
+      setHeaders(Object.keys(obtainedData[0]))
+      setUsers(obtainedData);
+    }
+    fetchAllUsers();
+  }, []);
+
+  return <CustomTable<User> rows={users} headers={headers} label={"Usuarios"} readOnly={false}/>
 }

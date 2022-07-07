@@ -28,22 +28,3 @@ export interface CustomTableHeadProps<T> extends TableHeadProps {
     rowCount: number,
     headers: string[],
 }
-
-export interface TrabajoPractico extends Listable {
-    title: string,
-    startDate: string, //TODO: Use date instead of string
-    endDate: string, //TODO: Use date instead of string
-    status: string
-    completedPercentage: number
-}
-
-export interface User extends Listable {
-  nombre: string
-  email: string
-  materias: number[]
-  trabajosPracticos: number[]
-}
-
-export interface Listable {
-  id: number
-}

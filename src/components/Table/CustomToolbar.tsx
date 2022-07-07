@@ -7,6 +7,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import {BasicModal} from "../BasicModal";
 import React from "react";
 import styled from "styled-components";
+import {routes} from "../../router";
 
 const StyledDivider = styled.div`
 display: flex;
@@ -35,9 +36,9 @@ export const CustomToolbar = <T extends Listable>({readOnly, ...props}: CustomTo
         <Typography variant="h4" id={label + "Title"} component="div">{label}</Typography>
       </StyledDivider>
       <StyledDivider>
-        <Field InputProps={{startAdornment: (<InputAdornment position="start"><Search/></InputAdornment>)}}
+        <Field disabled={true} InputProps={{startAdornment: (<InputAdornment position="start"><Search/></InputAdornment>)}}
                placeholder={"Buscar"}/>
-        <CustomButton color={'secondary'} title={'Filtrar'} endIcon={<FilterAlt/>}>Filtrar</CustomButton>
+        <CustomButton disabled={true} color={'secondary'} title={'Filtrar'} endIcon={<FilterAlt/>}>Filtrar</CustomButton>
         <StyledButtonGroup>
           {!readOnly && numSelected > 0 &&
               <>
@@ -46,7 +47,7 @@ export const CustomToolbar = <T extends Listable>({readOnly, ...props}: CustomTo
                   <BasicModal/>
               </>
           }
-          {!readOnly && <CustomButton color={'primary'} title={'Crear'} endIcon={<Add/>} href={"admin/users/create"}>Crear</CustomButton>}
+          {!readOnly && <CustomButton color={'primary'} title={'Crear'} endIcon={<Add/>} href={routes.admin.users.create.path}>Crear</CustomButton>}
         </StyledButtonGroup>
       </StyledDivider>
     </StyledToolbar>)
