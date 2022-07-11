@@ -1,4 +1,4 @@
-import {TrabajoPractico} from "./props";
+import {Assignment} from "./props";
 import {CustomTable} from "./CustomTable";
 import React from "react";
 
@@ -13,22 +13,22 @@ function getAssignmentHeaders() {
   ]
 }
 
-function getAssignmentsRows(): Array<TrabajoPractico> {
+function getAssignmentsRows(): Array<Assignment> {
   function createData(
     id: number,
-    title: string,
+    name: string,
     startDate: string,
     endDate: string,
     status: string,
     completedPercentage: number
-  ): TrabajoPractico {
+  ): Assignment {
     return {
-      id,
-      title,
-      startDate,
-      endDate,
-      status,
-      completedPercentage
+      estado: status,
+      fechaInicio: startDate,
+      fechaFin: endDate,
+      id: id,
+      nombre: name,
+      porcentajeCompletado: completedPercentage
     };
   }
 
@@ -44,5 +44,6 @@ function getAssignmentsRows(): Array<TrabajoPractico> {
 
 
 export const AssignmentTable = () => {
-  return <CustomTable<TrabajoPractico> rows={getAssignmentsRows()} headers={getAssignmentHeaders()} label={"Trabajos Prácticos"} readOnly={true}/>
+  return <CustomTable<Assignment> rows={getAssignmentsRows()} headers={getAssignmentHeaders()}
+                                  label={"Trabajos Prácticos"} readOnly={true}/>
 }

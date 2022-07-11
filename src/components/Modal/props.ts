@@ -1,8 +1,9 @@
-import { ReactNode } from "react";
+import {MouseEventHandler, ReactNode} from "react";
 
 export interface ModalProps {
   id?: string,
-  open?: boolean,
+  open: boolean,
+  handleClose: MouseEventHandler,
   title?: string,
   content?: ReactNode,
   footer?: ReactNode,

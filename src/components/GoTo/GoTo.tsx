@@ -6,13 +6,13 @@ import {
   ArrowLeft,
   ArrowRight,
 } from './styles'
+import {CustomButton} from "../Button/Button";
 
-export const GoToBack = ({ text, ...props }: GoToProps) => {
+export const GoToBack = ({ text, onClick, ...props }: GoToProps) => {
   return (
-    <GoToContainer {...props}>
-      <ArrowLeft />
+    <CustomButton onClick={onClick} startIcon={<ArrowLeft />} {...props}>
       <label>{text}</label>
-    </GoToContainer>
+    </CustomButton>
   )
 }
 

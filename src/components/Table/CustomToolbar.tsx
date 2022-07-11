@@ -1,12 +1,11 @@
-import {CustomToolbarProps, Listable} from "./props";
-import {ButtonGroup, Divider, InputAdornment, Toolbar, Typography} from "@mui/material";
+import {CustomToolbarProps, Nameable} from "./props";
+import {ButtonGroup, InputAdornment, Toolbar, Typography} from "@mui/material";
 import {Field} from "../Field";
-import {Add, FilterAlt, Search} from "@mui/icons-material";
-import {CustomButton} from "../Button/Button";
-import EditIcon from "@mui/icons-material/Edit";
-import {BasicModal} from "../BasicModal";
-import React from "react";
+import {Add, Delete, FilterAlt, Search, Edit} from "@mui/icons-material";
+import {CustomButton} from "../Button";
+import React, {useState} from "react";
 import styled from "styled-components";
+import {CustomModal} from "../Modal";
 
 const StyledDivider = styled.div`
 display: flex;
@@ -23,12 +22,31 @@ justify-content: center;
 const StyledButtonGroup = styled(ButtonGroup)`
 justify-content: right;
 width: 100%;
-
 `
-export const CustomToolbar = <T extends Listable>({readOnly, ...props}: CustomToolbarProps<T>) => {
-  const {numSelected, label} = props;
-  {/*TODO: Fix search bar placement*/
+
+export const CustomToolbar = <T extends Nameable>({readOnly, numSelected, label, rows, ...props}: CustomToolbarProps<T>) => {
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+
+  const handleOpenDeleteModal = () => {
+    setOpenDeleteModal(true)
   }
+  const handleCloseDeleteModal = () => {
+    setOpenDeleteModal(false)
+  }
+
+  const deleteModal = (id: number, name:string) => {
+    return <CustomModal open={openDeleteModal}
+                 handleClose={handleCloseDeleteModal}
+                 title={"Eliminar " + label.toLowerCase()}
+                 content={
+                   <Typography>Desea eliminar el valor con id <b>{id}</b> y
+                     nombre <b>{name}</b> de {label.toLowerCase()}?</Typography>
+                 }
+                 footer={
+                   <CustomButton color={'error'} onClick={handleCloseDeleteModal}>Eliminar</CustomButton>
+                 }/>
+  }
+
   return (
     <StyledToolbar>
       <StyledDivider>
@@ -41,9 +59,9 @@ export const CustomToolbar = <T extends Listable>({readOnly, ...props}: CustomTo
         <StyledButtonGroup>
           {!readOnly && numSelected > 0 &&
               <>
-                  <CustomButton color={'info'} title={'Editar'} endIcon={<EditIcon/>}>Editar</CustomButton>
-                {/*      TODO: Replace with modal component*/}
-                  <BasicModal/>
+                  <CustomButton color={'info'} title={'Editar'} endIcon={<Edit/>}>Editar</CustomButton>
+                  <CustomButton color={'error'} title={'Eliminar'} endIcon={<Delete/>} onClick={handleOpenDeleteModal}>Eliminar</CustomButton>
+                {deleteModal(rows[numSelected-1].id, rows[numSelected-1].nombre) }
               </>
           }
           {!readOnly && <CustomButton color={'primary'} title={'Crear'} endIcon={<Add/>} href={"admin/users/create"}>Crear</CustomButton>}

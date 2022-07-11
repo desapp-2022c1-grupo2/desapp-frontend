@@ -1,4 +1,6 @@
+import {MouseEventHandler} from "react";
+
 export interface GoToProps {
-  onClick?: Function,
+  onClick?: MouseEventHandler,
   text: string,
 }

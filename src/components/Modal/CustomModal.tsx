@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ModalProps } from './props'
 
 import {
@@ -10,22 +10,19 @@ import {
 } from './styles'
 
 import { GoToBack } from '../GoTo'
+import {Modal} from "@mui/material";
 
-export const Modal = ({
+export const CustomModal = ({
   content,
   footer,
   id,
   open,
+  handleClose,
   title,
   ...props
 } : ModalProps ) => {
-  const [openStatus, setOpen] = useState(open)
-
-  const handleOpen = () => { setOpen(true) }
-  const handleClose = () => { setOpen(false) }
-
   return (
-    <ModalDialog id={id} open={openStatus} {...props}>
+    <ModalDialog id={id} open={open} {...props}>
       <ModalContainer>
         <ModalHeader>
           <GoToBack onClick={handleClose} text="Volver"/>

@@ -1,7 +1,6 @@
-import {CustomTableProps, TrabajoPractico, User} from "./props";
+import {User} from "./props";
 import {CustomTable} from "./CustomTable";
 import React from "react";
-import {CustomToolbar} from "./CustomToolbar";
 
 function getUserHeaders() {
   return [
@@ -18,7 +17,7 @@ function getUserRows(): Array<User> {
     id: number,
     nombre: string,
     email: string,
-    materias: number[],
+    materias: number,
     trabajosPracticos: number[],
   ): User {
     return {
@@ -31,9 +30,8 @@ function getUserRows(): Array<User> {
   }
 
   return [
-    createData(1, "JTP 1", "jtp1@unahur.edu.ar", [1], [1, 2]),
-    createData(2, "JTP 2", "jtp2@unahur.edu.ar", [2], [3, 4]),
-
+    createData(1, "JTP 1", "jtp1@unahur.edu.ar", 1, [1, 2]),
+    createData(2, "JTP 2", "jtp2@unahur.edu.ar", 2, [3, 4]),
   ];
 }
 

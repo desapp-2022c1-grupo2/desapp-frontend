@@ -1,10 +1,8 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import {CustomTableHeadProps, CustomTableProps, CustomToolbarProps, Listable, Order} from './props'
+import {CustomTableHeadProps, CustomTableProps, Nameable, Order} from './props'
 import {
   Box,
-  Divider,
-  InputAdornment,
   Table,
   TableBody,
   TableCell,
@@ -13,15 +11,8 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
-  Toolbar,
-  Typography
 } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
 import {visuallyHidden} from '@mui/utils';
-import {Field} from "../Field";
-import {CustomButton} from "../Button/Button";
-import {Add, FilterAlt, Search} from "@mui/icons-material";
-import {BasicModal} from '../BasicModal';
 import {CustomToolbar} from "./CustomToolbar";
 
 const StyledDivider = styled.div`
@@ -32,7 +23,7 @@ const StyledDivider = styled.div`
   justify-content: space-between;
 `
 
-const CustomTableHead = <T extends Listable>(props: CustomTableHeadProps<T>) => {
+const CustomTableHead = <T extends Nameable>(props: CustomTableHeadProps<T>) => {
     let {onRequestSort, orderBy, order, headers} = props;
     const createSortHandler = (property: keyof T) => (event: React.MouseEvent<unknown>) => {
             onRequestSort(event, property);
@@ -62,7 +53,7 @@ const CustomTableHead = <T extends Listable>(props: CustomTableHeadProps<T>) => 
 
 /*https://mui.com/material-ui/react-table/#sorting-amp-selecting*/
 
-export const CustomTable = <T extends Listable>({label, rows, headers, readOnly, ...props}: CustomTableProps<T>) => {
+export const CustomTable = <T extends Nameable>({label, rows, headers, readOnly, ...props}: CustomTableProps<T>) => {
     const [selected, setSelected] = useState<number>(-1);
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof T>('id');
@@ -117,7 +108,7 @@ export const CustomTable = <T extends Listable>({label, rows, headers, readOnly,
                                     {Object.entries(row).map(key => {
                                         //TODO: crear un convertidor de elementos (ej, si es lista de TP, que haga las referencias)
                                         let value = (key[0].toLowerCase().includes("percentage")) ? key[1] + "%" : key[1]
-                                        return <TableCell key={value + row.id}>{value}</TableCell>
+                                        return <TableCell key={key[0]}>{value}</TableCell>
                                     })}
                                 </TableRow>);
                             })}
