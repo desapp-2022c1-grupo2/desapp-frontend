@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import {CustomTableHeadProps, CustomTableProps, Nameable, Order} from './props'
+import {CustomTableHeadProps, CustomTableProps, Order} from './props'
 import {
   Box,
   Table,
@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 import {visuallyHidden} from '@mui/utils';
 import {CustomToolbar} from "./CustomToolbar";
+import {BaseEntity} from "../../models";
+import {BaseEntityAdapter} from "../../models/BaseEntityAdapter";
 
 const StyledDivider = styled.div`
   display: flex;
@@ -23,7 +25,7 @@ const StyledDivider = styled.div`
   justify-content: space-between;
 `
 
-const CustomTableHead = <T extends Nameable>(props: CustomTableHeadProps<T>) => {
+const CustomTableHead = <T extends BaseEntityAdapter>(props: CustomTableHeadProps<T>) => {
     let {onRequestSort, orderBy, order, headers} = props;
     const createSortHandler = (property: keyof T) => (event: React.MouseEvent<unknown>) => {
             onRequestSort(event, property);
@@ -53,7 +55,7 @@ const CustomTableHead = <T extends Nameable>(props: CustomTableHeadProps<T>) => 
 
 /*https://mui.com/material-ui/react-table/#sorting-amp-selecting*/
 
-export const CustomTable = <T extends Nameable>({label, rows, headers, readOnly, ...props}: CustomTableProps<T>) => {
+export const CustomTable = <T extends BaseEntityAdapter>({label, rows, headers, readOnly, ...props}: CustomTableProps<T>) => {
     const [selected, setSelected] = useState<number>(-1);
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof T>('id');

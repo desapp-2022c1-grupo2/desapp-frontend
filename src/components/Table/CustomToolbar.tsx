@@ -1,11 +1,13 @@
-import {CustomToolbarProps, Nameable} from "./props";
+import {CustomToolbarProps} from "./props";
 import {ButtonGroup, InputAdornment, Toolbar, Typography} from "@mui/material";
 import {Field} from "../Field";
 import {Add, Delete, FilterAlt, Search, Edit} from "@mui/icons-material";
 import {CustomButton} from "../Button";
 import React, {useState} from "react";
 import styled from "styled-components";
+import {routes} from "../../router";
 import {CustomModal} from "../Modal";
+import {BaseEntityAdapter} from "../../models/BaseEntityAdapter";
 
 const StyledDivider = styled.div`
 display: flex;
@@ -22,9 +24,10 @@ justify-content: center;
 const StyledButtonGroup = styled(ButtonGroup)`
 justify-content: right;
 width: 100%;
+
 `
 
-export const CustomToolbar = <T extends Nameable>({readOnly, numSelected, label, rows, ...props}: CustomToolbarProps<T>) => {
+export const CustomToolbar = <T extends BaseEntityAdapter>({readOnly, numSelected, label, rows, ...props}: CustomToolbarProps<T>) => {
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
 
   const handleOpenDeleteModal = () => {
@@ -47,24 +50,27 @@ export const CustomToolbar = <T extends Nameable>({readOnly, numSelected, label,
                  }/>
   }
 
+  const rowFound = rows.find(row => row.id === numSelected);
   return (
     <StyledToolbar>
       <StyledDivider>
         <Typography variant="h4" id={label + "Title"} component="div">{label}</Typography>
       </StyledDivider>
       <StyledDivider>
-        <Field InputProps={{startAdornment: (<InputAdornment position="start"><Search/></InputAdornment>)}}
+        <Field disabled={true} InputProps={{startAdornment: (<InputAdornment position="start"><Search/></InputAdornment>)}}
                placeholder={"Buscar"}/>
-        <CustomButton color={'secondary'} title={'Filtrar'} endIcon={<FilterAlt/>}>Filtrar</CustomButton>
+        <CustomButton disabled={true} color={'secondary'} title={'Filtrar'} endIcon={<FilterAlt/>}>Filtrar</CustomButton>
         <StyledButtonGroup>
           {!readOnly && numSelected > 0 &&
               <>
                   <CustomButton color={'info'} title={'Editar'} endIcon={<Edit/>}>Editar</CustomButton>
                   <CustomButton color={'error'} title={'Eliminar'} endIcon={<Delete/>} onClick={handleOpenDeleteModal}>Eliminar</CustomButton>
-                {deleteModal(rows[numSelected-1].id, rows[numSelected-1].nombre) }
+                {rowFound &&
+                  deleteModal(rowFound.id, rowFound.nombre)
+                }
               </>
           }
-          {!readOnly && <CustomButton color={'primary'} title={'Crear'} endIcon={<Add/>} href={"admin/users/create"}>Crear</CustomButton>}
+          {!readOnly && <CustomButton color={'primary'} title={'Crear'} endIcon={<Add/>} href={routes.admin.users.create.path}>Crear</CustomButton>}
         </StyledButtonGroup>
       </StyledDivider>
     </StyledToolbar>)

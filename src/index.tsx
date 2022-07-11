@@ -7,6 +7,8 @@ import './styles/styles.css'
 
 import { Router } from './router'
 
+export * from './models'
+
 createRoot(document.getElementById('root')!)
   .render(
     <StrictMode>
