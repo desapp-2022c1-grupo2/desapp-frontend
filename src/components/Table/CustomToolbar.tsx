@@ -42,7 +42,7 @@ export const CustomToolbar = <T extends BaseEntityAdapter>({readOnly, numSelecte
                  handleClose={handleCloseDeleteModal}
                  title={"Eliminar " + label.toLowerCase()}
                  content={
-                   <Typography>Desea eliminar el valor con id <b>{id}</b> y
+                   <Typography>Desea eliminar la entrada con id <b>{id}</b> y
                      nombre <b>{name}</b> de {label.toLowerCase()}?</Typography>
                  }
                  footer={

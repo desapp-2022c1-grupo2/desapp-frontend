@@ -53,6 +53,18 @@ const CustomTableHead = <T extends BaseEntityAdapter>(props: CustomTableHeadProp
         </TableHead>);
 }
 
+
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+
 /*https://mui.com/material-ui/react-table/#sorting-amp-selecting*/
 
 export const CustomTable = <T extends BaseEntityAdapter>({label, rows, headers, readOnly, ...props}: CustomTableProps<T>) => {
@@ -63,7 +75,8 @@ export const CustomTable = <T extends BaseEntityAdapter>({label, rows, headers, 
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const isSelected = (id: number) => selected === id;
 
-    const handleRequestSort = (
+
+  const handleRequestSort = (
         _event: React.MouseEvent<unknown>,
         property: keyof T,
     ) => {
@@ -84,6 +97,19 @@ export const CustomTable = <T extends BaseEntityAdapter>({label, rows, headers, 
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+
+  function getComparator<Key extends keyof T>(
+    order: Order,
+    orderBy: Key,
+  ): (
+    a: { [key in Key]: number | string },
+    b: { [key in Key]: number | string },
+  ) => number {
+    return order === 'desc'
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  }
+
     return (
       <>
                 <TableContainer>
@@ -96,7 +122,7 @@ export const CustomTable = <T extends BaseEntityAdapter>({label, rows, headers, 
                                             rowCount={rows.length}
                                             headers={headers}/>
                         <TableBody>
-                            {rows.length > 0 && rows
+                            {rows.length > 0 && rows.slice().sort(getComparator(order, orderBy))
                               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                               .map(row => {
                                 const isItemSelected = isSelected(row.id);

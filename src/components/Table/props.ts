@@ -3,10 +3,6 @@ import React from "react";
 import {BaseEntity} from "../../models";
 import {BaseEntityAdapter} from "../../models/BaseEntityAdapter";
 
-
-export type Order = 'asc' | 'desc';
-
-
 export interface CustomToolbarProps<T extends BaseEntityAdapter> extends ToolbarProps {
   numSelected: number,
   rows: Array<T>,
@@ -29,5 +25,7 @@ export interface CustomTableHeadProps<T extends BaseEntityAdapter> extends Table
     rowCount: number,
     headers: string[],
 }
+
+export type Order = 'asc' | 'desc';
 
 
