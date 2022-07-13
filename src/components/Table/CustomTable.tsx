@@ -1,10 +1,8 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import {CustomTableHeadProps, CustomTableProps, CustomToolbarProps, Listable, Order} from './props'
+import {CustomTableHeadProps, CustomTableProps, Order} from './props'
 import {
   Box,
-  Divider,
-  InputAdornment,
   Table,
   TableBody,
   TableCell,
@@ -13,15 +11,11 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
-  Toolbar,
-  Typography
 } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
 import {visuallyHidden} from '@mui/utils';
-import {Field} from "../Field";
-import {CustomButton} from "../Button/Button";
-import {Add, FilterAlt, Search} from "@mui/icons-material";
-import {BasicModal} from '../BasicModal';
+import {CustomToolbar} from "./CustomToolbar";
+import {BaseEntity} from "../../models";
+import {BaseEntityAdapter} from "../../models/BaseEntityAdapter";
 
 const StyledDivider = styled.div`
   display: flex;
@@ -31,40 +25,7 @@ const StyledDivider = styled.div`
   justify-content: space-between;
 `
 
-const CustomToolbar = <T extends Listable>(props: CustomToolbarProps<T>) => {
-    const {numSelected, label} = props;
-    {/*TODO: Fix search bar placement*/}
-    return (<Toolbar>
-        <StyledDivider>
-            <Typography variant="h6" id="tableTitle" component="div">{label}</Typography>
-            <Field InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                      <Search />
-                  </InputAdornment>
-                )
-            }} placeholder={"Buscar"}/>
-        </StyledDivider>
-        {numSelected > 0 ? (
-            <>
-                    <CustomButton color={'info'} title={'Editar'} endIcon={<EditIcon />}>Editar</CustomButton>
-              {/*      TODO: Replace with modal component*/}
-              <BasicModal/>
-                    {/*<CustomButton color={'error'} title={'Eliminar'} endIcon={<DeleteIcon />}>Eliminar</CustomButton>*/}
-            </>
-        ) : (
-          <>
-              <Divider>
-                    {/*TODO: Implementar filtrar button*/}
-                    <CustomButton color={'secondary'} title={'Filtrar'} endIcon={<FilterAlt/>}>Filtrar</CustomButton>
-                    <CustomButton color={'primary'} title={'Crear'} endIcon={<Add/>} href={"/admin/users/create"}>Crear</CustomButton>
-              </Divider>
-          </>
-        )}
-    </Toolbar>)
-}
-
-const CustomTableHead = <T extends Listable>(props: CustomTableHeadProps<T>) => {
+const CustomTableHead = <T extends BaseEntityAdapter>(props: CustomTableHeadProps<T>) => {
     let {onRequestSort, orderBy, order, headers} = props;
     const createSortHandler = (property: keyof T) => (event: React.MouseEvent<unknown>) => {
             onRequestSort(event, property);
@@ -92,9 +53,21 @@ const CustomTableHead = <T extends Listable>(props: CustomTableHeadProps<T>) => 
         </TableHead>);
 }
 
+
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+
 /*https://mui.com/material-ui/react-table/#sorting-amp-selecting*/
 
-export const CustomTable = <T extends Listable>({label, rows, headers, ...props}: CustomTableProps<T>) => {
+export const CustomTable = <T extends BaseEntityAdapter>({label, rows, headers, readOnly, ...props}: CustomTableProps<T>) => {
     const [selected, setSelected] = useState<number>(-1);
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof T>('id');
@@ -102,7 +75,8 @@ export const CustomTable = <T extends Listable>({label, rows, headers, ...props}
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const isSelected = (id: number) => selected === id;
 
-    const handleRequestSort = (
+
+  const handleRequestSort = (
         _event: React.MouseEvent<unknown>,
         property: keyof T,
     ) => {
@@ -123,10 +97,23 @@ export const CustomTable = <T extends Listable>({label, rows, headers, ...props}
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+
+  function getComparator<Key extends keyof T>(
+    order: Order,
+    orderBy: Key,
+  ): (
+    a: { [key in Key]: number | string },
+    b: { [key in Key]: number | string },
+  ) => number {
+    return order === 'desc'
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  }
+
     return (
       <>
                 <TableContainer>
-                    <CustomToolbar<T> numSelected={selected} rows={rows} label={label}/>
+                    <CustomToolbar<T> readOnly={readOnly} numSelected={selected} rows={rows} label={label}/>
                     <Table>
                         <CustomTableHead<T> numSelected={selected}
                                             order={order}
@@ -135,7 +122,7 @@ export const CustomTable = <T extends Listable>({label, rows, headers, ...props}
                                             rowCount={rows.length}
                                             headers={headers}/>
                         <TableBody>
-                            {rows.length > 0 && rows
+                            {rows.length > 0 && rows.slice().sort(getComparator(order, orderBy))
                               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                               .map(row => {
                                 const isItemSelected = isSelected(row.id);
@@ -149,7 +136,7 @@ export const CustomTable = <T extends Listable>({label, rows, headers, ...props}
                                     {Object.entries(row).map(key => {
                                         //TODO: crear un convertidor de elementos (ej, si es lista de TP, que haga las referencias)
                                         let value = (key[0].toLowerCase().includes("percentage")) ? key[1] + "%" : key[1]
-                                        return <TableCell key={value + row.id}>{value}</TableCell>
+                                        return <TableCell key={key[0]}>{value}</TableCell>
                                     })}
                                 </TableRow>);
                             })}

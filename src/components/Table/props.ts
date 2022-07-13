@@ -1,23 +1,23 @@
 import {TableHeadProps, TableProps, ToolbarProps} from "@mui/material";
 import React from "react";
+import {BaseEntity} from "../../models";
+import {BaseEntityAdapter} from "../../models/BaseEntityAdapter";
 
-
-export type Order = 'asc' | 'desc';
-
-
-export interface CustomToolbarProps<T> extends ToolbarProps {
+export interface CustomToolbarProps<T extends BaseEntityAdapter> extends ToolbarProps {
   numSelected: number,
   rows: Array<T>,
   label: string,
+  readOnly: boolean,
 }
 
-export interface CustomTableProps<T> extends TableProps {
+export interface CustomTableProps<T extends BaseEntityAdapter> extends TableProps {
   label: string,
   rows: Array<T>,
   headers: string[],
+  readOnly: boolean,
 }
 
-export interface CustomTableHeadProps<T> extends TableHeadProps {
+export interface CustomTableHeadProps<T extends BaseEntityAdapter> extends TableHeadProps {
     numSelected: number,
     onRequestSort: (event: React.MouseEvent<unknown>, property: keyof T) => void,
     order: Order,
@@ -26,21 +26,6 @@ export interface CustomTableHeadProps<T> extends TableHeadProps {
     headers: string[],
 }
 
-export interface TrabajoPractico extends Listable {
-    title: string,
-    startDate: string, //TODO: Use date instead of string
-    endDate: string, //TODO: Use date instead of string
-    status: string
-    completedPercentage: number
-}
+export type Order = 'asc' | 'desc';
 
-export interface User extends Listable {
-  nombre: string
-  email: string
-  materias: number[]
-  trabajosPracticos: number[]
-}
 
-export interface Listable {
-  id: number
-}
