@@ -1,6 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
-import MuiInput from '@mui/material/OutlinedInput'
+import { OutlinedInput } from './styles'
 import { InputProps } from './props'
 
 import {
@@ -8,14 +7,6 @@ import {
   LockOutlined,
   SearchOutlined,
 } from '../Icon'
-
-const OutlinedInput = styled(MuiInput)`
-  gap: 8px;
-  background-color: #F1F1F1;
-  minHeight: '52px';
-  minWidth: '192px';
-  padding: '8px 16px';
-`
 
 const SearchInput = ({ hideIcon = false, ...props } : InputProps) => (
   <OutlinedInput
@@ -40,7 +31,6 @@ const PasswordInput = ({ hideIcon = false, ...props } : InputProps) => (
     {...props}
   />
 )
-
 
 export const Input = ({ variant, ...props }: InputProps) => {
   if (variant==='email') return <EmailInput {...props}/>
