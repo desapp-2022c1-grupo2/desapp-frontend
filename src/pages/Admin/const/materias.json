@@ -1,0 +1,199 @@
+[
+  {
+    "materia_id":"2",
+    "materia_padre_id":null,
+    "nombre":"Diseño Industrial",
+    "año":"2021",
+    "es_cursada_anterior":"0"
+  }, {
+    "materia_id":"4",
+    "materia_padre_id":null,
+    "nombre":"Analisis de Producto",
+    "anio":null,"es_cursada_anterior":"1"
+  }, {
+    "materia_id":"5",
+    "materia_padre_id":null,
+    "nombre":"Ergonomía",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"6",
+    "materia_padre_id":null,
+    "nombre":"Física 1",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"7",
+    "materia_padre_id":null,
+    "nombre":"Física 2",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"8",
+    "materia_padre_id":null,
+    "nombre":"Matemática",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"9",
+    "materia_padre_id":null,
+    "nombre":"Historia del diseño industrial",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"10",
+    "materia_padre_id":null,
+    "nombre":"Industria Argentina",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"11",
+    "materia_padre_id":null,
+    "nombre":"Introducción al diseño y arquitectura moderna",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"12",
+    "materia_padre_id":null,
+    "nombre":"Legislación y practica profesional",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"13",
+    "materia_padre_id":null,
+    "nombre":"Materia optativa 1",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"14",
+    "materia_padre_id":null,
+    "nombre":"Materia optativa 2",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"15",
+    "materia_padre_id":null,
+    "nombre":"Metodología",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"16",
+    "materia_padre_id":null,
+    "nombre":"Morfología",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"17",
+    "materia_padre_id":null,
+    "nombre":"Morfología Especial 1",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"18",
+    "materia_padre_id":null,
+    "nombre":"Morfología Especial 2",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"19",
+    "materia_padre_id":null,
+    "nombre":"Sociologia aplicada al diseño",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"20",
+    "materia_padre_id":null,
+    "nombre":"Tecnología 1",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"21",
+    "materia_padre_id":null,
+    "nombre":"Tecnología 2",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"22",
+    "materia_padre_id":null,
+    "nombre":"Tecnología 3",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"23",
+    "materia_padre_id":null,
+    "nombre":"Tecnología 4",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"24",
+    "materia_padre_id":null,
+    "nombre":"Diseño Industrial 1",
+    "anio":"2021",
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"25",
+    "materia_padre_id":null,
+    "nombre":"Diseño Industrial 2",
+    "anio":"2021",
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"26",
+    "materia_padre_id":null,
+    "nombre":"Diseño Industrial 3",
+    "anio":"2021",
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"27",
+    "materia_padre_id":null,
+    "nombre":"Diseño Industrial 4",
+    "anio":"2021",
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"28",
+    "materia_padre_id":null,
+    "nombre":"Diseño Industrial 5",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"29",
+    "materia_padre_id":"2",
+    "nombre":"Diseño 1",
+    "anio":"2021",
+    "es_cursada_anterior":"0"
+  }, {
+    "materia_id":"30",
+    "materia_padre_id":"2",
+    "nombre":"Diseño 2",
+    "anio":"2021",
+    "es_cursada_anterior":"0"
+  }, {
+    "materia_id":"31",
+    "materia_padre_id":"2",
+    "nombre":"Diseño 3",
+    "anio":"2021",
+    "es_cursada_anterior":"0"
+  }, {
+    "materia_id":"32",
+    "materia_padre_id":"2",
+    "nombre":"Diseño 4",
+    "anio":"2021",
+    "es_cursada_anterior":"0"
+  }, {
+    "materia_id":"33",
+    "materia_padre_id":"2",
+    "nombre":"Diseño 5",
+    "anio":"2021",
+    "es_cursada_anterior":"0"
+  }, {
+    "materia_id":"3",
+    "materia_padre_id":null,
+    "nombre":"Ninguna",
+    "anio":null,
+    "es_cursada_anterior":"1"
+  }, {
+    "materia_id":"34",
+    "materia_padre_id":null,
+    "nombre":"Tecno",
+    "anio":null,
+    "es_cursada_anterior":"0"
+  }]
