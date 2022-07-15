@@ -1,1 +1,2 @@
-export * from './CustomModal'
+export * from './Modal'
+export * from './props'
