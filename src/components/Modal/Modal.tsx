@@ -10,30 +10,29 @@ import {
 } from './styles'
 
 import { GoToBack } from '../GoTo'
-import {Modal} from "@mui/material";
 
-export const CustomModal = ({
-  content,
+export const Modal = ({
+  children,
   footer,
-  id,
   open,
-  handleClose,
+  onClose,
   title,
   ...props
 } : ModalProps ) => {
   return (
-    <ModalDialog id={id} open={open} {...props}>
+    <ModalDialog
+      open={open}
+      {...props}
+    >
       <ModalContainer>
         <ModalHeader>
-          <GoToBack onClick={handleClose} text="Volver"/>
+          <GoToBack onClick={onClose} text="Volver"/>
         </ModalHeader>
         <ModalContent>
-          <h4>{title}</h4>
-          {content}
+          { title && <h4>{title}</h4> }
+          {children}
         </ModalContent>
-        <ModalFooter>
-          {footer}
-        </ModalFooter>
+        { footer && <ModalFooter>{footer}</ModalFooter> }
       </ModalContainer>
     </ModalDialog>
   )

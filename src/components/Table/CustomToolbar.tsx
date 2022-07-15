@@ -6,7 +6,7 @@ import {CustomButton} from "../Button";
 import React, {useState} from "react";
 import styled from "styled-components";
 import {routes} from "../../router";
-import {CustomModal} from "../Modal";
+import {Modal} from "../Modal";
 import {BaseEntityAdapter} from "../../models/BaseEntityAdapter";
 
 const StyledDivider = styled.div`
@@ -38,10 +38,10 @@ export const CustomToolbar = <T extends BaseEntityAdapter>({readOnly, numSelecte
   }
 
   const deleteModal = (id: number, name:string) => {
-    return <CustomModal open={openDeleteModal}
-                 handleClose={handleCloseDeleteModal}
+    return <Modal open={openDeleteModal}
+                 onClose={handleCloseDeleteModal}
                  title={"Eliminar " + label.toLowerCase()}
-                 content={
+                 children={
                    <Typography>Desea eliminar la entrada con id <b>{id}</b> y
                      nombre <b>{name}</b> de {label.toLowerCase()}?</Typography>
                  }
