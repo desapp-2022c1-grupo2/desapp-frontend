@@ -3,6 +3,7 @@ import { ArrowRightAltOutlined } from '../Icon'
 
 export const GoToContainer = styled.div`
   align-items: center;
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   gap: 8px;
