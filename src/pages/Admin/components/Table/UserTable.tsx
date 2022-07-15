@@ -14,7 +14,6 @@ function getUserHeaders() {
   ]
 }
 
-
 export const UserTable = () => {
   const [users, setUsers] = useState<UserAdapter[]>([]);
   const [headers, setHeaders] = useState<string[]>([]);

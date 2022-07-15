@@ -3,7 +3,6 @@ import {
   AdminAccountPage,
   AdminAssignmentsPage,
   AdminUsersPage,
-  CreateUserPage,
   LoginPage,
 } from '../pages'
 
@@ -43,12 +42,6 @@ export const routes = {
         element: <AdminUsersPage />,
         label: "Usuarios",
       },
-      create: {
-        path: paths.admin.users.create,
-        exact: true,
-        element: <CreateUserPage />,
-        label: "Crear usuario"
-      }
     },
     assignments: {
       home: {

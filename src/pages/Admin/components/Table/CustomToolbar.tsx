@@ -1,15 +1,18 @@
-import {CustomToolbarProps} from "./props";
-import {ButtonGroup, InputAdornment, Toolbar, Typography} from "@mui/material";
-import {Add, Delete, FilterAlt, Search, Edit} from "@mui/icons-material";
+import React from "react"
+import styled from "styled-components"
+import { ButtonGroup, Toolbar } from "@mui/material"
 import {
   Button,
-  Modal,
+  FilterAltOutlined,
   Input,
-} from '@components';
-import React, {useState} from "react";
-import styled from "styled-components";
-import {routes} from "../../../../router";
-import {BaseEntityAdapter} from "../../../../models/BaseEntityAdapter";
+} from '@components'
+import {
+  DeleteUserModal,
+  EditUserModal,
+  NewUserModal,
+} from '../Modals'
+import { BaseEntityAdapter } from "../../../../models/BaseEntityAdapter"
+import { CustomToolbarProps } from "./props"
 
 const StyledDivider = styled.div`
 display: flex;
@@ -26,52 +29,32 @@ justify-content: center;
 const StyledButtonGroup = styled(ButtonGroup)`
 justify-content: right;
 width: 100%;
-
 `
 
-export const CustomToolbar = <T extends BaseEntityAdapter>({readOnly, numSelected, label, rows, ...props}: CustomToolbarProps<T>) => {
-  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-
-  const handleOpenDeleteModal = () => {
-    setOpenDeleteModal(true)
-  }
-  const handleCloseDeleteModal = () => {
-    setOpenDeleteModal(false)
-  }
-
-  const deleteModal = (id: number, name:string) => {
-    return <Modal open={openDeleteModal}
-                 onClose={handleCloseDeleteModal}
-                 title={"Eliminar " + label.toLowerCase()}
-                 children={
-                   <Typography>Desea eliminar la entrada con id <b>{id}</b> y
-                     nombre <b>{name}</b> de {label.toLowerCase()}?</Typography>
-                 }
-                 footer={
-                   <Button color={'error'} onClick={handleCloseDeleteModal}>Eliminar</Button>
-                 }/>
-  }
-
-  const rowFound = rows.find(row => row.id === numSelected);
+export const CustomToolbar = <T extends BaseEntityAdapter>({
+  readOnly,
+  numSelected,
+  label,
+  rows,
+  ...props
+}: CustomToolbarProps<T>) => {
   return (
     <StyledToolbar>
       <StyledDivider>
-        <Typography variant="h4" id={label + "Title"} component="div">{label}</Typography>
+        <h4 id={`${label}Title`}>{label}</h4>
       </StyledDivider>
       <StyledDivider>
         <Input disabled placeholder={"Buscar"} variant='search'/>
-        <Button disabled={true} color={'secondary'} title={'Filtrar'} endIcon={<FilterAlt/>}>Filtrar</Button>
+        <Button disabled={true} color={'secondary'} title={'Filtrar'} startIcon={<FilterAltOutlined />}>Filtrar</Button>
         <StyledButtonGroup>
-          {!readOnly && numSelected > 0 &&
+          {
+            (!readOnly && numSelected > 0) &&
               <>
-                  <Button color={'info'} title={'Editar'} endIcon={<Edit/>}>Editar</Button>
-                  <Button color={'error'} title={'Eliminar'} endIcon={<Delete/>} onClick={handleOpenDeleteModal}>Eliminar</Button>
-                {rowFound &&
-                  deleteModal(rowFound.id, rowFound.nombre)
-                }
+                  <EditUserModal />
+                  <DeleteUserModal />
               </>
           }
-          {!readOnly && <Button color={'primary'} title={'Crear'} endIcon={<Add/>} href={routes.admin.users.create.path}>Crear</Button>}
+          { !readOnly && <NewUserModal /> }
         </StyledButtonGroup>
       </StyledDivider>
     </StyledToolbar>)
