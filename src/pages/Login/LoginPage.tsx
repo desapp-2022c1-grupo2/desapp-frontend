@@ -1,5 +1,5 @@
-import React from "react"
-import logo from "../../assets/LogoUnahur.svg"
+import React from 'react'
+import logo from '@assets/LogoUnahur.svg'
 import {
   LoginConfirmButton,
   LoginContainer,
@@ -7,13 +7,11 @@ import {
   LoginLayout,
   LoginLogo,
   LoginTitle,
-} from "./styles"
-import {AppBar} from "@mui/material";
+} from './styles'
 
 export const LoginPage = () => {
   return (
     <LoginLayout>
-      <AppBar> </AppBar>
       <LoginContainer>
         <LoginLogo src={logo} alt="logo-unahur"/>
         <LoginTitle>Ingresá a tu cuenta</LoginTitle>
@@ -23,7 +21,7 @@ export const LoginPage = () => {
           placeholder='Ingresá tu correo'
           />
         <LoginField
-          label="Contraseña"
+          label='Contraseña'
           variant='password'
           placeholder='Ingresá tu contraseña'
           />

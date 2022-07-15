@@ -1,13 +1,15 @@
 import {CustomToolbarProps} from "./props";
 import {ButtonGroup, InputAdornment, Toolbar, Typography} from "@mui/material";
-import {Field} from "../Field";
 import {Add, Delete, FilterAlt, Search, Edit} from "@mui/icons-material";
-import {CustomButton} from "../Button";
+import {
+  Button,
+  Modal,
+  Input,
+} from '@components';
 import React, {useState} from "react";
 import styled from "styled-components";
-import {routes} from "../../router";
-import {Modal} from "../Modal";
-import {BaseEntityAdapter} from "../../models/BaseEntityAdapter";
+import {routes} from "../../../../router";
+import {BaseEntityAdapter} from "../../../../models/BaseEntityAdapter";
 
 const StyledDivider = styled.div`
 display: flex;
@@ -46,7 +48,7 @@ export const CustomToolbar = <T extends BaseEntityAdapter>({readOnly, numSelecte
                      nombre <b>{name}</b> de {label.toLowerCase()}?</Typography>
                  }
                  footer={
-                   <CustomButton color={'error'} onClick={handleCloseDeleteModal}>Eliminar</CustomButton>
+                   <Button color={'error'} onClick={handleCloseDeleteModal}>Eliminar</Button>
                  }/>
   }
 
@@ -57,20 +59,19 @@ export const CustomToolbar = <T extends BaseEntityAdapter>({readOnly, numSelecte
         <Typography variant="h4" id={label + "Title"} component="div">{label}</Typography>
       </StyledDivider>
       <StyledDivider>
-        <Field disabled={true} InputProps={{startAdornment: (<InputAdornment position="start"><Search/></InputAdornment>)}}
-               placeholder={"Buscar"}/>
-        <CustomButton disabled={true} color={'secondary'} title={'Filtrar'} endIcon={<FilterAlt/>}>Filtrar</CustomButton>
+        <Input disabled placeholder={"Buscar"} variant='search'/>
+        <Button disabled={true} color={'secondary'} title={'Filtrar'} endIcon={<FilterAlt/>}>Filtrar</Button>
         <StyledButtonGroup>
           {!readOnly && numSelected > 0 &&
               <>
-                  <CustomButton color={'info'} title={'Editar'} endIcon={<Edit/>}>Editar</CustomButton>
-                  <CustomButton color={'error'} title={'Eliminar'} endIcon={<Delete/>} onClick={handleOpenDeleteModal}>Eliminar</CustomButton>
+                  <Button color={'info'} title={'Editar'} endIcon={<Edit/>}>Editar</Button>
+                  <Button color={'error'} title={'Eliminar'} endIcon={<Delete/>} onClick={handleOpenDeleteModal}>Eliminar</Button>
                 {rowFound &&
                   deleteModal(rowFound.id, rowFound.nombre)
                 }
               </>
           }
-          {!readOnly && <CustomButton color={'primary'} title={'Crear'} endIcon={<Add/>} href={routes.admin.users.create.path}>Crear</CustomButton>}
+          {!readOnly && <Button color={'primary'} title={'Crear'} endIcon={<Add/>} href={routes.admin.users.create.path}>Crear</Button>}
         </StyledButtonGroup>
       </StyledDivider>
     </StyledToolbar>)

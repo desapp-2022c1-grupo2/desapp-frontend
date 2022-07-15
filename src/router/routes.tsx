@@ -1,10 +1,11 @@
-import React from 'react';
+import React from 'react'
 import {
-  AdminPage,
+  AdminAccountPage,
+  AdminAssignmentsPage,
+  AdminUsersPage,
+  CreateUserPage,
   LoginPage,
-} from "../pages";
-import {AssignmentTable, UserTable} from "../components/Table";
-import {CreateUserPage} from "../pages/Admin/User/Create";
+} from '../pages'
 
 export const paths = {
   login: '/login',
@@ -33,19 +34,19 @@ export const routes = {
     home: {
       path: paths.admin.home,
       exact: true,
-      element: <AdminPage content={<UserTable/>}/>,
+      element: <AdminUsersPage />,
     },
     users: {
       home: {
         path: paths.admin.users.home,
         exact: false,
-        element: <AdminPage content={<UserTable/>}/>,
+        element: <AdminUsersPage />,
         label: "Usuarios",
       },
       create: {
         path: paths.admin.users.create,
         exact: true,
-        element: <AdminPage content={<CreateUserPage/>}/>,
+        element: <CreateUserPage />,
         label: "Crear usuario"
       }
     },
@@ -53,22 +54,16 @@ export const routes = {
       home: {
         path: paths.admin.assignments.home,
         exact: true,
-        element: <AdminPage content={<AssignmentTable/>}/>,
+        element: <AdminAssignmentsPage />,
         label: "Trabajos Practicos"
       },
-      create: {
-        // path: paths.admin.assignments.create,
-        // exact: true,
-        // element: <AdminPage content={<></>}/>,
-        // label: "Crear TP"
-      }
     },
     account: {
       home: {
         path: paths.admin.account.home,
         exact: true,
         //TODO: Implement mi cuenta page
-        element: <AdminPage content={<p>Mi Cuenta Page</p>}/>,
+        element: <AdminAccountPage />,
         label: "Mi cuenta"
       }
     },

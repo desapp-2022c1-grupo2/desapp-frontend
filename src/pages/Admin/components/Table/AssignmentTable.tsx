@@ -1,7 +1,7 @@
-import {Assignment} from "../../models";
+import {Assignment} from "../../../../models";
 import {CustomTable} from "./CustomTable";
 import React, {useState, useEffect} from "react";
-import {getAllAssignments} from "../../service";
+import {getAllAssignments} from "../../../../service";
 
 function getAssignmentHeaders() {
   return [

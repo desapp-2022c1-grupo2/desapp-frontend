@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import {AutocompleteFieldProps} from "./props";
-import {Field} from "../Field";
+import {Field} from "../../../../components/Field";
 
 
 export default function AutocompleteField({data, label, placeholder, ...props}: AutocompleteFieldProps) {

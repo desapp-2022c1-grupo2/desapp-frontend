@@ -2,10 +2,10 @@ import React from 'react'
 import {
   BrowserRouter,
   Routes,
-  Route, Link,
+  Route,
 } from 'react-router-dom'
 
-import {routes} from './routes'
+import { routes } from './routes'
 
 export const Router = () => (
   <BrowserRouter>
@@ -13,7 +13,6 @@ export const Router = () => (
       <Route {...routes.login}/>
       <Route {...routes.admin.home}/>
       <Route {...routes.admin.account.home}/>
-
 
       {/*Users*/}
       <Route {...routes.admin.users.home}/>
@@ -24,4 +23,4 @@ export const Router = () => (
 
     </Routes>
   </BrowserRouter>
-);
+)

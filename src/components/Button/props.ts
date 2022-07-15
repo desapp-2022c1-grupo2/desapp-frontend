@@ -1,12 +1,6 @@
-import {ButtonProps, Icon} from "@mui/material";
-import React from "react";
-import {OverridableStringUnion} from "@mui/types";
-import {ButtonPropsVariantOverrides} from "@mui/material/Button/Button";
+import { ButtonProps as MuiButtonProps } from "@mui/material"
 
-export interface CustomButtonProps extends ButtonProps {
-    startIcon?: React.ReactNode,
-    endIcon?: React.ReactNode,
-    value?: string,
-    variant?: OverridableStringUnion<'text' | 'outlined' | 'contained', ButtonPropsVariantOverrides>;
-    href?: string
+export interface ButtonProps extends MuiButtonProps {
+	textColor?: string,
+	text: string,
 }

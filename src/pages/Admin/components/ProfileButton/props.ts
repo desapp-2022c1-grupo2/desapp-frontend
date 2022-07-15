@@ -1,5 +1,4 @@
-import {ButtonProps} from "@mui/material";
-
+import { ButtonProps } from "@mui/material"
 
 export interface ProfileButtonProps extends ButtonProps{
   name: string;

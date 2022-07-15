@@ -1,7 +1,10 @@
-import {TableHeadProps, TableProps, ToolbarProps} from "@mui/material";
-import React from "react";
-import {BaseEntity} from "../../models";
-import {BaseEntityAdapter} from "../../models/BaseEntityAdapter";
+import React from 'react'
+import {
+  TableHeadProps,
+  TableProps,
+  ToolbarProps
+} from '@mui/material'
+import { BaseEntityAdapter } from "../../../../models/BaseEntityAdapter";
 
 export interface CustomToolbarProps<T extends BaseEntityAdapter> extends ToolbarProps {
   numSelected: number,
@@ -27,5 +30,3 @@ export interface CustomTableHeadProps<T extends BaseEntityAdapter> extends Table
 }
 
 export type Order = 'asc' | 'desc';
-
-

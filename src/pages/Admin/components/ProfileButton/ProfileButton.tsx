@@ -1,4 +1,4 @@
-import {KeyboardArrowDown} from "@mui/icons-material";
+import { KeyboardArrowDown } from "@mui/icons-material";
 import {Avatar, Button, Typography} from "@mui/material";
 import React from "react";
 import {ProfileButtonProps} from "./props";

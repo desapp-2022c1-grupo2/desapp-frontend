@@ -14,8 +14,7 @@ import {
 } from "@mui/material";
 import {visuallyHidden} from '@mui/utils';
 import {CustomToolbar} from "./CustomToolbar";
-import {BaseEntity} from "../../models";
-import {BaseEntityAdapter} from "../../models/BaseEntityAdapter";
+import {BaseEntityAdapter} from "../../../../models/BaseEntityAdapter";
 
 const StyledDivider = styled.div`
   display: flex;

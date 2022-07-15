@@ -4,8 +4,8 @@ import {
   AdminLayout,
 } from "./styles"
 import {routes} from "../../router";
-import {CustomTabs} from "../../components/Tab";
-import {MuiNavBar} from "../../components/AppBar";
+import {CustomTabs} from "./components/Tab";
+import {MuiNavBar} from "./components/AppBar";
 import {IconButtonLogoUnahur} from "../../assets";
 
 interface AdminPageProps {

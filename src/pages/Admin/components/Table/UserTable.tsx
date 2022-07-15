@@ -1,8 +1,8 @@
 import {CustomTable} from "./CustomTable";
 import React, {useEffect, useState} from "react";
-import {getAllJtp} from "../../service";
-import {User} from "../../models";
-import {UserAdapter} from "../../models/UserAdapter";
+import {getAllJtp} from "../../../../service";
+import {User} from "../../../../models";
+import {UserAdapter} from "../../../../models/UserAdapter";
 
 function getUserHeaders() {
   return [

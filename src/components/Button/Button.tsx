@@ -1,9 +1,14 @@
 import React from "react"
-import {CustomButtonProps} from "./props";
-import {Button} from "@mui/material";
+import { Button as MuiButton } from "@mui/material"
+import { ButtonProps } from "./props"
 
-export const CustomButton = ({startIcon, endIcon, color, href, variant, ...props}: CustomButtonProps) => {
-    return (<Button variant={ variant || 'outlined'} startIcon={startIcon} endIcon={endIcon} color={color} href={href} {...props}>
-        {props.children}
-    </Button>);
+export const Button = ({ 
+  text,
+  ...props
+}: ButtonProps ) => {
+  return (
+    <MuiButton {...props}>
+      { props.children ? props.children : text }
+    </MuiButton>
+  )
 }
