@@ -1,5 +1,7 @@
 export {
     AddOutlined,
+    CheckOutlined,
+    ClearOutlined,
     DeleteOutlined,
     EditOutlined,
     EmailOutlined,
