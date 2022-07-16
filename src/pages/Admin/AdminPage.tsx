@@ -3,8 +3,7 @@ import {
   AdminContainer,
   AdminLayout,
 } from "./styles"
-import {routes} from "../../router";
-import {CustomTabs} from "./components/Tab";
+import { AdminNavigation } from "./components/AdminNavigation";
 import {MuiNavBar} from "./components/AppBar";
 import {IconButtonLogoUnahur} from "../../assets";
 
@@ -28,7 +27,7 @@ export const AdminPage = ({content}: AdminPageProps) => {
                  icon={<IconButtonLogoUnahur/>}
                  avatarSrc={getCurrentUserProfilePicture()}
                  name={getCurrentUserName()}>
-        <CustomTabs routes={[routes.admin.users, routes.admin.assignments, routes.admin.account]}/>
+        <AdminNavigation />
       </MuiNavBar>
       <AdminContainer>
         {content}
