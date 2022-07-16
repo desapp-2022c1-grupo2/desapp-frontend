@@ -12,15 +12,9 @@ export const Router = () => (
     <Routes>
       <Route {...routes.login}/>
       <Route {...routes.admin.home}/>
-      <Route {...routes.admin.account.home}/>
-
-      {/*Users*/}
-      <Route {...routes.admin.users.home}/>
-      <Route {...routes.admin.users.create}/>
-
-      {/*Assignments*/}
-      <Route {...routes.admin.assignments.home}/>
-
+      <Route {...routes.admin.account}/>
+      <Route {...routes.admin.assignments}/>
+      <Route {...routes.admin.users}/>
     </Routes>
   </BrowserRouter>
 )

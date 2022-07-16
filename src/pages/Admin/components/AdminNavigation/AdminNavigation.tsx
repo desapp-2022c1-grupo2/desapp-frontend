@@ -21,9 +21,9 @@ export const AdminNavigation = () => {
       color="success"
       aria-label="secondary tabs example"
     >
-      <Tab component={Link} to={routes.admin.users.home.path} label='Usuarios'/>
-      <Tab component={Link} to={routes.admin.assignments.home.path} label='Trabajos Practicos'/>
-      <Tab component={Link} to={routes.admin.account.home.path} label='Mi cuenta' disabled/>
+      <Tab component={Link} to={routes.admin.users.path} label='Usuarios'/>
+      <Tab component={Link} to={routes.admin.assignments.path} label='Trabajos Practicos'/>
+      <Tab component={Link} to={routes.admin.account.path} label='Mi cuenta' disabled/>
     </TabsContainer>
   )
 }

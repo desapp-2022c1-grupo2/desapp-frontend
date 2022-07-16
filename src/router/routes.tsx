@@ -10,16 +10,9 @@ export const paths = {
   login: '/login',
   admin: {
     home: '/admin',
-    users: {
-      home: '/admin/users',
-      create: '/admin/users/create',
-    },
-    assignments: {
-      home: '/admin/assignments',
-    },
-    account: {
-      home: '/admin/account'
-    }
+    users: '/admin/users',
+    assignments: '/admin/assignments',
+    account: '/admin/account'
   },
 };
 
@@ -36,29 +29,23 @@ export const routes = {
       element: <AdminUsersPage />,
     },
     users: {
-      home: {
-        path: paths.admin.users.home,
-        exact: false,
-        element: <AdminUsersPage />,
-        label: "Usuarios",
-      },
+      path: paths.admin.users,
+      exact: false,
+      element: <AdminUsersPage />,
+      label: "Usuarios",
     },
     assignments: {
-      home: {
-        path: paths.admin.assignments.home,
-        exact: true,
-        element: <AdminAssignmentsPage />,
-        label: "Trabajos Practicos"
-      },
+      path: paths.admin.assignments,
+      exact: true,
+      element: <AdminAssignmentsPage />,
+      label: "Trabajos Practicos"
     },
     account: {
-      home: {
-        path: paths.admin.account.home,
-        exact: true,
-        //TODO: Implement mi cuenta page
-        element: <AdminAccountPage />,
-        label: "Mi cuenta"
-      }
+      path: paths.admin.account,
+      exact: true,
+      //TODO: Implement mi cuenta page
+      element: <AdminAccountPage />,
+      label: "Mi cuenta"
     },
   }
-};
+}
