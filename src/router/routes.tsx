@@ -10,9 +10,9 @@ export const paths = {
   login: '/login',
   admin: {
     home: '/admin',
-    users: '/admin/users',
-    assignments: '/admin/assignments',
-    account: '/admin/account'
+    users: '/admin#users',
+    assignments: '/admin#assignments',
+    account: '/admin#account'
   },
 };
 
