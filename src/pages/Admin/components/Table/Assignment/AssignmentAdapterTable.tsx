@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import {CustomTableHeadProps, CustomTableProps, Order} from './props'
+import {CustomTableHeadProps, CustomTableProps, Order} from '../props'
 import {
   Box,
   Table,
@@ -13,8 +13,9 @@ import {
   TableSortLabel,
 } from "@mui/material";
 import {visuallyHidden} from '@mui/utils';
-import {CustomToolbar} from "./CustomToolbar";
-import {BaseEntityAdapter} from "../../../../models/BaseEntityAdapter";
+import {CustomToolbar} from "../CustomToolbar";
+import {BaseEntityAdapter} from "../../../../../models/BaseEntityAdapter";
+import {AssignmentAdapter} from "../../../../../models/AssignmentAdapter";
 
 const StyledDivider = styled.div`
   display: flex;
@@ -66,7 +67,7 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
 
 /*https://mui.com/material-ui/react-table/#sorting-amp-selecting*/
 
-export const CustomTable = <T extends BaseEntityAdapter>({label, rows, headers, readOnly, ...props}: CustomTableProps<T>) => {
+export const AssignmentAdapterTable = ({label, rows, headers, readOnly, ...props}: CustomTableProps<AssignmentAdapter>) => {
     const [selected, setSelected] = useState<number>(-1);
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof T>('id');
@@ -112,9 +113,9 @@ export const CustomTable = <T extends BaseEntityAdapter>({label, rows, headers, 
     return (
       <>
                 <TableContainer>
-                    <CustomToolbar<T> readOnly={readOnly} numSelected={selected} rows={rows} label={label}/>
+                    <CustomToolbar<AssignmentAdapter> readOnly={readOnly} numSelected={selected} rows={rows} label={label}/>
                     <Table>
-                        <CustomTableHead<T> numSelected={selected}
+                        <CustomTableHead<AssignmentAdapter> numSelected={selected}
                                             order={order}
                                             orderBy={orderBy as string}
                                             onRequestSort={handleRequestSort}

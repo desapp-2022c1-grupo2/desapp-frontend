@@ -1,3 +1,4 @@
 export * from './DeleteUserModal'
-export * from './EditUserModal'
-export * from './NewUserModal'
+export * from './EditJtpModal'
+export * from './NewJtpModal'
+export * from './WriteModalProps'

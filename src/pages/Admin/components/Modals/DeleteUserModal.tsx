@@ -4,8 +4,10 @@ import {
   DeleteOutlined,
   Modal,
 } from '@components'
+import {deleteUser} from "../../../../service";
+import {WriteModalProps} from "./WriteModalProps";
 
-export const DeleteUserModal = () => {
+export const DeleteUserModal = ({jtp}: WriteModalProps) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => { setOpen(true) }
   const handleClose = () => { setOpen(false) }
@@ -27,12 +29,17 @@ export const DeleteUserModal = () => {
       title='Eliminar Usuario'
       footer={
         <>
-          <Button color='unahurCyan' onClick={handleClose} variant='outlined' title='Cancelar'>Cancelar</Button>
-          <Button color='unahurRed' onClick={handleClose} variant='contained' title='Eliminar'>Eliminar</Button>
+          <Button color='unahurCyan' onClick={handleClose} variant='contained' title='Cancelar'>Cancelar</Button>
+          <Button color='unahurRed' onClick={async () => {
+            // Borra pero no refresca la tabla
+            await deleteUser(jtp.id);
+            handleClose();
+          }
+          } variant='contained' title='Eliminar'>Eliminar</Button>
         </>
       }
     >
-      <p>Esta a punto de eliminar el usuario, Este cambio es permanente</p>
+      <p>Está a punto de eliminar el usuario con nombre "<b>{jtp.nombre}</b>" y con id <b>{jtp.id}</b>, este cambio es permanente</p>
     </Modal>
     </>
   )
