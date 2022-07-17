@@ -32,9 +32,9 @@ export const NewUserModal = () => {
   return (
     <>
     <Button
-      color='success'
+      color='unahurGreen'
       onClick={handleOpen}
-      startIcon={<AddOutlined color='primary'/>}
+      startIcon={<AddOutlined />}
       variant='contained'
       title='Agregar'
       >
@@ -46,8 +46,8 @@ export const NewUserModal = () => {
       title='Agregar nuevo usuario'
       footer={
         <>
-          <Button color='info' onClick={handleClose} startIcon={<ClearOutlined />} variant='outlined' title='Limpiar datos'>Limpiar</Button>
-          <Button color='success' onClick={handleClose} startIcon={<CheckOutlined />} variant='contained' title='Crear usuario'>Confirmar</Button>
+          <Button color='unahurCyan' onClick={handleClose} startIcon={<ClearOutlined />} variant='outlined' title='Limpiar datos'>Limpiar</Button>
+          <Button color='unahurGreen' onClick={handleClose} startIcon={<CheckOutlined />} variant='contained' title='Crear usuario'>Confirmar</Button>
         </>
       }
     >

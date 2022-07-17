@@ -13,7 +13,7 @@ export const DeleteUserModal = () => {
   return (
     <>
     <Button
-      color='error'
+      color='unahurRed'
       onClick={handleOpen}
       startIcon={<DeleteOutlined />}
       variant='contained'
@@ -27,8 +27,8 @@ export const DeleteUserModal = () => {
       title='Eliminar Usuario'
       footer={
         <>
-          <Button color='secondary' onClick={handleClose} variant='outlined' title='Cancelar'>Cancelar</Button>
-          <Button color='error' onClick={handleClose} variant='contained' title='Eliminar'>Eliminar</Button>
+          <Button color='unahurCyan' onClick={handleClose} variant='outlined' title='Cancelar'>Cancelar</Button>
+          <Button color='unahurRed' onClick={handleClose} variant='contained' title='Eliminar'>Eliminar</Button>
         </>
       }
     >
