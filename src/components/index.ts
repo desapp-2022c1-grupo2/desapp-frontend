@@ -1,3 +1,5 @@
+export { Avatar } from '@mui/material' 
+
 export * from './Button'
 export * from './Field'
 export * from './GoTo'

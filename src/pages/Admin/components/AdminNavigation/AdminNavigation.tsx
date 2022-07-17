@@ -18,8 +18,9 @@ export const AdminNavigation = () => {
     <TabsContainer
       value={value}
       onChange={handleChange}
-      color="success"
-      aria-label="secondary tabs example"
+      color='unahurGreen'
+      textColor='primary'
+      aria-label='secondary tabs example'
     >
       <Tab component={Link} to={routes.admin.users.path} label='Usuarios'/>
       <Tab component={Link} to={routes.admin.assignments.path} label='Trabajos Practicos'/>
