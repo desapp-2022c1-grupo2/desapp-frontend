@@ -1,4 +1,6 @@
 import React, {useState} from "react"
+import { useDispatch } from 'react-redux'
+import { logout } from "@store/auth"
 import {
   Menu,
   MenuItem
@@ -12,6 +14,7 @@ import {
 // TODO: Actualizar dinamicamente avatar src y name
 export const ProfileDropdown = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const dispatch = useDispatch()
   const open = Boolean(anchorEl)
   
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -19,6 +22,7 @@ export const ProfileDropdown = () => {
   }
   
   const handleClose = () => { setAnchorEl(null) }
+  const handleLogout = () => { dispatch(logout())}
   
   return (
     <>
@@ -46,7 +50,7 @@ export const ProfileDropdown = () => {
           horizontal:'right'
       }}
     >
-      <MenuItem key='logout'>logout</MenuItem>
+      <MenuItem key='logout' onClick={handleLogout}>logout</MenuItem>
     </Menu>
   </>
   )

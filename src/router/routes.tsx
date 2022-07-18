@@ -12,7 +12,7 @@ export const paths = {
     home: '/admin',
     users: '/admin/users',
     assignments: '/admin/assignments',
-    account: '/admin#account'
+    account: '/admin/account'
   },
 };
 
@@ -30,7 +30,7 @@ export const routes = {
     },
     users: {
       path: paths.admin.users,
-      exact: false,
+      exact: true,
       element: <AdminUsersPage />,
       label: "Usuarios",
     },
