@@ -10,8 +10,8 @@ export const paths = {
   login: '/login',
   admin: {
     home: '/admin',
-    users: '/admin#users',
-    assignments: '/admin#assignments',
+    users: '/admin/users',
+    assignments: '/admin/assignments',
     account: '/admin#account'
   },
 };

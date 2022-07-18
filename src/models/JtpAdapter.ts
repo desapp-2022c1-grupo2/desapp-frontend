@@ -1,6 +1,6 @@
 import {BaseEntityAdapter} from "./BaseEntityAdapter";
 
-export class UserAdapter extends BaseEntityAdapter {
+export class JtpAdapter extends BaseEntityAdapter {
   constructor(public id: number,
               public nombre: string,
               public apellido: string,

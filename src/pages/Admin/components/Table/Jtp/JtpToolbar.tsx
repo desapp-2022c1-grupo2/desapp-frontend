@@ -10,9 +10,9 @@ import {
   DeleteUserModal,
   EditJtpModal,
   NewJtpModal,
-} from '../Modals'
-import { BaseEntityAdapter } from "../../../../models/BaseEntityAdapter"
-import { CustomToolbarProps } from "./props"
+} from '../../Modals'
+import { CustomToolbarProps } from "../props"
+import {JtpAdapter} from "../../../../../models/JtpAdapter";
 
 const StyledDivider = styled.div`
 display: flex;
@@ -31,13 +31,15 @@ justify-content: right;
 width: 100%;
 `
 
-export const CustomToolbar = <T extends BaseEntityAdapter>({
+export const JtpToolbar =({
   readOnly,
   numSelected,
   label,
   rows,
   ...props
-}: CustomToolbarProps<T>) => {
+}: CustomToolbarProps<JtpAdapter>) => {
+  const userAdapter = rows.find(row => row.id === numSelected);
+  const itemFound = userAdapter ? userAdapter : new JtpAdapter(-1, "", "", "", -1);
   return (
     <StyledToolbar>
       <StyledDivider>
@@ -47,6 +49,13 @@ export const CustomToolbar = <T extends BaseEntityAdapter>({
         <Input disabled placeholder={"Buscar"} variant='search'/>
         <Button disabled={true} color={'secondary'} title={'Filtrar'} startIcon={<FilterAltOutlined />}>Filtrar</Button>
         <StyledButtonGroup>
+          {
+            (!readOnly && numSelected > 0) &&
+              <>
+                  <EditJtpModal jtp={itemFound}/>
+                  <DeleteUserModal jtp={itemFound}/>
+              </>
+          }
           { !readOnly && <NewJtpModal /> }
         </StyledButtonGroup>
       </StyledDivider>

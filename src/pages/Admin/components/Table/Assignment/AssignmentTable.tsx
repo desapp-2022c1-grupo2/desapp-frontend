@@ -1,7 +1,7 @@
-import {Assignment} from "../../../../models";
-import {CustomTable} from "./CustomTable";
+import {Assignment} from "../../../../../models";
+import {AssignmentAdapterTable} from "./AssignmentAdapterTable";
 import React, {useState, useEffect} from "react";
-import {getAllAssignments} from "../../../../service";
+import {getAllAssignments} from "../../../../../service";
 
 function getAssignmentHeaders() {
   return [
@@ -28,5 +28,5 @@ export const AssignmentTable = () => {
     fetchAllAssignments();
   }, []);
 
-  return <CustomTable<Assignment> rows={assignments} headers={headers} label={"Trabajos Prácticos"} readOnly={true}/>
+  return <AssignmentAdapterTable<Assignment> rows={assignments} headers={headers} label={"Trabajos Prácticos"} readOnly={true}/>
 }
