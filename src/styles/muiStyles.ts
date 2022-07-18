@@ -1,14 +1,48 @@
-import { createTheme } from '@mui/material/styles'
-import {customColors} from "./customColors";
+import { createTheme, PaletteColorOptions } from '@mui/material/styles'
+import { unahurPalette } from "./unahurPalette"
+
+interface unahurPaletteOptions {
+  unahurBlack: PaletteColorOptions,
+  unahurBlue: PaletteColorOptions,
+  unahurCyan: PaletteColorOptions,
+  unahurGreen: PaletteColorOptions,
+  unahurGreenAlt: PaletteColorOptions,
+  unahurGrey: PaletteColorOptions,
+  unahurOrange: PaletteColorOptions,
+  unahurRed: PaletteColorOptions,
+  unahurRedAlt: PaletteColorOptions,
+  unahurSoftGrey: PaletteColorOptions,
+  unahurSoftWhite: PaletteColorOptions,
+  unahurWhite: PaletteColorOptions,
+}
+
+declare module '@mui/material/styles' {
+  interface Palette extends unahurPaletteOptions {}
+  interface PaletteOptions extends unahurPaletteOptions {}
+}
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    unahurBlack: true,
+    unahurBlue: true,
+    unahurCyan: true,
+    unahurGreen: true,
+    unahurGreenAlt: true,
+    unahurGrey: true,
+    unahurOrange: true,
+    unahurRed: true,
+    unahurRedAlt: true,
+    unahurSoftGrey: true,
+    unahurSoftWhite: true,
+    unahurWhite: true,
+  }
+}
 
 export const theme = createTheme({
   palette: {
-    error: { main: '#E74924' },
-    info: { main: '#0089CD' },
-    primary:  customColors.unahurGreen,
-    secondary: { main: '#00A79F' },
-    success: { main: '#56A42C' },
-    warning: { main: '#F08100' },
+    ...unahurPalette,
+    primary: unahurPalette.unahurGreen,
+    secondary: unahurPalette.unahurCyan,
     contrastThreshold: 3,
     tonalOffset: 0.2,
   },
@@ -36,28 +70,6 @@ export const theme = createTheme({
         },
       }
     },
-    MuiAppBar:{
-      styleOverrides: {
-        root: {
-            backgroundColor: 'secondary',
-        }
-      }
-    },
-    MuiTypography: {
-      styleOverrides: {
-        root: {
-          margin: '8px',
-        }
-      }
-    },
-    MuiButtonGroup: {
-      styleOverrides: {
-        root: {
-          minHeight: '52px',
-          minWidth: '192px',
-        }
-      }
-    }
   },
 });
 

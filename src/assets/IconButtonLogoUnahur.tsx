@@ -1,15 +1,16 @@
-import {Button, Icon, IconButton, SvgIcon} from "@mui/material";
-import React from "react";
-import styled from "styled-components";
 
-const UnahurStyledIconButton = styled(Button)`
-width: fit-content;
-border-radius: 10px,
-padding: 8px 16px,
+import React from "react"
+import styled from "styled-components"
+
+const UnahurStyledIconButton = styled.div`
+  width: fit-content;
+  border-radius: 10px,
+  padding: 8px 16px,
 `
 
 export const IconButtonLogoUnahur = () => {
-  return (<UnahurStyledIconButton>
+  return (
+    <UnahurStyledIconButton>
       <svg width="117" height="30" viewBox="0 0 117 30" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g>
           <path d="M34.4 0.100098H29.5C26.8 0.100098 24.6 2.3001 24.6 5.0001V13.2001H29.5C32.2 13.2001 34.4 11.0001 34.4 8.3001V0.100098Z" fill="#57A52D"/>

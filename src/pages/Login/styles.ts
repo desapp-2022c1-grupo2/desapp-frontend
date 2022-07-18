@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Button, Field } from '../../components'
+import { Button, Field } from '@components'
 
 
 export const LoginLayout = styled.div`

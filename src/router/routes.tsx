@@ -1,25 +1,18 @@
-import React from 'react';
+import React from 'react'
 import {
-  AdminPage,
+  AdminAccountPage,
+  AdminAssignmentsPage,
+  AdminUsersPage,
   LoginPage,
-} from "../pages";
-import {AssignmentTable, UserTable} from "../components/Table";
-import {CreateUserPage} from "../pages/Admin/User/Create";
+} from '../pages'
 
 export const paths = {
   login: '/login',
   admin: {
     home: '/admin',
-    users: {
-      home: '/admin/users',
-      create: '/admin/users/create',
-    },
-    assignments: {
-      home: '/admin/assignments',
-    },
-    account: {
-      home: '/admin/account'
-    }
+    users: '/admin/users',
+    assignments: '/admin/assignments',
+    account: '/admin#account'
   },
 };
 
@@ -33,44 +26,26 @@ export const routes = {
     home: {
       path: paths.admin.home,
       exact: true,
-      element: <AdminPage content={<UserTable/>}/>,
+      element: <AdminUsersPage />,
     },
     users: {
-      home: {
-        path: paths.admin.users.home,
-        exact: false,
-        element: <AdminPage content={<UserTable/>}/>,
-        label: "Usuarios",
-      },
-      create: {
-        path: paths.admin.users.create,
-        exact: true,
-        element: <AdminPage content={<CreateUserPage/>}/>,
-        label: "Crear usuario"
-      }
+      path: paths.admin.users,
+      exact: false,
+      element: <AdminUsersPage />,
+      label: "Usuarios",
     },
     assignments: {
-      home: {
-        path: paths.admin.assignments.home,
-        exact: true,
-        element: <AdminPage content={<AssignmentTable/>}/>,
-        label: "Trabajos Practicos"
-      },
-      create: {
-        // path: paths.admin.assignments.create,
-        // exact: true,
-        // element: <AdminPage content={<></>}/>,
-        // label: "Crear TP"
-      }
+      path: paths.admin.assignments,
+      exact: true,
+      element: <AdminAssignmentsPage />,
+      label: "Trabajos Practicos"
     },
     account: {
-      home: {
-        path: paths.admin.account.home,
-        exact: true,
-        //TODO: Implement mi cuenta page
-        element: <AdminPage content={<p>Mi Cuenta Page</p>}/>,
-        label: "Mi cuenta"
-      }
+      path: paths.admin.account,
+      exact: true,
+      //TODO: Implement mi cuenta page
+      element: <AdminAccountPage />,
+      label: "Mi cuenta"
     },
   }
-};
+}
