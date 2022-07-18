@@ -2,9 +2,10 @@
 export class AssignmentAdapter {
   constructor(public id: number,
               public nombre: string,
-              public apellido: string,
-              public email: string,
               public materia: number,
+              //TODO: Add missing fields
+              public fechaCreacion: string,
+              public fechaActualizacion: string,
               // public trabajosPracticos: number[]
   ) {
   }

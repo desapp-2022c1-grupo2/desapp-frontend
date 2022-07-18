@@ -1,32 +1,23 @@
-import {Assignment} from "../../../../../models";
 import {AssignmentAdapterTable} from "./AssignmentAdapterTable";
 import React, {useState, useEffect} from "react";
 import {getAllAssignments} from "../../../../../service";
-
-function getAssignmentHeaders() {
-  return [
-    "Id",
-    "Título",
-    "Fecha de inicio",
-    "Fecha de fin",
-    "Estado",
-    "Porcentaje completado"
-  ]
-}
-
+import {AssignmentAdapter} from "../../../../../models";
+import {validateDate} from "../../../../../util";
 
 export const AssignmentTable = () => {
-  const [assignments, setAssignments] = useState<Assignment[]>([]);
+  const [assignments, setAssignments] = useState<AssignmentAdapter[]>([]);
   const [headers, setHeaders] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchAllAssignments = async () => {
       const obtainedData = await getAllAssignments();
-      setHeaders(Object.keys(obtainedData[0]))
-      setAssignments(obtainedData);
+      console.log(obtainedData)
+      const adaptedAssignments: AssignmentAdapter[] = obtainedData.map(assignment => new AssignmentAdapter(assignment.id, assignment.name, assignment.courseId, validateDate(assignment.createdAt), validateDate(assignment.updatedAt)));
+      setHeaders(Object.keys(adaptedAssignments[0]))
+      setAssignments(adaptedAssignments)
     }
     fetchAllAssignments();
   }, []);
 
-  return <AssignmentAdapterTable<Assignment> rows={assignments} headers={headers} label={"Trabajos Prácticos"} readOnly={true}/>
+  return <AssignmentAdapterTable<AssignmentAdapter> rows={assignments} headers={headers} label={"Trabajos Prácticos"} readOnly={true}/>
 }
