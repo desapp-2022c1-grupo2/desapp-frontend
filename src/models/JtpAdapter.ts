@@ -6,6 +6,8 @@ export class JtpAdapter extends BaseEntityAdapter {
               public apellido: string,
               public email: string,
               public materia: number,
+              public fechaCreacion: string,
+              public fechaActualizacion: string,
               // public trabajosPracticos: number[]
   ) {
     super();
