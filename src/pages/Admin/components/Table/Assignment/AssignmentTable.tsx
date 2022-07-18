@@ -2,12 +2,11 @@ import {AssignmentAdapterTable} from "./AssignmentAdapterTable";
 import React, {useState, useEffect} from "react";
 import {getAllAssignments} from "../../../../../service";
 import {AssignmentAdapter} from "../../../../../models";
+import {validateDate} from "../../../../../util";
 
 export const AssignmentTable = () => {
   const [assignments, setAssignments] = useState<AssignmentAdapter[]>([]);
   const [headers, setHeaders] = useState<string[]>([]);
-
-  const validateDate = (date: string) => date ? new Date(date).toLocaleDateString("es-AR") : "-"
 
   useEffect(() => {
     const fetchAllAssignments = async () => {
