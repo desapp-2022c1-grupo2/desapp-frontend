@@ -1,20 +1,10 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import {
-  Button,
-  CheckOutlined,
-  EditOutlined,
-  Field,
-  Modal,
-  Select,
-} from '@components'
-import {
-  materias,
-  roles,
-} from '../../const'
+import {Button, CheckOutlined, EditOutlined, Field, Modal, Select,} from '@components'
 import {WriteModalProps} from "./WriteModalProps";
-import {createJtp, updateJtp} from "../../../../service";
-import {JtpAdapter} from "../../../../models/JtpAdapter";
+import {updateJtp} from "../../../../service";
+import {JtpAdapter} from "../../../../models";
+import {CircularProgress, Typography} from "@mui/material";
 
 const Content = styled.div`
   align-items: center;
@@ -26,7 +16,7 @@ const Content = styled.div`
   justify-content: center;
 `
 
-export const EditJtpModal = ({jtp}: WriteModalProps) => {
+export const EditJtpModal = ({jtp, courses}: WriteModalProps) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
     setOpen(true)
@@ -35,10 +25,12 @@ export const EditJtpModal = ({jtp}: WriteModalProps) => {
     setOpen(false)
   }
 
-  const [name, setName] = useState("");
-  const [lastName, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [materia, setMateria] = useState(-1);
+  const [name, setName] = useState(jtp.nombre);
+  const [lastName, setLastname] = useState(jtp.apellido);
+  const [email, setEmail] = useState(jtp.email);
+  const [selectedCourse, setSelectedCourse] = useState(jtp.materia);
+  const [loading, setLoading] = useState(false);
+  const formIsCompleted = name && lastName && email && selectedCourse;
 
   const handleChange = (setState: Function, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     const value = event.target.value;
@@ -65,23 +57,28 @@ export const EditJtpModal = ({jtp}: WriteModalProps) => {
           <>
             <Button color='success' onClick={
               async () => {
-                await updateJtp(new JtpAdapter(jtp.id, name, lastName, email, materia));
+                setLoading(true);
+                await updateJtp(new JtpAdapter(jtp.id, name, lastName, email, selectedCourse, jtp.fechaCreacion, Date.now().toLocaleString()));
+                setLoading(false);
                 handleClose();
               }
-            } startIcon={<CheckOutlined/>} variant='contained' title='Confirmar cambios'>Confirmar</Button>
+            } startIcon={<CheckOutlined/>} variant='contained' title='Confirmar cambios'>
+              {loading? <CircularProgress /> : "Confirmar"}
+            </Button>
           </>
         }
       >
         <Content>
-          <Field label={"Nombre"} defaultValue={jtp.nombre} placeholder={"Ingresá el nombre"}
+          <Field label={"Nombre"} defaultValue={name} placeholder={"Ingresá el nombre"}
                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleChange(setName, event)}/>
-          <Field label={"Apellido"} defaultValue={jtp.apellido} placeholder={"Ingresá el apellido"}
+          <Field label={"Apellido"} defaultValue={lastName} placeholder={"Ingresá el apellido"}
                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleChange(setLastname, event)}/>
-          <Field label={"Email"} defaultValue={jtp.email} placeholder={"Ingresá el email"}
+          <Field label={"Email"} defaultValue={email} placeholder={"Ingresá el email"}
                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleChange(setEmail, event)}/>
-          <Select defaultValue={jtp.materia} items={materias.map(m => m.nombre)} placeholder={"Elegí la materia"}
-                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleChange(setMateria, event)}/>
+          <Select defaultValue={selectedCourse} items={courses.map(course => course.name)} placeholder={selectedCourse}
+                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleChange(setSelectedCourse, event)}/>
         </Content>
+        {!formIsCompleted && <Typography color={'error'}>Tenés que completar los campos</Typography>}
       </Modal>
     </>
   )

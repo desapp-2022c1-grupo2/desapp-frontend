@@ -1,20 +1,10 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
-import {
-  Button,
-  AddOutlined,
-  CheckOutlined,
-  ClearOutlined,
-  Field,
-  Modal,
-  Select,
-} from '../../../../components'
-import {
-  materias,
-  roles,
-} from '../../const'
+import {AddOutlined, Button, CheckOutlined, Field, Modal, Select,} from '../../../../components'
 import {createJtp} from "../../../../service";
-import {JtpAdapter} from "../../../../models/JtpAdapter";
+import {JtpAdapter} from "../../../../models";
+import {CircularProgress, Typography} from "@mui/material";
+import {WriteModalProps} from "./WriteModalProps";
 
 const Content = styled.div`
   align-items: center;
@@ -26,20 +16,37 @@ const Content = styled.div`
   justify-content: center;
 `
 
-export const NewJtpModal = () => {
+export const NewJtpModal = ({courses}: WriteModalProps) => {
   const [open, setOpen] = useState(false)
-  const handleOpen = () => { setOpen(true) }
-  const handleClose = () => { setOpen(false) }
+  const handleOpen = () => {
+    setOpen(true)
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   const [name, setName] = useState("");
   const [lastName, setLastname] = useState("");
   const [email, setEmail] = useState("");
-  const [materia, setMateria] = useState(-1);
+  const [selectedCourse, setSelectedCourse] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (setState: Function, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      setState(event.target.value);
-    };
+    const value = event.target.value;
+    if (value !== '') {
+      setState(value);
+    }
+  };
 
+
+  const createAndClose = async () => {
+    setLoading(true);
+    await createJtp(new JtpAdapter(-1, name, lastName, email, selectedCourse, Date.now().toLocaleString(), Date.now().toLocaleString()));
+    setLoading(false);
+    handleClose();
+  }
+
+  const formIsCompleted = name && lastName && email && selectedCourse;
   return (
     <>
     <Button
@@ -49,30 +56,41 @@ export const NewJtpModal = () => {
       variant='contained'
       title='Agregar'
       >
-      Agregar
-    </Button>
-    <Modal
-      onClose={handleClose}
-      open={open}
-      title='Agregar nuevo usuario'
-      footer={
-        <>
-          <Button color='unahurGreen' onClick={
-            async () => {
-              await createJtp(new JtpAdapter(-1, name, lastName, email, materia));
-              handleClose();
+        Agregar
+      </Button>
+      <Modal
+        onClose={handleClose}
+        open={open}
+        title='Agregar nuevo usuario'
+        footer={
+          <>
+            <Button color='unahurGreen' onClick={() => {
+              if (formIsCompleted) {
+                createAndClose()
+              }
             }
-          } startIcon={<CheckOutlined />} variant='contained' title='Crear usuario'>Confirmar</Button>
-        </>
-      }
-    >
-      <Content>
-        <Field label={"Nombre"} placeholder={"Ingresá el nombre"} onChange={(event) => handleChange(setName, event)}/>
-        <Field label={"Apellido"} placeholder={"Ingresá el apellido"} onChange={(event) => handleChange(setLastname, event)}/>
-        <Field label={"Email"} placeholder={"Ingresá el email"} onChange={(event) => handleChange(setEmail, event)}/>
-        <Select items={materias.map(m => m.nombre)} placeholder={"Elegí la materia"} onChange={(event) => handleChange(setMateria, event)}/>
-      </Content>
-    </Modal>
+            }
+                    startIcon={<CheckOutlined/>}
+                    variant='contained'
+                    title='Crear usuario'
+                    disabled={!formIsCompleted}>
+              {loading? <CircularProgress /> : "Confirmar"}
+            </Button>
+          </>
+        }
+      >
+        <Content>
+          <Field required error={!name} label={"Nombre"} placeholder={"Ingresá el nombre"}
+                 onChange={(event) => handleChange(setName, event)}/>
+          <Field required error={!lastName} label={"Apellido"} placeholder={"Ingresá el apellido"}
+                 onChange={(event) => handleChange(setLastname, event)}/>
+          <Field required error={!email} label={"Email"} placeholder={"Ingresá el email"}
+                 onChange={(event) => handleChange(setEmail, event)}/>
+          <Select defaultValue={selectedCourse} items={courses.map(course => course.name)} placeholder={selectedCourse}
+                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleChange(setSelectedCourse, event)}/>
+          {!formIsCompleted && <Typography color={'error'}>Tenés que completar los campos</Typography>}
+        </Content>
+      </Modal>
     </>
   )
 }

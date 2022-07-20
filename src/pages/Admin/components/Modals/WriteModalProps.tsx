@@ -1,5 +1,7 @@
-import {JtpAdapter} from "../../../../models/JtpAdapter";
+import {JtpAdapter} from "../../../../models";
+import {CourseAdapter} from "../../../../models";
 
 export interface WriteModalProps {
   jtp: JtpAdapter,
+  courses: CourseAdapter[]
 }
