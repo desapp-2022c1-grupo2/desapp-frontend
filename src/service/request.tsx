@@ -1,6 +1,5 @@
 import axios from "axios";
-import {JtpAdapter} from "../models/JtpAdapter";
-import {Jtp} from "../models";
+import {JtpAdapter} from "../models";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const API_URL = `${BACKEND_URL}/api`;
@@ -32,12 +31,20 @@ export async function updateJtp(jtp: JtpAdapter) {
     email: jtp.email,
     courseId: 0
   };
-  console.log(data)
   const response = await axios.patch(`${API_URL}/jtp/${jtp.id}`, data);
   return Promise.resolve(response.data);
 }
 
 export async function deleteUser(id: number){
   const response = await axios.delete(`${API_URL}/jtp/${id}`);
+  return Promise.resolve(response.data);
+}
+
+export async function getCourseById(id: number){
+  const response = await axios.get(`${API_URL}/course/${id}`);
+  return Promise.resolve(response.data);
+}
+export async function getAllCourses(){
+  const response = await axios.get(`${API_URL}/course`);
   return Promise.resolve(response.data);
 }

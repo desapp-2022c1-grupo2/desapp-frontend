@@ -6,11 +6,13 @@ import {
 } from '@components'
 import {deleteUser} from "../../../../service";
 import {WriteModalProps} from "./WriteModalProps";
+import {CircularProgress} from "@mui/material";
 
 export const DeleteUserModal = ({jtp}: WriteModalProps) => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => { setOpen(true) }
   const handleClose = () => { setOpen(false) }
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
@@ -32,10 +34,14 @@ export const DeleteUserModal = ({jtp}: WriteModalProps) => {
           <Button color='unahurCyan' onClick={handleClose} variant='contained' title='Cancelar'>Cancelar</Button>
           <Button color='unahurRed' onClick={async () => {
             // Borra pero no refresca la tabla
+            setLoading(true);
             await deleteUser(jtp.id);
+            setLoading(false);
             handleClose();
           }
-          } variant='contained' title='Eliminar'>Eliminar</Button>
+          } variant='contained' title='Eliminar'>
+            {loading? <CircularProgress /> : "Eliminar"}
+          </Button>
         </>
       }
     >
