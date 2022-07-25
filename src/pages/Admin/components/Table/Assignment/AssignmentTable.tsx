@@ -11,12 +11,12 @@ export const AssignmentTable = () => {
   useEffect(() => {
     const fetchAllAssignments = async () => {
       const obtainedData = await getAllAssignments();
-      const adaptedAssignments: AssignmentAdapter[] = obtainedData.map(assignment => new AssignmentAdapter(assignment.id, assignment.name, assignment.courseId, validateDate(assignment.createdAt), validateDate(assignment.updatedAt)));
+      const adaptedAssignments: AssignmentAdapter[] = obtainedData.map(assignment => new AssignmentAdapter(assignment.id, assignment.name, assignment.courseId, assignment.shortDescr, assignment.url, validateDate(assignment.startDate), validateDate(assignment.endDate)));
       setHeaders(Object.keys(adaptedAssignments[0]))
       setAssignments(adaptedAssignments)
     }
     fetchAllAssignments();
   }, []);
 
-  return <AssignmentAdapterTable<AssignmentAdapter> rows={assignments} headers={headers} label={"Trabajos Prácticos"} readOnly={true}/>
+  return <AssignmentAdapterTable rows={assignments} headers={headers} label={"Trabajos Prácticos"} readOnly={true}/>
 }
