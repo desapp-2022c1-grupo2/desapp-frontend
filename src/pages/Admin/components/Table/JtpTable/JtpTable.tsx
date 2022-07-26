@@ -23,7 +23,7 @@ export const JtpTable = () => {
       setJtps(adaptedUsers);
     }
     fetchAllUsers();
-  }, [jtps]);
+  }, [jtps, rowsPerPage]);
 
   const toolbar = (<JtpToolbar selected={selected} rows={jtps} label={label}/>);
   const tableContent = (
