@@ -22,7 +22,7 @@ export const AssignmentTable = () => {
       setAssignments(adaptedAssignments)
     }
     fetchAllAssignments();
-  }, []);
+  }, [assignments]);
 
   const toolbar = (<ReadOnlyToolbar label={label}/>);
   const tableContent = (
