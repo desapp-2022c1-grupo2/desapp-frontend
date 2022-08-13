@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import logo from '@assets/LogoUnahur.svg'
 import { requestLogin } from '@store/auth'
 import {
@@ -18,7 +18,11 @@ export const LoginPage = () => {
 
   const emailListener = (event: React.FormEvent<HTMLInputElement>) => setEmail(event.currentTarget.value)
   const passwordListener = (event: React.FormEvent<HTMLInputElement>) => setPassword(event.currentTarget.value)
-  const handleLogin = () => { dispatch(requestLogin({ email, password })) }
+  const handleLogin = () => {
+    dispatch(requestLogin({ email, password }))
+    localStorage.setItem('email', email)
+    localStorage.setItem('password', password)
+  }
 
   return (
     <LoginLayout>
@@ -39,13 +43,13 @@ export const LoginPage = () => {
           />
         <LoginConfirmButton
           fullWidth
-          color='success'
+          color='unahurGreen'
           variant='contained'
           onClick={handleLogin}
           >
           Ingresar
         </LoginConfirmButton>
-        </LoginContainer>
+      </LoginContainer>
     </LoginLayout>
   )
 }
