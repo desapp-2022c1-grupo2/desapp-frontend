@@ -1,42 +1,63 @@
 import React, {useEffect, useState} from "react";
-import {getAllJtp} from "../../../../../service";
-import {JtpAdapter} from "../../../../../models";
+import {getAllJtp, updateJtpDatagrid} from "../../../../../service";
+import {Jtp} from "../../../../../models";
+
+import {DataGrid, GridColDef, GridEventListener,} from '@mui/x-data-grid';
+import {DataGridLocaleText} from "./DataGridLocaleText";
 import {validateDate} from "../../../../../util";
-import {JtpToolbar} from "./JtpToolbar";
-import {TableContent} from "../TableContent";
-import {Table} from "../Table";
+import {MuiCustomToolbar} from "../MuiCustomToolbar";
+import {getJtpColumns} from "./JtpColumns";
 
 export const JtpTable = () => {
-  const [jtps, setJtps] = useState<JtpAdapter[]>([]);
-  const [headers, setHeaders] = useState<string[]>([]);
-  const label = "Usuarios";
-  const [page, setPage] = React.useState(0);
-  const [selected, setSelected] = useState<number>(-1);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [jtps, setJtps] = useState<Jtp[]>([]);
 
-
+  //Review this
   useEffect(() => {
     const fetchAllUsers = async () => {
-      const obtainedData = await getAllJtp();
-      const adaptedUsers: JtpAdapter[] = obtainedData.map(jtp => new JtpAdapter(jtp.id, jtp.name, jtp.lastName, jtp.email, jtp.courseId, validateDate(jtp.createdAt), validateDate(jtp.updatedAt)));
-      setHeaders(Object.keys(adaptedUsers[0]))
-      setJtps(adaptedUsers);
+      const obtainedData: Jtp[] = await getAllJtp();
+      const obtainedJtps: Jtp[] = obtainedData.map(jtp => new Jtp({
+        id: jtp.id,
+        name: jtp.name,
+        lastName: jtp.lastName,
+        email: jtp.email,
+        courseId: jtp.courseId,
+        createdAt: validateDate(jtp.createdAt),
+        updatedAt: validateDate(jtp.updatedAt)
+      }));
+      setJtps(obtainedJtps);
     }
-    fetchAllUsers();
-  }, [jtps, rowsPerPage]);
+    fetchAllUsers().then(value => console.log("fetched users"));
+  }, []);
 
-  const toolbar = (<JtpToolbar selected={selected} rows={jtps} label={label}/>);
-  const tableContent = (
-    <TableContent rows={jtps} rowsPerPage={rowsPerPage} page={page} headers={headers} setSelected={setSelected}
-                  selected={selected}/>);
-  return (<Table toolbar={toolbar}
-                 tableContent={tableContent}
-                 label={label}
-                 rowsLength={jtps.length}
-                 headers={headers}
-                 page={page}
-                 setPage={setPage}
-                 rows={jtps}
-                 rowsPerPage={rowsPerPage}
-                 setRowsPerPage={setRowsPerPage}/>);
+  const handleCommit: GridEventListener<"cellEditCommit"> | undefined = (e) => {
+    // if there are changes -> update jtp
+    if (jtps.find(jtp => jtp.id === e.id)[e.field] !== e.value) {
+      // {id: e.id, [e.field]: e.value}
+      let jtp = new Jtp({id: e.id, [e.field]: e.value})
+      updateJtpDatagrid(jtp).then(r => console.log('updated!', r));
+    }
+  }
+
+  let columns: GridColDef[] = getJtpColumns();
+  return (
+    <div style={{height: '75vh', width: '100%'}}>
+      <DataGrid rows={jtps}
+                columns={columns}
+                loading={!jtps.length}
+                onCellEditCommit={handleCommit}
+                localeText={
+                  DataGridLocaleText
+                }
+                components={{
+                  Toolbar: MuiCustomToolbar,
+                  Pagination: null
+                }}
+                componentsProps={{
+                  toolbar: {
+                    showQuickFilter: true,
+                    quickFilterProps: {debounceMs: 500},
+                  },
+                }}
+      />
+    </div>);
 }

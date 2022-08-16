@@ -1,1 +1,1 @@
-export const validateDate = (date: string) => date ? new Date(date).toLocaleDateString("es-AR") : "-"
+export const validateDate = (date: string | undefined) => date ? new Date(date).toLocaleDateString("es-AR") : "-"

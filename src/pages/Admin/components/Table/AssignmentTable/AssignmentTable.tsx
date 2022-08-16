@@ -1,45 +1,63 @@
 import React, {useEffect, useState} from "react";
 import {getAllAssignments} from "../../../../../service";
-import {AssignmentAdapter} from "../../../../../models";
+import {Assignment} from "../../../../../models";
+import {DataGrid, GridColDef} from "@mui/x-data-grid";
+import {getAssignmentColumns} from "./AssignmentColumns";
+import {DataGridLocaleText} from "../JtpTable";
+import {MuiCustomToolbar} from "../MuiCustomToolbar";
 import {validateDate} from "../../../../../util";
-import {ReadOnlyToolbar} from "../ReadOnlyToolbar";
-import {TableContent} from "../TableContent";
-import {Table} from "../Table";
 
 export const AssignmentTable = () => {
-  const [assignments, setAssignments] = useState<AssignmentAdapter[]>([]);
-  const [headers, setHeaders] = useState<string[]>([]);
-  const [page, setPage] = React.useState(0);
-  const [selected, setSelected] = useState<number>(-1);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const label = "Trabajos Prácticos"
-
+  const [assignments, setAssignments] = useState<Assignment[]>([]);
   useEffect(() => {
     const fetchAllAssignments = async () => {
       const obtainedData = await getAllAssignments();
-      const adaptedAssignments: AssignmentAdapter[] = obtainedData.map(assignment => new AssignmentAdapter(assignment.id, assignment.name, assignment.courseId, assignment.shortDescr, assignment.url, validateDate(assignment.startDate), validateDate(assignment.endDate)));
-      setHeaders(Object.keys(adaptedAssignments[0]))
+      const adaptedAssignments: Assignment[] = obtainedData.map(assignment => new Assignment(
+        assignment.id,
+        assignment.jtpId,
+        assignment.number,
+        assignment.name,
+        assignment.url,
+        assignment.shortDescr,
+        assignment.description,
+        assignment.taskDescription,
+        validateDate(assignment.startDate),
+        validateDate(assignment.endDate),
+        assignment.tags,
+        assignment.var1,
+        assignment.var2,
+        assignment.var3,
+        assignment.var4,
+        assignment.var5,
+        assignment.type,
+        assignment.status,
+        assignment.courseId,
+        assignment.individualProcess,
+      ));
       setAssignments(adaptedAssignments)
     }
     fetchAllAssignments();
-  }, [assignments, rowsPerPage]);
+  }, []);
 
-  const toolbar = (<ReadOnlyToolbar label={label}/>);
-  const tableContent = (
-    <TableContent<AssignmentAdapter> page={page}
-                                     rowsPerPage={rowsPerPage}
-                                     rows={assignments}
-                                     headers={headers}
-                                     selected={selected}
-                                     setSelected={setSelected}/>);
-  return (<Table toolbar={toolbar}
-                 tableContent={tableContent}
-                 label={label}
-                 rowsLength={assignments.length}
-                 headers={headers}
-                 page={page}
-                 setPage={setPage}
-                 rows={assignments}
-                 rowsPerPage={rowsPerPage}
-                 setRowsPerPage={setRowsPerPage}/>);
+  let columns: GridColDef[] = getAssignmentColumns();
+
+  return (<div style={{height: '75vh', width: '100%'}}>
+    <DataGrid rows={assignments}
+              columns={columns}
+              loading={!assignments.length}
+              localeText={
+                DataGridLocaleText
+              }
+              components={{
+                Toolbar: MuiCustomToolbar,
+                Pagination: null
+              }}
+              componentsProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: {debounceMs: 500},
+                },
+              }}
+    />
+  </div>);
 }

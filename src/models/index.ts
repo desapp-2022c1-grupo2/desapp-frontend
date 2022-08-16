@@ -1,6 +1,4 @@
 export * from './Assignment'
 export * from './BaseEntity'
 export * from './Jtp'
-export * from './AssignmentAdapter'
 export * from './CourseAdapter'
-export * from './JtpAdapter'
