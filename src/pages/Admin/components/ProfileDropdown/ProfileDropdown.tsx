@@ -22,7 +22,11 @@ export const ProfileDropdown = () => {
   }
   
   const handleClose = () => { setAnchorEl(null) }
-  const handleLogout = () => { dispatch(logout())}
+  const handleLogout = () => {
+    localStorage.removeItem("email")
+    localStorage.removeItem("password")
+    dispatch(logout())
+  }
   
   return (
     <>

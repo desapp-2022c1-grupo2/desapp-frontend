@@ -1,19 +1,28 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   BrowserRouter,
   Navigate,
   Routes,
   Route,
 } from 'react-router-dom'
-import { Iauth } from 'store/auth' 
+import { Iauth, requestLogin } from '@store/auth'
 import { RootState } from 'store' 
-
 import { routes } from './routes'
 
 export const Router = () => {
   const { isLogged } = useSelector<RootState, Iauth>((state) => state.auth)
+  const dispatch = useDispatch()
   
+  React.useEffect(
+    () => {
+      const localEmail = localStorage.getItem("email")
+      const localPass = localStorage.getItem("password")
+      if (localEmail && localPass) dispatch(requestLogin({ email: localEmail, password: localPass }))
+    },
+    []
+  )
+
   const AdminRoutes = (
     <Routes>
       <Route {...routes.admin.home} />
