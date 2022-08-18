@@ -1,5 +1,5 @@
 import axios from "axios";
-import {JtpAdapter} from "../models";
+import {Jtp} from "../models";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const API_URL = `${BACKEND_URL}/api`;
@@ -14,26 +14,20 @@ export async function getAllAssignments() {
   return Promise.resolve(response.data);
 }
 
-export async function createJtp(newJtp: JtpAdapter) {
-  const response = await axios.post(`${API_URL}/jtp`, {
-    name: newJtp.nombre,
-    lastName: newJtp.apellido,
-    email: newJtp.email,
-    courseId: newJtp.materia
-  });
+export async function createJtp(newJtp: Jtp) {
+  const response = await axios.post(`${API_URL}/jtp`, newJtp);
   return Promise.resolve(response.data);
 }
-export async function updateJtp(jtp: JtpAdapter) {
-  console.log(jtp.id)
-  const data = {
-    name: jtp.nombre,
-    lastName: jtp.apellido,
-    email: jtp.email,
-    courseId: 0
-  };
-  const response = await axios.patch(`${API_URL}/jtp/${jtp.id}`, data);
+export async function updateJtp(jtp: Jtp) {
+  const response = await axios.patch(`${API_URL}/jtp/${jtp.id}`, jtp);
   return Promise.resolve(response.data);
 }
+
+export async function updateJtpDatagrid(jtp: Jtp) {
+  const response = await axios.patch(`${API_URL}/jtp/${jtp.id}`, jtp);
+  return Promise.resolve(response.data);
+}
+
 
 export async function deleteUser(id: number){
   const response = await axios.delete(`${API_URL}/jtp/${id}`);

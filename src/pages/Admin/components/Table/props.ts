@@ -1,32 +1,19 @@
-import React from 'react'
-import {
-  TableHeadProps,
-  TableProps,
-  ToolbarProps
-} from '@mui/material'
-import { BaseEntityAdapter } from "../../../../models/BaseEntityAdapter";
+import {Dispatch, SetStateAction} from 'react'
+import {TableProps as MuiTableProps} from '@mui/material'
+import {BaseEntityAdapter} from "../../../../models/BaseEntityAdapter";
 
-export interface CustomToolbarProps<T extends BaseEntityAdapter> extends ToolbarProps {
-  numSelected: number,
-  rows: Array<T>,
-  label: string,
-  readOnly: boolean,
-}
-
-export interface CustomTableProps<T extends BaseEntityAdapter> extends TableProps {
+export interface TableProps<T extends BaseEntityAdapter> extends MuiTableProps {
+  toolbar: JSX.Element;
+  tableContent: JSX.Element;
   label: string,
   rows: Array<T>,
+  rowsLength: number,
   headers: string[],
-  readOnly: boolean,
-}
-
-export interface CustomTableHeadProps<T extends BaseEntityAdapter> extends TableHeadProps {
-    numSelected: number,
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof T) => void,
-    order: Order,
-    orderBy: string,
-    rowCount: number,
-    headers: string[],
+  page: number,
+  setPage: Dispatch<SetStateAction<number>>;
+  rowsPerPage: number,
+  setRowsPerPage: Dispatch<SetStateAction<number>>;
 }
 
 export type Order = 'asc' | 'desc';
+

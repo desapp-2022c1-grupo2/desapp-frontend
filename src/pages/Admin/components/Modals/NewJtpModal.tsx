@@ -2,9 +2,9 @@ import React, {useState} from 'react'
 import styled from 'styled-components'
 import {AddOutlined, Button, CheckOutlined, Field, Modal, Select,} from '../../../../components'
 import {createJtp} from "../../../../service";
-import {JtpAdapter} from "../../../../models";
 import {CircularProgress, Typography} from "@mui/material";
 import {WriteModalProps} from "./WriteModalProps";
+import {Jtp} from "../../../../models";
 
 const Content = styled.div`
   align-items: center;
@@ -41,7 +41,14 @@ export const NewJtpModal = ({courses}: WriteModalProps) => {
 
   const createAndClose = async () => {
     setLoading(true);
-    await createJtp(new JtpAdapter(-1, name, lastName, email, selectedCourse, Date.now().toLocaleString(), Date.now().toLocaleString()));
+    await createJtp(new Jtp({
+      name: name,
+      lastName: lastName,
+      email: email,
+      courseId: selectedCourse,
+      createdAt: Date.now().toLocaleString(),
+      updatedAt: Date.now().toLocaleString(),
+    }));
     setLoading(false);
     handleClose();
   }
@@ -49,12 +56,12 @@ export const NewJtpModal = ({courses}: WriteModalProps) => {
   const formIsCompleted = name && lastName && email && selectedCourse;
   return (
     <>
-    <Button
-      color='unahurGreen'
-      onClick={handleOpen}
-      startIcon={<AddOutlined />}
-      variant='contained'
-      title='Agregar'
+      <Button
+        color='unahurGreen'
+        onClick={handleOpen}
+        startIcon={<AddOutlined/>}
+        variant='contained'
+        title='Agregar'
       >
         Agregar
       </Button>
@@ -74,7 +81,7 @@ export const NewJtpModal = ({courses}: WriteModalProps) => {
                     variant='contained'
                     title='Crear usuario'
                     disabled={!formIsCompleted}>
-              {loading? <CircularProgress /> : "Confirmar"}
+              {loading ? <CircularProgress/> : "Confirmar"}
             </Button>
           </>
         }

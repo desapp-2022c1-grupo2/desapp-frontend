@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import {Button, CheckOutlined, EditOutlined, Field, Modal, Select,} from '@components'
 import {WriteModalProps} from "./WriteModalProps";
 import {updateJtp} from "../../../../service";
-import {JtpAdapter} from "../../../../models";
 import {CircularProgress, Typography} from "@mui/material";
+import {Jtp} from "../../../../models";
 
 const Content = styled.div`
   align-items: center;
@@ -25,10 +25,10 @@ export const EditJtpModal = ({jtp, courses}: WriteModalProps) => {
     setOpen(false)
   }
 
-  const [name, setName] = useState(jtp.nombre);
-  const [lastName, setLastname] = useState(jtp.apellido);
+  const [name, setName] = useState(jtp.name);
+  const [lastName, setLastname] = useState(jtp.lastName);
   const [email, setEmail] = useState(jtp.email);
-  const [selectedCourse, setSelectedCourse] = useState(jtp.materia);
+  const [selectedCourse, setSelectedCourse] = useState(jtp.courseId);
   const [loading, setLoading] = useState(false);
   const formIsCompleted = name && lastName && email && selectedCourse;
 
@@ -58,7 +58,15 @@ export const EditJtpModal = ({jtp, courses}: WriteModalProps) => {
             <Button color='success' onClick={
               async () => {
                 setLoading(true);
-                await updateJtp(new JtpAdapter(jtp.id, name, lastName, email, selectedCourse, jtp.fechaCreacion, Date.now().toLocaleString()));
+                await updateJtp(new Jtp({
+                  id: jtp.id,
+                  name: name,
+                  lastName: lastName,
+                  email: email,
+                  courseId: selectedCourse,
+                  createdAt: jtp.createdAt,
+                  updatedAt: Date.now().toLocaleString()
+                }));
                 setLoading(false);
                 handleClose();
               }

@@ -16,7 +16,6 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    
     logout(state){
       state.email = ''
       state.password = ''
