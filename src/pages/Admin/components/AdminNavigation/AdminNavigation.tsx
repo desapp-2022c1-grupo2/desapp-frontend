@@ -19,7 +19,6 @@ export const AdminNavigation = () => {
       value={value}
       onChange={handleChange}
       color='unahurGreen'
-      textColor='primary'
       aria-label='secondary tabs example'
     >
       <Tab component={Link} to={routes.admin.users.path} label='Usuarios'/>
