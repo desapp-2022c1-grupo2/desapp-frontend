@@ -31,7 +31,7 @@ export const ProfileDropdown = () => {
   return (
     <>
     <Button
-      color='inherit'
+      color='unahurBlack'
       onClick={handleClick}
       aria-controls={open ? 'resources-menu' : undefined}
       aria-haspopup='true'
@@ -39,7 +39,6 @@ export const ProfileDropdown = () => {
       startIcon={<Avatar src="https://randomuser.me/api/portraits/men/17.jpg" />}
       endIcon={<KeyboardArrowDownOutlined />}
       text="Administrador"
-      textColor="#575756"
     />
     <Menu
       open={open}
