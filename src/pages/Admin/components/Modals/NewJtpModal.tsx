@@ -5,6 +5,7 @@ import {createJtp} from "../../../../service";
 import {CircularProgress, Typography} from "@mui/material";
 import {WriteModalProps} from "./WriteModalProps";
 import {Jtp} from "../../../../models";
+import {validateDate} from "../../../../util";
 
 const Content = styled.div`
   align-items: center;
@@ -41,13 +42,13 @@ export const NewJtpModal = ({courses}: WriteModalProps) => {
 
   const createAndClose = async () => {
     setLoading(true);
+    let date = new Date().toLocaleString("es-AR");
+    console.log(date)
     await createJtp(new Jtp({
       name: name,
       lastName: lastName,
       email: email,
       courseId: selectedCourse,
-      createdAt: Date.now().toLocaleString(),
-      updatedAt: Date.now().toLocaleString(),
     }));
     setLoading(false);
     handleClose();

@@ -9,13 +9,12 @@ import {
 
 export const MuiCustomToolbar = () => {
   return (
-    <GridToolbarContainer style={{margin: "10px"}}>
-      <GridToolbarQuickFilter/>
-      <GridToolbarColumnsButton/>
-      <GridToolbarFilterButton/>
-      <GridToolbarDensitySelector/>
-      <GridToolbarExport/>
-      {/*<CreateJtp/>*/}
+    <GridToolbarContainer style={{ margin: "10px" }}>
+      <GridToolbarQuickFilter />
+      <GridToolbarColumnsButton />
+      <GridToolbarFilterButton />
+      <GridToolbarDensitySelector />
+      <GridToolbarExport />
     </GridToolbarContainer>
   );
 }
