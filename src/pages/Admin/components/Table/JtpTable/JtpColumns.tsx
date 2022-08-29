@@ -1,18 +1,27 @@
 import React, {useState} from "react";
-import {CourseAdapter} from "../../../../../models";
 import {deleteUser} from "../../../../../service";
-import {GridRenderCellParams} from "@mui/x-data-grid";
+import {GridColDef, GridRenderCellParams} from "@mui/x-data-grid";
 import {CircularProgress, IconButton} from "@mui/material";
 import {DeleteOutlineOutlined} from "../../../../../components";
-export function getJtpColumns(courses) {
 
-  const [loading, setLoading] = useState(false);
+export function getJtpColumns(courses, setLoading) : GridColDef[] {
 
   return [
     {headerName: "ID", field: 'id', flex: 1, editable: false},
     {headerName: "Nombre", field: 'name', flex: 2, editable: true},
     {headerName: "Apellido", field: 'lastName', flex: 2, editable: true},
     {headerName: "Email", field: "email", flex: 2, editable: true},
+      // {headerName: "Materia",
+      //     field: "courseId",
+      //     flex: 5,
+      //     editable: true,
+      //     renderCell: (params: GridRenderCellParams) => {
+      //         console.log(params.field)
+      //         return (
+      //             <Select items={courses.map(course => course.name)}/>
+      //         )
+      //     }
+      // },
     {
       headerName: "Materia",
       field: "courseId",
@@ -32,18 +41,21 @@ export function getJtpColumns(courses) {
       field: "delete",
       headerName: "Eliminar",
       flex: 1,
+      minWidth: 100,
       align: "center",
       sortable: false,
       disableColumnMenu: true,
       renderCell: (params: GridRenderCellParams) => (
-        //  Implemete deletion
+        //  TODO: delete and refresh
+
         <IconButton onClick={() => {
           setLoading(true);
-            deleteUser(parseInt(params.id.valueOf.toString())).then(r => console.log(r))
+          deleteUser(parseInt(params.id.toString())).then(r => {
+            console.log(r)
           setLoading(false);
+          })
         }}>
-          {loading ? <CircularProgress/> : <DeleteOutlineOutlined />}
-
+          <DeleteOutlineOutlined />
         </IconButton>
 ),
 },

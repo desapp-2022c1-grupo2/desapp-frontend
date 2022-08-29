@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {getAllCourses, getAllJtp, updateJtpDatagrid} from "../../../../../service";
 import {CourseAdapter, Jtp} from "../../../../../models";
 
-import {DataGrid, GridColDef, GridEventListener,} from '@mui/x-data-grid';
+import {DataGrid, GridColDef, GridEventListener} from '@mui/x-data-grid';
 import {DataGridLocaleText} from "./DataGridLocaleText";
 import {validateDate} from "../../../../../util";
 import {MuiCustomToolbar} from "../MuiCustomToolbar";
@@ -13,10 +13,22 @@ import {NewJtpModal} from "../../Modals";
 export const JtpTable = () => {
     const [jtps, setJtps] = useState<Jtp[]>([]);
     const [courses, setCourses] = useState<CourseAdapter[]>([]);
+    const [pageSize, setPageSize] = React.useState(10);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchAllCourses = async () => {
+            const obtainedData = await getAllCourses();
+            setCourses(obtainedData.map((course: CourseAdapter) => {
+                return new CourseAdapter(course.id, course.name, course.parentCourseId, course.year, course.isPreviousCourse, course.createdAt, course.updatedAt);
+            }));
+        };
+        fetchAllCourses().then(r => console.log('fetched courses'));
+    }, []);
 
     useEffect(() => {
         const fetchAllUsers = async () => {
-            const obtainedData: Jtp[] = await getAllJtp();
+            const obtainedData = await getAllJtp();
             const obtainedJtps: Jtp[] = obtainedData.map(jtp => new Jtp({
                 id: jtp.id,
                 name: jtp.name,
@@ -26,17 +38,15 @@ export const JtpTable = () => {
                 createdAt: validateDate(jtp.createdAt),
                 updatedAt: validateDate(jtp.updatedAt)
             }));
-        setJtps(obtainedJtps);
+            setJtps(obtainedJtps);
         }
-        const fetchAllCourses = async () => {
-            const obtainedData = await getAllCourses();
-            setCourses(obtainedData.map((course: CourseAdapter) => {
-                return new CourseAdapter(course.id, course.name, course.parentCourseId, course.year, course.isPreviousCourse, course.createdAt, course.updatedAt);
-            }));
-        };
-        fetchAllCourses().then(r => console.log('fetched courses'));
-        fetchAllUsers().then(value => console.log("fetched users"));
-    }, []);
+        const interval = setInterval(() => {
+            fetchAllUsers();
+        }, 3000);
+        return () => clearInterval(interval);
+    }, [jtps]);
+
+
 
     const handleCommit: GridEventListener<"cellEditCommit"> | undefined = (e) => {
         // if there are changes -> update jtp
@@ -47,25 +57,26 @@ export const JtpTable = () => {
         }
     }
 
-    let columns: GridColDef[] = getJtpColumns(courses);
+    let columns: GridColDef[] = getJtpColumns(courses, setLoading);
 
-    const findJtpById: (id: number) => Jtp | undefined = (id: number) => {
-        return jtps.find(jtp => jtp.id === id)
-    }
     return (
-        <div style={{height: '75vh', width: '100%'}}>
+        <div>
             <h3>Lista de JTPs</h3>
-            <NewJtpModal courses={courses}/>
+            <NewJtpModal setRows={setJtps} courses={courses}/>
+        <div style={{height: '500px'}}>
             <DataGrid rows={jtps}
                       columns={columns}
-                      loading={!jtps.length}
+                      loading={loading || !jtps.length}
                       onCellEditCommit={handleCommit}
+                      pagination
+                      pageSize={pageSize}
+                      rowsPerPageOptions={[10, 25, 50]}
+                      onPageSizeChange={(newPage) => setPageSize(newPage)}
                       localeText={
                           DataGridLocaleText
                       }
                       components={{
                           Toolbar: MuiCustomToolbar,
-                          Pagination: null
                       }}
                       componentsProps={{
                           toolbar: {
@@ -74,5 +85,6 @@ export const JtpTable = () => {
                           },
                       }}
             />
+        </div>
         </div>);
 }
