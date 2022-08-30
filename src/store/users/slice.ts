@@ -1,4 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit'
 import { IJtp } from './IJtp'
 
 interface IUsers {
@@ -29,4 +32,4 @@ export const {
   setJtps,
 } = usersSlice.actions
 
-export default usersSlice.reducer
+export const user = usersSlice.reducer

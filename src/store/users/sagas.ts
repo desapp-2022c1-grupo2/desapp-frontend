@@ -1,4 +1,8 @@
-import { put, call, takeLatest } from 'redux-saga/effects'
+import {
+  call,
+  put,
+  takeLatest,
+} from 'redux-saga/effects'
 import { setJtps } from './slice'
 import { IJtp } from './IJtp'
 

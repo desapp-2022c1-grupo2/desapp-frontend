@@ -1,4 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit'
 import { IAuth } from './IAuth'
 
 const initialState: IAuth = {
@@ -30,4 +33,4 @@ export const {
   requestLogin,
 } = authSlice.actions
 
-export default authSlice.reducer
+export const auth = authSlice.reducer
