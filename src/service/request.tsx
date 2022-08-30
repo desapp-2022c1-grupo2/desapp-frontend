@@ -15,6 +15,7 @@ export async function getAllAssignments() {
 }
 
 export async function createJtp(newJtp: Jtp) {
+  console.log(newJtp)
   const response = await axios.post(`${API_URL}/jtp`, newJtp);
   return Promise.resolve(response.data);
 }

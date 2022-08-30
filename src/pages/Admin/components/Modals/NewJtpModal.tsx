@@ -16,14 +16,10 @@ const Content = styled.div`
   justify-content: center;
 `
 
-export const NewJtpModal = ({courses}: WriteModalProps) => {
+export const NewJtpModal = ({ courses, id }: WriteModalProps) => {
   const [open, setOpen] = useState(false)
-  const handleOpen = () => {
-    setOpen(true)
-  }
-  const handleClose = () => {
-    setOpen(false)
-  }
+  const handleOpen = () => { setOpen(true) }
+  const handleClose = () => { setOpen(false) }
 
   const [name, setName] = useState("");
   const [lastName, setLastname] = useState("");
@@ -41,13 +37,13 @@ export const NewJtpModal = ({courses}: WriteModalProps) => {
 
   const createAndClose = async () => {
     setLoading(true);
+    let date = new Date().toLocaleString("es-AR");
+    console.log(date)
     await createJtp(new Jtp({
       name: name,
       lastName: lastName,
       email: email,
       courseId: selectedCourse,
-      createdAt: Date.now().toLocaleString(),
-      updatedAt: Date.now().toLocaleString(),
     }));
     setLoading(false);
     handleClose();
@@ -62,6 +58,8 @@ export const NewJtpModal = ({courses}: WriteModalProps) => {
         startIcon={<AddOutlined/>}
         variant='contained'
         title='Agregar'
+        className='hide'
+        id={id}
       >
         Agregar
       </Button>

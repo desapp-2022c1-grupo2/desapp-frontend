@@ -6,9 +6,12 @@ import {getAssignmentColumns} from "./AssignmentColumns";
 import {DataGridLocaleText} from "../JtpTable";
 import {MuiCustomToolbar} from "../MuiCustomToolbar";
 import {validateDate} from "../../../../../util";
+import {Collapse} from "@mui/material";
 
 export const AssignmentTable = () => {
   const [assignments, setAssignments] = useState<Assignment[]>([]);
+  const [open, setOpen] = React.useState(false);
+
   useEffect(() => {
     const fetchAllAssignments = async () => {
       const obtainedData = await getAllAssignments();
@@ -44,6 +47,7 @@ export const AssignmentTable = () => {
   return (<div style={{height: '75vh', width: '100%'}}>
     <DataGrid rows={assignments}
               columns={columns}
+              getRowHeight={() => 'auto'}
               loading={!assignments.length}
               localeText={
                 DataGridLocaleText

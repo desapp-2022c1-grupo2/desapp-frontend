@@ -106,6 +106,7 @@ dist
 yarn.lock
 package-lock.json
 
+.vscode
 .idea
 
 .DS_Store

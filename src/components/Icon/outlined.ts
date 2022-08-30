@@ -12,4 +12,5 @@ export {
     LockOutlined,
     SearchOutlined,
     ArrowRightAltOutlined,
+    DeleteOutlineOutlined
 } from '@mui/icons-material'
