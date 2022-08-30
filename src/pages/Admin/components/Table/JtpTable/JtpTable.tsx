@@ -1,6 +1,15 @@
-import React, {useEffect, useState} from "react";
-import {getAllCourses, getAllJtp, updateJtpDatagrid} from "../../../../../service";
-import {CourseAdapter, Jtp} from "../../../../../models";
+import React, {useEffect, useState} from "react"
+import {
+  getAllCourses,
+  getAllJtp,
+  updateJtpDatagrid
+} from "../../../../../service"
+
+import {
+  CourseAdapter,
+  Jtp,
+  IJtp,
+} from "@models"
 
 import {DataGrid, GridColDef, GridEventListener} from '@mui/x-data-grid';
 import {DataGridLocaleText} from "./DataGridLocaleText";
@@ -13,8 +22,9 @@ import {NewJtpModal} from "../../Modals";
 export const JtpTable = () => {
     const [jtps, setJtps] = useState<Jtp[]>([]);
     const [courses, setCourses] = useState<CourseAdapter[]>([]);
-    const [pageSize, setPageSize] = React.useState(10);
+    const [pageSize, setPageSize] = useState(10);
     const [loading, setLoading] = useState(false);
+    const [flag, setFlag] = useState(false);
 
     useEffect(() => {
         const fetchAllCourses = async () => {
@@ -24,12 +34,13 @@ export const JtpTable = () => {
             }));
         };
         fetchAllCourses().then(r => console.log('fetched courses'));
+        setFlag(true)
     }, []);
 
     useEffect(() => {
         const fetchAllUsers = async () => {
             const obtainedData = await getAllJtp();
-            const obtainedJtps: Jtp[] = obtainedData.map(jtp => new Jtp({
+            const obtainedJtps: Jtp[] = obtainedData.map((jtp: IJtp) => new Jtp({
                 id: jtp.id,
                 name: jtp.name,
                 lastName: jtp.lastName,
@@ -46,8 +57,6 @@ export const JtpTable = () => {
         return () => clearInterval(interval);
     }, [jtps]);
 
-
-
     const handleCommit: GridEventListener<"cellEditCommit"> | undefined = (e) => {
         // if there are changes -> update jtp
         if (jtps.find(jtp => jtp.id === e.id)[e.field] !== e.value) {
@@ -57,12 +66,24 @@ export const JtpTable = () => {
         }
     }
 
+    useEffect(() => {
+        try {
+            const btnNewJTP = document.getElementById("btnAgregarJTP")
+            if(flag && btnNewJTP) {
+                btnNewJTP.style.position = 'absolute'
+                btnNewJTP.style.right = '0'
+                btnNewJTP.className = btnNewJTP.className.replace('hide', '')
+                document.getElementsByClassName("MuiDataGrid-toolbarContainer")[0].append(btnNewJTP)
+            }
+        } catch (err){ console.error(err)}
+    }, [flag])
+
     let columns: GridColDef[] = getJtpColumns(courses, setLoading);
 
     return (
         <div>
             <h3>Lista de JTPs</h3>
-            <NewJtpModal setRows={setJtps} courses={courses}/>
+            <NewJtpModal id="btnAgregarJTP" setRows={setJtps} courses={courses} style='display: none'/>
         <div style={{height: '500px'}}>
             <DataGrid rows={jtps}
                       columns={columns}
@@ -84,6 +105,7 @@ export const JtpTable = () => {
                               quickFilterProps: {debounceMs: 500},
                           },
                       }}
+                      sx={{border: 0}}
             />
         </div>
         </div>);

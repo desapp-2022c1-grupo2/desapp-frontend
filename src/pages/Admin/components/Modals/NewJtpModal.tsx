@@ -5,7 +5,6 @@ import {createJtp} from "../../../../service";
 import {CircularProgress, Typography} from "@mui/material";
 import {WriteModalProps} from "./WriteModalProps";
 import {Jtp} from "../../../../models";
-import {validateDate} from "../../../../util";
 
 const Content = styled.div`
   align-items: center;
@@ -17,14 +16,10 @@ const Content = styled.div`
   justify-content: center;
 `
 
-export const NewJtpModal = ({courses}: WriteModalProps) => {
+export const NewJtpModal = ({ courses, id }: WriteModalProps) => {
   const [open, setOpen] = useState(false)
-  const handleOpen = () => {
-    setOpen(true)
-  }
-  const handleClose = () => {
-    setOpen(false)
-  }
+  const handleOpen = () => { setOpen(true) }
+  const handleClose = () => { setOpen(false) }
 
   const [name, setName] = useState("");
   const [lastName, setLastname] = useState("");
@@ -63,6 +58,8 @@ export const NewJtpModal = ({courses}: WriteModalProps) => {
         startIcon={<AddOutlined/>}
         variant='contained'
         title='Agregar'
+        className='hide'
+        id={id}
       >
         Agregar
       </Button>

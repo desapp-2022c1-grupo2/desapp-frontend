@@ -1,4 +1,4 @@
-interface IJtp {
+export interface IJtp {
   id?: number
   name?: string
   lastName?: string
