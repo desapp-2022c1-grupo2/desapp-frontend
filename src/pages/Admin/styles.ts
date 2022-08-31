@@ -1,20 +1,21 @@
 import styled from 'styled-components'
-import {Button, Field} from '../../components'
-
 
 export const AdminLayout = styled.div`
   align-items: center;
+  height: 100vh;
   justify-content: center;
   width: 100%;
 `
 
 export const AdminContainer = styled.div`
-  margin: 20px;
+  margin: 32px auto;
   background-color: white;
   border-radius: 20px;
   align-items: center;
   flex-direction: column;
-  height: 100%;
+  height: calc(100vh - 184px);
   justify-content: center;
-  padding: 56px 24px;
+  overflow: hidden;
+  padding: 40px 24px;
+  max-width: 1200px;
 `
