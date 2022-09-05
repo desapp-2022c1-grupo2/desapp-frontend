@@ -1,17 +1,14 @@
 import React, { useEffect } from 'react'
 import { ModalProps } from './props'
-
+import { Button } from '../Button'
 import {
-  ModalContainer,
-  ModalContent,
+  SmallModalContainer,
+  SmallModalContent,
   ModalDialog,
   ModalFooter,
-  ModalHeader,
 } from './styles'
 
-import { GoToBack } from '../GoTo'
-
-export const Modal = ({
+export const SmallModal = ({
   children,
   footer,
   open,
@@ -36,16 +33,22 @@ export const Modal = ({
       open={open}
       {...props}
     >
-      <ModalContainer>
-        <ModalHeader>
-          <GoToBack onClick={onClose} text="Volver"/>
-        </ModalHeader>
-        <ModalContent>
-          { title && <h4>{title}</h4> }
+      <SmallModalContainer>
+        { title && <h4>{title}</h4> }
+        <SmallModalContent>
           {children}
-        </ModalContent>
-        { footer && <ModalFooter>{footer}</ModalFooter> }
-      </ModalContainer>
+        </SmallModalContent>
+        <ModalFooter>
+          <Button
+            color='unahurCyan'
+            onClick={onClose}
+            variant='contained'
+            text='Cancelar'
+            title='Cancelar'
+          />
+          {footer}
+        </ModalFooter>
+      </SmallModalContainer>
     </ModalDialog>
   )
 }
