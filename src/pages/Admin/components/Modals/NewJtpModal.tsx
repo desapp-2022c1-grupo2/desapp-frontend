@@ -1,17 +1,9 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
-import { CircularProgress, Typography } from "@mui/material"
-import { createJtp } from "../../../../services"
-import { WriteModalProps } from "./WriteModalProps"
-import {
-  AddOutlined,
-  Button,
-  CheckOutlined,
-  Field,
-  Modal,
-  Select,
-} from '@components'
-import {getCurrentDate, validateDate} from "../../../../util";
+import {CircularProgress, Typography} from "@mui/material"
+import {createJtp} from "../../../../services"
+import {WriteModalProps} from "./WriteModalProps"
+import {AddOutlined, Button, CheckOutlined, Field, Modal, Select,} from '@components'
 
 const Content = styled.div`
   align-items: center;
