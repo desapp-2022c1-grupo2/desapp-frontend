@@ -11,6 +11,7 @@ import {
   Modal,
   Select,
 } from '@components'
+import {getCurrentDate, validateDate} from "../../../../util";
 
 const Content = styled.div`
   align-items: center;
@@ -50,8 +51,6 @@ export const NewJtpModal = ({ courses, id }: WriteModalProps) => {
       lastName,
       email,
       courseId: selectedCourse,
-      createdAt: Date.now().toLocaleString(),
-      updatedAt: Date.now().toLocaleString(),
     })
     setLoading(false)
     handleClose()
