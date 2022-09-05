@@ -23,7 +23,7 @@ export const AdminNavigation = () => {
     >
       <Tab component={Link} to={routes.admin.users.path} label='Usuarios'/>
       <Tab component={Link} to={routes.admin.assignments.path} label='Trabajos Practicos'/>
-      <Tab component={Link} to={routes.admin.account.path} label='Mi cuenta' disabled/>
+      <Tab component={Link} to={routes.admin.account.path} label='Mi cuenta'/>
     </TabsContainer>
   )
 }
