@@ -1,6 +1,10 @@
-import { CourseAdapter } from "../../../../models";
+import {
+  ICourse,
+  IJtp,
+} from "@models"
 
 export interface WriteModalProps {
-  id?: string,
-  courses: CourseAdapter[],
+  id?: string | number,
+  jtp?: IJtp,
+  courses?: ICourse[],
 }

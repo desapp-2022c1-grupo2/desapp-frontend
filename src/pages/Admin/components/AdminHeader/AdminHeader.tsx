@@ -1,28 +1,17 @@
 import React from "react"
-import styled from "styled-components"
-import {
-  AppBar,
-  Toolbar,
-} from "@mui/material"
+import { IconButtonLogoUnahur } from "@assets"
 import { ProfileDropdown } from "../ProfileDropdown"
 import { AdminNavigation } from "../AdminNavigation"
-import { IconButtonLogoUnahur } from "@assets"
-
-const StyledToolbar = styled(Toolbar)`
-  align-items: center;
-  background-color: white;
-  display: flex;
-  justify-content: space-between;
-`
+import { AdminHeaderContainer, TopHeader } from './styles'
 
 export const AdminHeader = () => {
   return (
-    <AppBar position='static'>
-      <StyledToolbar>
+    <AdminHeaderContainer position='static'>
+      <TopHeader>
         <IconButtonLogoUnahur />
         <ProfileDropdown />
-      </StyledToolbar>
+      </TopHeader>
       <AdminNavigation />
-    </AppBar>
+    </AdminHeaderContainer>
   )
 }

@@ -1,112 +1,87 @@
-import React, {useEffect, useState} from "react"
+import React, { useEffect, useState } from "react"
 import {
+  DataGrid,
+  GridColDef,
+  GridEventListener,
+} from '@mui/x-data-grid'
+import {
+  getAllJtps,
+  updateJtp,
   getAllCourses,
-  getAllJtp,
-  updateJtpDatagrid
-} from "../../../../../service"
-
-import {
-  CourseAdapter,
-  Jtp,
-  IJtp,
-} from "@models"
-
-import {DataGrid, GridColDef, GridEventListener} from '@mui/x-data-grid';
-import {DataGridLocaleText} from "./DataGridLocaleText";
-import {validateDate} from "../../../../../util";
-import {MuiCustomToolbar} from "../MuiCustomToolbar";
-import {getJtpColumns} from "./JtpColumns";
-import {NewJtpModal} from "../../Modals";
-
+} from '@services'
+import { DataGridLocaleText } from "./DataGridLocaleText"
+import { MuiCustomToolbar } from "../MuiCustomToolbar"
+import { getJtpColumns } from "./JtpColumns"
+import { IJtp, ICourse } from "@models"
+import { NewJtpModal } from "../../Modals"
 
 export const JtpTable = () => {
-    const [jtps, setJtps] = useState<Jtp[]>([]);
-    const [courses, setCourses] = useState<CourseAdapter[]>([]);
-    const [pageSize, setPageSize] = useState(10);
-    const [loading, setLoading] = useState(false);
-    const [flag, setFlag] = useState(false);
+  const [jtps, setJtps] = useState<IJtp[]>([])
+  const [courses, setCourses] = useState<ICourse[]>([])
+  const [pageSize, setPageSize] = useState<number>(10)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [flag, setFlag] = useState<boolean>(false)
+  const columns: GridColDef[] = getJtpColumns(courses, setLoading)
 
-    useEffect(() => {
-        const fetchAllCourses = async () => {
-            const obtainedData = await getAllCourses();
-            setCourses(obtainedData.map((course: CourseAdapter) => {
-                return new CourseAdapter(course.id, course.name, course.parentCourseId, course.year, course.isPreviousCourse, course.createdAt, course.updatedAt);
-            }));
-        };
-        fetchAllCourses().then(r => console.log('fetched courses'));
-        setFlag(true)
-    }, []);
-
-    useEffect(() => {
-        const fetchAllUsers = async () => {
-            const obtainedData = await getAllJtp();
-            const obtainedJtps: Jtp[] = obtainedData.map((jtp: IJtp) => new Jtp({
-                id: jtp.id,
-                name: jtp.name,
-                lastName: jtp.lastName,
-                email: jtp.email,
-                courseId: jtp.courseId,
-                createdAt: validateDate(jtp.createdAt),
-                updatedAt: validateDate(jtp.updatedAt)
-            }));
-            setJtps(obtainedJtps);
-        }
-        const interval = setInterval(() => {
-            fetchAllUsers();
-        }, 3000);
-        return () => clearInterval(interval);
-    }, [jtps]);
-
-    const handleCommit: GridEventListener<"cellEditCommit"> | undefined = (e) => {
-        // if there are changes -> update jtp
-        if (jtps.find(jtp => jtp.id === e.id)[e.field] !== e.value) {
-            // {id: e.id, [e.field]: e.value}
-            let jtp = new Jtp({id: e.id, [e.field]: e.value})
-            updateJtpDatagrid(jtp).then(r => console.log('updated!', r));
-        }
+  useEffect(() => {
+    const fetchJtps = async () => {
+      const jtps: IJtp[] = await getAllJtps()
+      setJtps(jtps)
+    }
+    const fetchCourses = async () =>{
+        const courses: ICourse[] = await getAllCourses()
+        setCourses(courses)
     }
 
-    useEffect(() => {
-        try {
-            const btnNewJTP = document.getElementById("btnAgregarJTP")
-            if(flag && btnNewJTP) {
-                btnNewJTP.style.position = 'absolute'
-                btnNewJTP.style.right = '0'
-                btnNewJTP.className = btnNewJTP.className.replace('hide', '')
-                document.getElementsByClassName("MuiDataGrid-toolbarContainer")[0].append(btnNewJTP)
-            }
-        } catch (err){ console.error(err)}
-    }, [flag])
+    fetchCourses()
+    setFlag(true)
+    fetchJtps()
+  }, [])
 
-    let columns: GridColDef[] = getJtpColumns(courses, setLoading);
+  const handleCommit: GridEventListener<"cellEditCommit"> | undefined = (e) => {
+    if (jtps.find(jtp => jtp.id === e.id)[e.field] !== e.value) {
+      const jtp: IJtp = {id: e.id, [e.field]: e.value}
+      updateJtp(jtp)
+    }
+  }
 
-    return (
-        <div>
-            <h3>Lista de JTPs</h3>
-            <NewJtpModal id="btnAgregarJTP" setRows={setJtps} courses={courses} style='display: none'/>
-        <div style={{height: '500px'}}>
-            <DataGrid rows={jtps}
-                      columns={columns}
-                      loading={loading || !jtps.length}
-                      onCellEditCommit={handleCommit}
-                      pagination
-                      pageSize={pageSize}
-                      rowsPerPageOptions={[10, 25, 50]}
-                      onPageSizeChange={(newPage) => setPageSize(newPage)}
-                      localeText={
-                          DataGridLocaleText
-                      }
-                      components={{
-                          Toolbar: MuiCustomToolbar,
-                      }}
-                      componentsProps={{
-                          toolbar: {
-                              showQuickFilter: true,
-                              quickFilterProps: {debounceMs: 500},
-                          },
-                      }}
-                      sx={{border: 0}}
-            />
-        </div>
-        </div>);
+  useEffect(() => {
+    try {
+      const btnNewJTP = document.getElementById("btnAgregarJTP")
+      if(flag && btnNewJTP) {
+        document.getElementsByClassName("MuiDataGrid-toolbarContainer")[0].append(btnNewJTP)
+        btnNewJTP.className = btnNewJTP.className.replace('hide', '')
+      }
+    } catch (err){ console.error(err)}
+}, [flag])
+
+  return (
+    <div>
+      <h4>Jefes de Trabajos Practicos</h4>
+      <NewJtpModal id="btnAgregarJTP" setRows={setJtps} courses={courses} style='display: none'/>
+      <div style={{height: 'calc(100vh - 320px)'}}>
+        <DataGrid
+          pagination
+          columns={columns}
+          components={{ Toolbar: MuiCustomToolbar }}
+          componentsProps={{
+            toolbar: {
+              showQuickFilter: true,
+              quickFilterProps: {debounceMs: 500},
+            },
+          }}
+          density='comfortable'
+          disableDensitySelector={true}
+          loading={loading || !jtps.length}
+          localeText={DataGridLocaleText}
+          onCellEditCommit={handleCommit}
+          onPageSizeChange={(newPage) => setPageSize(newPage)}
+          pageSize={pageSize}
+          rows={jtps}
+          rowsPerPageOptions={[10, 25, 50]}
+          sx={{border: 0}}
+        />
+      </div>
+    </div>
+  )
 }

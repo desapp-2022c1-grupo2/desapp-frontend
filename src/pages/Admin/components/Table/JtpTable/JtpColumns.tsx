@@ -1,10 +1,10 @@
-import React, {useState} from "react";
-import {deleteUser} from "../../../../../service";
-import {GridColDef, GridRenderCellParams} from "@mui/x-data-grid";
-import {CircularProgress, IconButton} from "@mui/material";
-import {DeleteOutlineOutlined} from "../../../../../components";
+import React from "react"
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid"
+import { DeleteJtpModal } from "../../Modals"
+import { ICourse } from "@models"
 
-export function getJtpColumns(courses, setLoading) : GridColDef[] {
+
+export function getJtpColumns(courses: ICourse[], setLoading: Function): GridColDef[] {
 
   return [
     {headerName: "ID", field: 'id', flex: 1, editable: false},
@@ -45,20 +45,7 @@ export function getJtpColumns(courses, setLoading) : GridColDef[] {
       align: "center",
       sortable: false,
       disableColumnMenu: true,
-      renderCell: (params: GridRenderCellParams) => (
-        //  TODO: delete and refresh
-
-        <IconButton onClick={() => {
-          setLoading(true);
-          deleteUser(parseInt(params.id.toString())).then(r => {
-            console.log(r)
-          setLoading(false);
-          })
-        }}>
-          <DeleteOutlineOutlined />
-        </IconButton>
-),
-},
-  ];
-
+      renderCell: (params: GridRenderCellParams) => <DeleteJtpModal id={params.id}/>,
+    },
+  ]
 }
