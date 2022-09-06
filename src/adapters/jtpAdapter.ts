@@ -25,6 +25,5 @@ export const jtpResponseAdapter = (jtp: IJtp): IJtpResponse => ({
   name: jtp.name,
   lastName: jtp.lastName,
   email: jtp.email,
-  courseId: jtp.courseId,
-  updatedAt: (new Date()).toUTCString(),
+  courseId: jtp.courseId
 })
