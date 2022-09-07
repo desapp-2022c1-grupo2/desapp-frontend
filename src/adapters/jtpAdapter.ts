@@ -16,8 +16,8 @@ export const jtpAdapter = (jtp: IJtpResponse): IJtp => ({
   lastName: jtp.lastName,
   email: jtp.email,
   courseId: jtp.courseId,
-  createdAt: jtp.createdAt,
-  updatedAt: jtp.updatedAt,
+  createdAt: jtp.createdAt?.slice(0, 10),
+  updatedAt: jtp.updatedAt?.slice(0, 10),
 })
 
 export const jtpResponseAdapter = (jtp: IJtp): IJtpResponse => ({
@@ -25,7 +25,5 @@ export const jtpResponseAdapter = (jtp: IJtp): IJtpResponse => ({
   name: jtp.name,
   lastName: jtp.lastName,
   email: jtp.email,
-  courseId: jtp.courseId,
-  createdAt: jtp.createdAt,
-  updatedAt: jtp.updatedAt,
+  courseId: jtp.courseId
 })

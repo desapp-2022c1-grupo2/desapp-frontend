@@ -39,7 +39,7 @@ export const createJtp = async (newJtp: IJtp) => {
 
 export const updateJtp = async (jtp: IJtp) => {
   try {
-    const response = await axios.put(`${API_URL}/jtp/${jtp.id}`, jtpResponseAdapter(jtp))
+    const response = await axios.patch(`${API_URL}/jtp/${jtp.id}`, jtpResponseAdapter(jtp))
     return Promise.resolve(response.data)
   } catch (err) {
     console.error(err)

@@ -50,8 +50,6 @@ export const NewJtpModal = ({ courses, id }: WriteModalProps) => {
       lastName,
       email,
       courseId: selectedCourse,
-      createdAt: Date.now().toLocaleString(),
-      updatedAt: Date.now().toLocaleString(),
     })
     setLoading(false)
     handleClose()

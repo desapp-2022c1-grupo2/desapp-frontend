@@ -42,7 +42,7 @@ export const getAllAssignments = async (): Promise<IAssignment[]> => {
   
   export const updateAssignment = async (assignment: IAssignment) => {
     try {
-      const response = await axios.put(
+      const response = await axios.patch(
         `${API_URL}/assignment/${assignment.id}`,
         assignmentResponseAdapter(assignment),
       )

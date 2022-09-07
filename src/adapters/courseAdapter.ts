@@ -1,13 +1,13 @@
 import { ICourse } from '../models/ICourse'
 
 export interface ICourseResponse {
-  id: number,
-  name: string,
-  parentCourseId: number,
-  year: number,
-  isPreviousCourse: number,
-  createdAt: string,
-  updatedAt: string,
+  id?: number,
+  name?: string,
+  parentCourseId?: number,
+  year?: number,
+  isPreviousCourse?: number,
+  createdAt?: string,
+  updatedAt?: string,
 }
 
 export const courseAdapter = (course: ICourseResponse): ICourse => ({
@@ -16,8 +16,8 @@ export const courseAdapter = (course: ICourseResponse): ICourse => ({
   parentCourseId: course.parentCourseId,
   year: course.year,
   isPreviousCourse: course.isPreviousCourse,
-  createdAt: course.createdAt,
-  updatedAt: course.updatedAt,
+  createdAt: course.createdAt?.slice(0, 10),
+  updatedAt: course.updatedAt?.slice(0, 10),
 })
 
 export const courseResponseAdapter = (course: ICourse): ICourseResponse => ({
@@ -27,5 +27,5 @@ export const courseResponseAdapter = (course: ICourse): ICourseResponse => ({
   year: course.year,
   isPreviousCourse: course.isPreviousCourse,
   createdAt: course.createdAt,
-  updatedAt: course.updatedAt,
+  updatedAt: (new Date()).toUTCString(),
 })

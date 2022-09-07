@@ -39,7 +39,7 @@ export const createCourse = async (newCourse: ICourse) => {
 
 export const updateCourse = async (course: ICourse) => {
   try {
-    const response = await axios.put(`${API_URL}/course/${course.id}`, courseResponseAdapter(course))
+    const response = await axios.patch(`${API_URL}/course/${course.id}`, courseResponseAdapter(course))
     return Promise.resolve(response.data)
   } catch (err) {
     console.error(err)
