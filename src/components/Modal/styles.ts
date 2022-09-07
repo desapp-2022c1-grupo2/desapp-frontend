@@ -29,6 +29,28 @@ export const ModalContainer = styled.div`
   width: 900px;
 `
 
+export const SmallModalContainer = styled.div`
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 80px 40px 80px;
+  height: 400px;
+  text-align: center;
+  width: 800px;
+`
+
+export const SmallModalContent = styled.div`
+  align-itemns: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  overflow: auto;
+`
+
 export const ModalContent = styled.div`
   height: 100%;
   overflow: auto;

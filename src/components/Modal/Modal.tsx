@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ModalProps } from './props'
 
 import {
@@ -19,6 +19,18 @@ export const Modal = ({
   title,
   ...props
 } : ModalProps ) => {
+  const setupModal = () => {
+    if(props.className) {
+      const allModals = document.getElementsByClassName(props.className)
+      const root = document.getElementById('root')
+      for(let modal of allModals) {
+        root && root.append(modal)
+      }
+    }
+  }
+
+  useEffect(setupModal, [])
+
   return (
     <ModalDialog
       open={open}

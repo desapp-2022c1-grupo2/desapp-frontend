@@ -4,11 +4,12 @@ import {
 } from "react";
 
 export interface ModalProps {
-  onClose: MouseEventHandler,
+  children?: ReactNode,
+  className?: string,
+  footer?: ReactNode,
   open?: boolean,
   title?: string,
-  children?: ReactNode,
-  footer?: ReactNode,
+  onClose: MouseEventHandler,
 }
 
 export interface ModalDialogProps {

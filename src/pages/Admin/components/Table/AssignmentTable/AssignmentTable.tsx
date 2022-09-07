@@ -1,63 +1,49 @@
-import React, {useEffect, useState} from "react";
-import {getAllAssignments} from "../../../../../service";
-import {Assignment} from "../../../../../models";
-import {DataGrid, GridColDef} from "@mui/x-data-grid";
-import {getAssignmentColumns} from "./AssignmentColumns";
-import {DataGridLocaleText} from "../JtpTable";
-import {MuiCustomToolbar} from "../MuiCustomToolbar";
-import {validateDate} from "../../../../../util";
+import React, { useEffect, useState } from "react"
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { getAllAssignments } from "@services"
+import { IAssignment } from "@models"
+import { getAssignmentColumns } from "./AssignmentColumns"
+import { DataGridLocaleText } from "../JtpTable"
+import { MuiCustomToolbar } from "../MuiCustomToolbar"
 
 export const AssignmentTable = () => {
-  const [assignments, setAssignments] = useState<Assignment[]>([]);
+  const [assignments, setAssignments] = useState<IAssignment[]>([])
+  const [pageSize, setPageSize] = useState<number>(10)
+  const [loading, setLoading] = useState<boolean>(false)
+  const columns: GridColDef[] = getAssignmentColumns()
+
   useEffect(() => {
-    const fetchAllAssignments = async () => {
-      const obtainedData = await getAllAssignments();
-      const adaptedAssignments: Assignment[] = obtainedData.map(assignment => new Assignment(
-        assignment.id,
-        assignment.jtpId,
-        assignment.number,
-        assignment.name,
-        assignment.url,
-        assignment.shortDescr,
-        assignment.description,
-        assignment.taskDescription,
-        validateDate(assignment.startDate),
-        validateDate(assignment.endDate),
-        assignment.tags,
-        assignment.var1,
-        assignment.var2,
-        assignment.var3,
-        assignment.var4,
-        assignment.var5,
-        assignment.type,
-        assignment.status,
-        assignment.courseId,
-        assignment.individualProcess,
-      ));
-      setAssignments(adaptedAssignments)
+    const fetchAssignments = async () => {
+      const assignments = await getAllAssignments()
+      setAssignments(assignments)
     }
-    fetchAllAssignments();
-  }, []);
+    fetchAssignments()
+  }, [])
 
-  let columns: GridColDef[] = getAssignmentColumns();
-
-  return (<div style={{height: '75vh', width: '100%'}}>
-    <DataGrid rows={assignments}
-              columns={columns}
-              loading={!assignments.length}
-              localeText={
-                DataGridLocaleText
-              }
-              components={{
-                Toolbar: MuiCustomToolbar,
-                Pagination: null
-              }}
-              componentsProps={{
-                toolbar: {
-                  showQuickFilter: true,
-                  quickFilterProps: {debounceMs: 500},
-                },
-              }}
-    />
-  </div>);
+  return (
+    <div>
+      <h4>Trabajos Practicos</h4>
+      <div style={{height: 'calc(100vh - 320px)'}}>
+        <DataGrid
+          pagination
+          columns={columns}
+          components={{ Toolbar: MuiCustomToolbar }}
+          componentsProps={{
+            toolbar: {
+              showQuickFilter: true,
+              quickFilterProps: {debounceMs: 500},
+            },
+          }}
+          getRowHeight={() => 'auto'}
+          loading={loading || !assignments.length}
+          localeText={DataGridLocaleText}
+          onPageSizeChange={(newPage) => setPageSize(newPage)}
+          pageSize={pageSize}
+          rows={assignments}
+          rowsPerPageOptions={[10, 25, 50]}
+          sx={{border: 0}}
+        />
+      </div>
+    </div>
+  )
 }

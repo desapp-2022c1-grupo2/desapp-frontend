@@ -5,6 +5,7 @@ import {
   AdminUsersPage,
   LoginPage,
 } from '../pages'
+import {AdminStudentsTable} from "../pages/Admin/pages/Students";
 
 export const paths = {
   login: '/login',
@@ -12,6 +13,7 @@ export const paths = {
     home: '/admin',
     users: '/admin/users',
     assignments: '/admin/assignments',
+    students: '/admin/students',
     account: '/admin/account'
   },
 };
@@ -32,13 +34,19 @@ export const routes = {
       path: paths.admin.users,
       exact: true,
       element: <AdminUsersPage />,
-      label: "Usuarios",
+      label: "JTPs",
     },
     assignments: {
       path: paths.admin.assignments,
       exact: true,
       element: <AdminAssignmentsPage />,
       label: "Trabajos Practicos"
+    },
+    students: {
+      path: paths.admin.students,
+      exact: true,
+      element: <AdminStudentsTable />,
+      label: "Estudiantes"
     },
     account: {
       path: paths.admin.account,

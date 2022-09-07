@@ -1,63 +1,87 @@
-import React, {useEffect, useState} from "react";
-import {getAllJtp, updateJtpDatagrid} from "../../../../../service";
-import {Jtp} from "../../../../../models";
-
-import {DataGrid, GridColDef, GridEventListener,} from '@mui/x-data-grid';
-import {DataGridLocaleText} from "./DataGridLocaleText";
-import {validateDate} from "../../../../../util";
-import {MuiCustomToolbar} from "../MuiCustomToolbar";
-import {getJtpColumns} from "./JtpColumns";
+import React, { useEffect, useState } from "react"
+import {
+  DataGrid,
+  GridColDef,
+  GridEventListener,
+} from '@mui/x-data-grid'
+import {
+  getAllJtps,
+  updateJtp,
+  getAllCourses,
+} from '@services'
+import { DataGridLocaleText } from "./DataGridLocaleText"
+import { MuiCustomToolbar } from "../MuiCustomToolbar"
+import { getJtpColumns } from "./JtpColumns"
+import { IJtp, ICourse } from "@models"
+import { NewJtpModal } from "../../Modals"
 
 export const JtpTable = () => {
-  const [jtps, setJtps] = useState<Jtp[]>([]);
+  const [jtps, setJtps] = useState<IJtp[]>([])
+  const [courses, setCourses] = useState<ICourse[]>([])
+  const [pageSize, setPageSize] = useState<number>(10)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [flag, setFlag] = useState<boolean>(false)
+  const columns: GridColDef[] = getJtpColumns(courses, setLoading)
 
-  //Review this
   useEffect(() => {
-    const fetchAllUsers = async () => {
-      const obtainedData: Jtp[] = await getAllJtp();
-      const obtainedJtps: Jtp[] = obtainedData.map(jtp => new Jtp({
-        id: jtp.id,
-        name: jtp.name,
-        lastName: jtp.lastName,
-        email: jtp.email,
-        courseId: jtp.courseId,
-        createdAt: validateDate(jtp.createdAt),
-        updatedAt: validateDate(jtp.updatedAt)
-      }));
-      setJtps(obtainedJtps);
+    const fetchJtps = async () => {
+      const jtps: IJtp[] = await getAllJtps()
+      setJtps(jtps)
     }
-    fetchAllUsers().then(value => console.log("fetched users"));
-  }, []);
+    const fetchCourses = async () =>{
+        const courses: ICourse[] = await getAllCourses()
+        setCourses(courses)
+    }
+
+    fetchCourses()
+    setFlag(true)
+    fetchJtps()
+  }, [])
 
   const handleCommit: GridEventListener<"cellEditCommit"> | undefined = (e) => {
-    // if there are changes -> update jtp
     if (jtps.find(jtp => jtp.id === e.id)[e.field] !== e.value) {
-      // {id: e.id, [e.field]: e.value}
-      let jtp = new Jtp({id: e.id, [e.field]: e.value})
-      updateJtpDatagrid(jtp).then(r => console.log('updated!', r));
+      const jtp: IJtp = {id: e.id, [e.field]: e.value}
+      updateJtp(jtp)
     }
   }
 
-  let columns: GridColDef[] = getJtpColumns();
+  useEffect(() => {
+    try {
+      const btnNewJTP = document.getElementById("btnAgregarJTP")
+      if(flag && btnNewJTP) {
+        document.getElementsByClassName("MuiDataGrid-toolbarContainer")[0].append(btnNewJTP)
+        btnNewJTP.className = btnNewJTP.className.replace('hide', '')
+      }
+    } catch (err){ console.error(err)}
+}, [flag])
+
   return (
-    <div style={{height: '75vh', width: '100%'}}>
-      <DataGrid rows={jtps}
-                columns={columns}
-                loading={!jtps.length}
-                onCellEditCommit={handleCommit}
-                localeText={
-                  DataGridLocaleText
-                }
-                components={{
-                  Toolbar: MuiCustomToolbar,
-                  Pagination: null
-                }}
-                componentsProps={{
-                  toolbar: {
-                    showQuickFilter: true,
-                    quickFilterProps: {debounceMs: 500},
-                  },
-                }}
-      />
-    </div>);
+    <div>
+      <h4>Jefes de Trabajos Practicos</h4>
+      <NewJtpModal id="btnAgregarJTP" setRows={setJtps} courses={courses} style='display: none'/>
+      <div style={{height: 'calc(100vh - 320px)'}}>
+        <DataGrid
+          pagination
+          columns={columns}
+          components={{ Toolbar: MuiCustomToolbar }}
+          componentsProps={{
+            toolbar: {
+              showQuickFilter: true,
+              quickFilterProps: {debounceMs: 500},
+            },
+          }}
+          density='comfortable'
+          disableDensitySelector={true}
+          loading={loading || !jtps.length}
+          localeText={DataGridLocaleText}
+          onCellEditCommit={handleCommit}
+          onPageSizeChange={(newPage) => setPageSize(newPage)}
+          pageSize={pageSize}
+          rows={jtps}
+          rowsPerPageOptions={[10, 25, 50]}
+          sx={{border: 0}}
+        />
+      </div>
+    </div>
+  )
 }

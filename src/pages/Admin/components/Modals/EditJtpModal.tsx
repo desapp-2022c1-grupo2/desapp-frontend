@@ -1,10 +1,19 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
+import {
+  CircularProgress,
+  Typography,
+} from "@mui/material"
 import styled from 'styled-components'
-import {Button, CheckOutlined, EditOutlined, Field, Modal, Select,} from '@components'
-import {WriteModalProps} from "./WriteModalProps";
-import {updateJtp} from "../../../../service";
-import {CircularProgress, Typography} from "@mui/material";
-import {Jtp} from "../../../../models";
+import { WriteModalProps } from "./WriteModalProps"
+import { updateJtp } from "@services"
+import {
+  Button,
+  CheckOutlined,
+  EditOutlined,
+  Field,
+  Modal,
+  Select,
+} from '@components'
 
 const Content = styled.div`
   align-items: center;
@@ -16,28 +25,41 @@ const Content = styled.div`
   justify-content: center;
 `
 
+type changeEvent = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+
 export const EditJtpModal = ({jtp, courses}: WriteModalProps) => {
   const [open, setOpen] = useState(false)
-  const handleOpen = () => {
-    setOpen(true)
-  }
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  const [name, setName] = useState(jtp.name);
+  const [name, setName] = useState(jtp.name)
   const [lastName, setLastname] = useState(jtp.lastName);
   const [email, setEmail] = useState(jtp.email);
   const [selectedCourse, setSelectedCourse] = useState(jtp.courseId);
   const [loading, setLoading] = useState(false);
-  const formIsCompleted = name && lastName && email && selectedCourse;
+  const formIsCompleted = name && lastName && email && selectedCourse
 
-  const handleChange = (setState: Function, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    const value = event.target.value;
-    if (value !== '') {
-      setState(value);
-    }
-  };
+  const handleOpen = () => { setOpen(true) }
+  const handleClose = () => { setOpen(false) }
+  const handleChange = (
+    setState: Function,
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    const value: string = event.target.value
+    value && setState(value)
+  }
+
+  const handleUpdate = async () => {
+    setLoading(true)
+    await updateJtp({
+      ...jtp,
+      name,
+      lastName,
+      email,
+      courseId: selectedCourse,
+      updatedAt: Date.now().toLocaleString()
+    })
+    setLoading(false)
+    handleClose()
+  }
+
   return (
     <>
       <Button
@@ -45,48 +67,52 @@ export const EditJtpModal = ({jtp, courses}: WriteModalProps) => {
         onClick={handleOpen}
         startIcon={<EditOutlined/>}
         variant='contained'
+        text='Editar'
         title='Editar usuario'
-      >
-        Editar
-      </Button>
+      />
       <Modal
         onClose={handleClose}
         open={open}
         title='Editar usuario'
         footer={
-          <>
-            <Button color='success' onClick={
-              async () => {
-                setLoading(true);
-                await updateJtp(new Jtp({
-                  id: jtp.id,
-                  name: name,
-                  lastName: lastName,
-                  email: email,
-                  courseId: selectedCourse,
-                  createdAt: jtp.createdAt,
-                  updatedAt: Date.now().toLocaleString()
-                }));
-                setLoading(false);
-                handleClose();
-              }
-            } startIcon={<CheckOutlined/>} variant='contained' title='Confirmar cambios'>
-              {loading? <CircularProgress /> : "Confirmar"}
-            </Button>
-          </>
+          <Button
+            children={loading? <CircularProgress /> : "Confirmar"}
+            color='success'
+            onClick={handleUpdate}
+            startIcon={<CheckOutlined/>}
+            variant='contained'
+            title='Confirmar cambios'
+          />
         }
       >
         <Content>
-          <Field label={"Nombre"} defaultValue={name} placeholder={"Ingresá el nombre"}
-                 onChange={(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleChange(setName, event)}/>
-          <Field label={"Apellido"} defaultValue={lastName} placeholder={"Ingresá el apellido"}
-                 onChange={(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleChange(setLastname, event)}/>
-          <Field label={"Email"} defaultValue={email} placeholder={"Ingresá el email"}
-                 onChange={(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleChange(setEmail, event)}/>
-          <Select defaultValue={selectedCourse} items={courses.map(course => course.name)} placeholder={selectedCourse}
-                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => handleChange(setSelectedCourse, event)}/>
+          <Field
+            defaultValue={name}
+            label={"Nombre"}
+            onChange={(event: changeEvent) => handleChange(setName, event)}
+            placeholder={"Ingresá el nombre"}
+          />
+          <Field
+            defaultValue={lastName}
+            label={"Apellido"}
+            onChange={(event: changeEvent) => handleChange(setLastname, event)}
+            placeholder={"Ingresá el apellido"}
+          />
+          <Field
+            defaultValue={email}
+            label={"Email"}
+            onChange={(event: changeEvent) => handleChange(setEmail, event)}
+            placeholder={"Ingresá el email"}
+          />
+          <Select
+            defaultValue={selectedCourse}
+            items={courses.map(course => course.name)}
+            label='Materia'
+            onChange={(event: changeEvent) => handleChange(setSelectedCourse, event)}
+            placeholder={selectedCourse}
+          />
         </Content>
-        {!formIsCompleted && <Typography color={'error'}>Tenés que completar los campos</Typography>}
+        { !formIsCompleted && <Typography color={'unahurRed'}>Tenés que completar los campos</Typography> }
       </Modal>
     </>
   )

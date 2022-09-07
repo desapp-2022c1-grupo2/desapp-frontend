@@ -7,3 +7,15 @@ export const MuiSelect = styled(Select)`
   minWidth: '192px';
   padding: '8px 16px';
 `
+
+export const SelectLabel = styled.label`
+  display: block;
+  text-align: left;
+  width: 100%;
+`
+
+export const SelectContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
+`
