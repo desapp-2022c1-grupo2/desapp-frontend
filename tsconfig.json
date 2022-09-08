@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": "./",
     "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -16,9 +16,38 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
+    "paths": {
+      "@src/*": ["./src/*"],
+      "@adapters/*": ["./src/adapters/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@components/*": ["./src/components/*"],
+      "@models/*": ["./src/models/*"],
+      "@router/*": ["./src/router/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@services/*": ["./src/serices/*"],
+      "@store/*": ["./src/store/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@util/*": ["./src/util/*"],
+      "@adminPages/*": ["./src/pages/Admin/*"],
+      "@LoginPage/*": ["./src/pages/Login/*"],
+      // read index
+      "@adapters": ["./src/adapters/index"],
+      "@assets": ["./src/assets/index"],
+      "@components": ["./src/components/index"],
+      "@const": ["./src/const"],
+      "@models": ["./src/models/index"],
+      "@pages": ["./src/pages/index"],
+      "@router": ["./src/router/index"],
+      "@services": ["./src/services/index"],
+      "@store": ["./src/store/index"],
+      "@styles": ["./src/styles/index"],
+      "@util": ["./src/util/index"],
+      "@adminPages": ["./src/pages/Admin/index"],
+      "@LoginPage": ["./src/pages/Login/index"],
+    }
   },
   "include": [
     "src",
     "vite.config.ts"
-  ]
+, ".vscode/adapters copy"  ]
 }

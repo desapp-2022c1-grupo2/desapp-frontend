@@ -7,16 +7,22 @@ export default defineConfig({
   plugins: [react()],
   publicDir: "public",
   resolve: {
-    alias: {
-      "@assets": path.resolve(__dirname, './src/assets'),
-      "@components": path.resolve(__dirname, './src/components'),
-      "@models": path.resolve(__dirname, './src/models'),
-      "@pages": path.resolve(__dirname, './src/pages'),
-      "@router": path.resolve(__dirname, './src/router'),
-      "@services": path.resolve(__dirname, './src/services'),
-      "@store": path.resolve(__dirname, './src/store'),
-      "@adminPages": path.resolve(__dirname, './src/pages/Admin'),
-      //"@JtpPages": path.resolve(__dirname, './src/pages/JTP'),
-    }
-  }
+    alias: [
+      { find: '@src', replacement: path.resolve(__dirname, 'src') },
+      { find: '@adapters', replacement: path.resolve(__dirname, 'src/adapters') },
+      { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
+      { find: '@const', replacement: path.resolve(__dirname, 'src/const')},
+      { find: '@components', replacement: path.resolve(__dirname, 'src/components') },
+      { find: '@models', replacement: path.resolve(__dirname, 'src/models') },
+      { find: '@router', replacement: path.resolve(__dirname, 'src/router') },
+      { find: '@services', replacement: path.resolve(__dirname, 'src/services') },
+      { find: '@store', replacement: path.resolve(__dirname, 'src/store') },
+      { find: '@styles', replacement: path.resolve(__dirname, 'src/styles') },
+      { find: '@util', replacement: path.resolve(__dirname, 'src/pages/util') },
+      //pages
+      { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') },
+      { find: '@adminPages', replacement: path.resolve(__dirname, 'src/pages/Admin') },
+      { find: '@LoginPage', replacement: path.resolve(__dirname, 'src/pages/Login') },
+    ],
+  },
 })
