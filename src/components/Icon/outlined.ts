@@ -10,6 +10,7 @@ export {
     VisibilityOutlined,
     VisibilityOffOutlined,
     LockOutlined,
+    PersonOutlined,
     SearchOutlined,
     ArrowRightAltOutlined,
     DeleteOutlineOutlined
