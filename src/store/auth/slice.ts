@@ -2,7 +2,7 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit'
-import { IAuth } from './IAuth'
+import { IAuth } from '@models/IAuth'
 
 const initialState: IAuth = {
   email: '',

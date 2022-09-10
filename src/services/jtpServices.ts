@@ -1,11 +1,11 @@
 import axios from "axios"
 import { API_URL } from "../const"
-import { IJtp } from "../models"
+import { IJtp } from "@models"
 import {
   jtpAdapter,
   jtpResponseAdapter,
   IJtpResponse,
-} from "../adapters"
+} from "@adapters"
 
 export const getAllJtps = async (): Promise<IJtp[]> => {
   try {

@@ -2,7 +2,7 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit'
-import { IJtp } from './IJtp'
+import { IJtp } from '@models'
 
 interface IUsers {
   jtps: IJtp[],

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
+import { Button } from '@components/Button'
 import { ModalProps } from './props'
-import { Button } from '../Button'
 import {
   SmallModalContainer,
   SmallModalContent,

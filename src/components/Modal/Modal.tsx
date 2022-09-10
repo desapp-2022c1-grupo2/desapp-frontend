@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { ModalProps } from './props'
-
+import { GoToBack } from '@components/GoTo'
 import {
   ModalContainer,
   ModalContent,
@@ -8,8 +8,6 @@ import {
   ModalFooter,
   ModalHeader,
 } from './styles'
-
-import { GoToBack } from '../GoTo'
 
 export const Modal = ({
   children,

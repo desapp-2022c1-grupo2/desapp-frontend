@@ -6,12 +6,13 @@ import {
   Routes,
   Route,
 } from 'react-router-dom'
-import { Iauth, requestLogin } from '@store/auth'
-import { RootState } from 'store' 
+import { IAuth } from '@models'
+import { requestLogin } from '@store/auth'
+import { RootState } from '@store' 
 import { routes } from './routes'
 
 export const Router = () => {
-  const { isLogged } = useSelector<RootState, Iauth>((state) => state.auth)
+  const { isLogged } = useSelector<RootState, IAuth>((state) => state.auth)
   const dispatch = useDispatch()
   
   React.useEffect(

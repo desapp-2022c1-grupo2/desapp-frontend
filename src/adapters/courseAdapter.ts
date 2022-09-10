@@ -1,4 +1,4 @@
-import { ICourse } from '../models/ICourse'
+import { ICourse } from '@models'
 
 export interface ICourseResponse {
   id?: number,
@@ -6,8 +6,6 @@ export interface ICourseResponse {
   parentCourseId?: number,
   year?: number,
   isPreviousCourse?: number,
-  createdAt?: string,
-  updatedAt?: string,
 }
 
 export const courseAdapter = (course: ICourseResponse): ICourse => ({
@@ -16,8 +14,6 @@ export const courseAdapter = (course: ICourseResponse): ICourse => ({
   parentCourseId: course.parentCourseId,
   year: course.year,
   isPreviousCourse: course.isPreviousCourse,
-  createdAt: course.createdAt?.slice(0, 10),
-  updatedAt: course.updatedAt?.slice(0, 10),
 })
 
 export const courseResponseAdapter = (course: ICourse): ICourseResponse => ({
@@ -26,6 +22,4 @@ export const courseResponseAdapter = (course: ICourse): ICourseResponse => ({
   parentCourseId: course.parentCourseId,
   year: course.year,
   isPreviousCourse: course.isPreviousCourse,
-  createdAt: course.createdAt,
-  updatedAt: (new Date()).toUTCString(),
 })

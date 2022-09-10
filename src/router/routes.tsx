@@ -4,14 +4,15 @@ import {
   AdminAssignmentsPage,
   AdminUsersPage,
   LoginPage,
-} from '../pages'
-import {AdminStudentsTable} from "../pages/Admin/pages/Students";
+} from '@pages'
+import { AdminStudentsTable } from "@pages/Admin/pages/Students";
+
 
 export const paths = {
   login: '/login',
   admin: {
     home: '/admin',
-    users: '/admin/users',
+    jtps: '/admin/users',
     assignments: '/admin/assignments',
     students: '/admin/students',
     account: '/admin/account'
@@ -30,8 +31,8 @@ export const routes = {
       exact: true,
       element: <AdminUsersPage />,
     },
-    users: {
-      path: paths.admin.users,
+    jtps: {
+      path: paths.admin.jtps,
       exact: true,
       element: <AdminUsersPage />,
       label: "JTPs",
@@ -51,7 +52,6 @@ export const routes = {
     account: {
       path: paths.admin.account,
       exact: true,
-      //TODO: Implement mi cuenta page
       element: <AdminAccountPage />,
       label: "Mi cuenta"
     },

@@ -1,4 +1,4 @@
-import { InputProps } from "../Input"
+import { InputProps } from "@components/Input"
 
 export interface FieldProps extends InputProps {
   label?: string,

@@ -1,13 +1,9 @@
 import React, { StrictMode } from 'react'
 import { Provider as StoreProvider } from 'react-redux'
 import { createRoot } from 'react-dom/client'
-
-import { ThemeProvider } from '@mui/material/styles'
-import { Router } from './router'
-import { store } from './store'
-import { theme } from './styles/muiStyles'
-import './styles/styles.css'
-
+import { Router } from '@router'
+import { store } from '@store'
+import { theme, ThemeProvider } from './styles'
 
 createRoot(document.getElementById('root')!)
   .render(

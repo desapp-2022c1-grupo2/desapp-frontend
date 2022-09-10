@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   MenuItem,
   SelectChangeEvent,
 } from '@mui/material'
-import { MuiSelect, SelectContainer, SelectLabel } from './styles'
-import { Input } from '../Input'
+import {
+  MuiSelect,
+  SelectContainer,
+  SelectLabel,
+} from './styles'
+import { Input } from '@components/Input'
 import { SelectProps } from './props'
 
 export const Select = ({ items, placeholder, ...props } : SelectProps) => {
