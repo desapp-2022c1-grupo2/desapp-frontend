@@ -1,11 +1,14 @@
 import styled from 'styled-components'
-import { Tab, Tabs } from '@mui/material'
+import { Tab as MuiTab, Tabs } from '@mui/material'
 
 export const TabsContainer = styled(Tabs)`
-  background-color: white;
-  margin: 0 4%;
-  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  height: 80px;
+  margin: 16px;
   width: 100%;
 `
 
-export { Tab }
+export const Tab = styled(MuiTab)`
+  height: 79px;
+`

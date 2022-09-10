@@ -1,16 +1,16 @@
 import React from "react"
-import { IconButtonLogoUnahur } from "@assets"
 import { AdminNavigation, ProfileDropdown } from '@adminPages/components'
-import { AdminHeaderContainer, TopHeader } from './styles'
+import { AdminHeaderContainer, LogoUnahur, TopHeader } from './styles'
+import logoUnahur from "@assets/LogoUnahur.svg"
 
 export const AdminHeader = () => {
   return (
-    <AdminHeaderContainer position='static'>
+    <AdminHeaderContainer position='absolute'>
       <TopHeader>
-        <IconButtonLogoUnahur />
+        <LogoUnahur src={logoUnahur} alt='unahur'/>
+        <AdminNavigation />
         <ProfileDropdown />
       </TopHeader>
-      <AdminNavigation />
     </AdminHeaderContainer>
   )
 }

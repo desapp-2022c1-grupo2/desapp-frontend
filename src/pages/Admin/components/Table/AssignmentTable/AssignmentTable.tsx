@@ -21,9 +21,9 @@ export const AssignmentTable = () => {
   }, [])
 
   return (
-    <div>
-      <h4>Trabajos Practicos</h4>
-      <div style={{height: 'calc(100vh - 320px)'}}>
+    <div style={{height: '100%'}}>
+      <h4>Trabajos Prácticos</h4>
+      <div style={{height: '100%'}}>
         <DataGrid
           pagination
           columns={columns}

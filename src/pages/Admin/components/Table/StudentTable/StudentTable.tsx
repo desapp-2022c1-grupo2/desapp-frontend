@@ -21,9 +21,9 @@ export const StudentTable = () => {
   }, [])
 
   return (
-    <div>
+    <div style={{height: '100%'}}>
       <h4>Estudiantes</h4>
-      <div style={{height: 'calc(100vh - 320px)'}}>
+    <div style={{height: '100%'}}>
         <DataGrid
           pagination
           columns={columns}
