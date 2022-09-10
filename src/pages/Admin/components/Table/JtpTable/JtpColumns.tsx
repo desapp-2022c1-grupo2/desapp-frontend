@@ -3,7 +3,6 @@ import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid"
 import { DeleteJtpModal } from "../../Modals"
 import { ICourse } from "@models"
 
-
 export function getJtpColumns(courses: ICourse[], setLoading: Function): GridColDef[] {
 
   return [
@@ -35,8 +34,6 @@ export function getJtpColumns(courses: ICourse[], setLoading: Function): GridCol
         }
       }) : []
     },
-    {headerName: "Fecha de creación", field: "createdAt", flex: 3, editable: true, type: "date"},
-    {headerName: "Última actualización", field: "updatedAt", flex: 3, editable: false, type: "date"},
     {
       field: "delete",
       headerName: "Eliminar",

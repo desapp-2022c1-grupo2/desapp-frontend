@@ -34,7 +34,6 @@ export const AssignmentTable = () => {
               quickFilterProps: {debounceMs: 500},
             },
           }}
-          getRowHeight={() => 'auto'}
           loading={loading || !assignments.length}
           localeText={DataGridLocaleText}
           onPageSizeChange={(newPage) => setPageSize(newPage)}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { EditAdminInfoModal } from '../../components/Modals'
+import { EditAdminInfoModal } from '@adminPages/components'
 import {
   Button,
   EmailOutlined,

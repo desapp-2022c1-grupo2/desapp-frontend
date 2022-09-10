@@ -1,17 +1,16 @@
-import React, {useEffect, useState} from "react"
-import {DataGrid, GridColDef} from "@mui/x-data-grid";
-import {IAssignment} from "@models"
-import {getAssignmentColumns} from "./StudentColumns"
-import {DataGridLocaleText} from "../JtpTable"
-import {MuiCustomToolbar} from "../MuiCustomToolbar"
-import {getAllStudents} from "../../../../../services/studentServices";
-import {IStudent} from "../../../../../models/IStudent";
+import React, { useEffect, useState } from "react"
+import { DataGrid, GridColDef } from "@mui/x-data-grid"
+import { getStudentColumns } from "./StudentColumns"
+import { DataGridLocaleText } from "../JtpTable"
+import { MuiCustomToolbar } from "../MuiCustomToolbar"
+import { getAllStudents } from '@services'
+import { IStudent } from '@models'
 
 export const StudentTable = () => {
   const [students, setStudents] = useState<IStudent[]>([])
   const [pageSize, setPageSize] = useState<number>(50)
   const [loading, setLoading] = useState<boolean>(false)
-  const columns: GridColDef[] = getAssignmentColumns()
+  const columns: GridColDef[] = getStudentColumns()
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -35,7 +34,7 @@ export const StudentTable = () => {
               quickFilterProps: {debounceMs: 500},
             },
           }}
-          getRowHeight={() => 'auto'}
+          density='comfortable'
           loading={loading || !students.length}
           localeText={DataGridLocaleText}
           onPageSizeChange={(newPage) => setPageSize(newPage)}

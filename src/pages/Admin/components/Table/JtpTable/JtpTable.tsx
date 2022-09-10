@@ -13,7 +13,7 @@ import { DataGridLocaleText } from "./DataGridLocaleText"
 import { MuiCustomToolbar } from "../MuiCustomToolbar"
 import { getJtpColumns } from "./JtpColumns"
 import { IJtp, ICourse } from "@models"
-import { NewJtpModal } from "../../Modals"
+import { NewJtpModal } from "@adminPages/components"
 
 export const JtpTable = () => {
   const [jtps, setJtps] = useState<IJtp[]>([])
