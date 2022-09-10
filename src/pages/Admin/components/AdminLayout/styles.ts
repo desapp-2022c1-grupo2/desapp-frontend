@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 
-export const AdminLayout = styled.div`
+export const AdminLayoutContainer = styled.div`
   align-items: center;
   height: 100vh;
   justify-content: center;
   width: 100%;
 `
 
-export const AdminContainer = styled.div`
+export const AdminContent = styled.div`
   margin: 32px auto;
   background-color: white;
   border-radius: 20px;

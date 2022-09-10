@@ -1,7 +1,6 @@
 import React from "react"
 import { IconButtonLogoUnahur } from "@assets"
-import { ProfileDropdown } from "../ProfileDropdown"
-import { AdminNavigation } from "../AdminNavigation"
+import { AdminNavigation, ProfileDropdown } from '@adminPages/components'
 import { AdminHeaderContainer, TopHeader } from './styles'
 
 export const AdminHeader = () => {
