@@ -1,25 +1,25 @@
 import React, { useState } from 'react'
-import { CircularProgress } from "@mui/material"
+import { deleteJtp } from "@services"
+import { DeleteJtpModalProps } from "./props"
 import {
   Button,
+  CircularProgress,
   DeleteOutlined,
   SmallModal,
 } from '@components'
-import { deleteJtp } from "@services"
-import { WriteModalProps } from "./WriteModalProps"
 
-export const DeleteJtpModal = ({ jtp, id }: WriteModalProps) => {
+export const DeleteJtpModal = ({ jtp, id }: DeleteJtpModalProps) => {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+  
+  const handleOpen = () => { setOpen(true) }
+  const handleClose = () => { setOpen(false) }
 
-  const handleOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => { console.log('close'); setOpen(false) }
   const handleDelete = async () => {
     setLoading(true)
-    await deleteJtp(jtp ? jtp.id : id)
+    let _id: number | undefined = id ? parseInt(id.toString()) : undefined
+    _id = (jtp && jtp.id) || _id
+    _id && await deleteJtp(_id)
     setLoading(false)
     handleClose()
   }
@@ -51,7 +51,7 @@ export const DeleteJtpModal = ({ jtp, id }: WriteModalProps) => {
     >
       {
         jtp
-          ? <p>Está a punto de eliminar el JTP con nombre "<b>{jtp.nombre}</b>" y con id <b>{jtp.id}</b>, este cambio es permanente</p>
+          ? <p>Está a punto de eliminar el JTP con nombre "<b>{jtp.name} {jtp.lastName}</b>" y con id <b>{jtp.id}</b>, este cambio es permanente</p>
           : <p>Está a punto de eliminar el JTP con id <b>{id}</b>, este cambio es permanente</p>
       }
     </SmallModal>
