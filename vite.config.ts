@@ -18,7 +18,7 @@ export default defineConfig({
       { find: '@services', replacement: path.resolve(__dirname, 'src/services') },
       { find: '@store', replacement: path.resolve(__dirname, 'src/store') },
       { find: '@styles', replacement: path.resolve(__dirname, 'src/styles') },
-      { find: '@util', replacement: path.resolve(__dirname, 'src/pages/util') },
+      { find: '@util', replacement: path.resolve(__dirname, 'src/util') },
       //pages
       { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') },
       { find: '@adminPages', replacement: path.resolve(__dirname, 'src/pages/Admin') },
