@@ -1,12 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit"
-import { all } from 'redux-saga/effects'
 import createSagaMiddleware from 'redux-saga'
+import { configureStore } from "@reduxjs/toolkit"
 import { reducers } from './reducers'
-import { jtpWatcher } from './users'
-
-export function* rootSagas() {
-  yield all([jtpWatcher()])
-}
+import { rootSagas } from './rootSagas'
 
 const sagaMiddleware = createSagaMiddleware()
 const middlewares = [ sagaMiddleware ]
@@ -22,4 +17,5 @@ sagaMiddleware.run(rootSagas)
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 
+export * from './selectors'
 export default store

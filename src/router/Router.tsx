@@ -11,17 +11,29 @@ import { requestLogin } from '@store/auth'
 import { RootState } from '@store' 
 import { routes } from './routes'
 
+import { getAssignments } from '@store/Assignments'
+import { getCourses } from '@store/courses'
+import { getJtps, getStudents } from '@store/users'
+
+
 export const Router = () => {
   const { isLogged } = useSelector<RootState, IAuth>((state) => state.auth)
   const dispatch = useDispatch()
-  
+
   React.useEffect(
     () => {
-      const localEmail = localStorage.getItem("email")
-      const localPass = localStorage.getItem("password")
-      if (localEmail && localPass) dispatch(requestLogin({ email: localEmail, password: localPass }))
+      if(!isLogged) {
+        const localEmail = localStorage.getItem("email")
+        const localPass = localStorage.getItem("password")
+        if (localEmail && localPass) dispatch(requestLogin({ email: localEmail, password: localPass }))
+      } else {
+        dispatch(getAssignments())
+        dispatch(getCourses())
+        dispatch(getJtps())
+        dispatch(getStudents())
+      }
     },
-    []
+    [isLogged]
   )
 
   const AdminRoutes = (

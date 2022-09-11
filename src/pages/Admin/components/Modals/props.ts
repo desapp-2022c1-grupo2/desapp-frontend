@@ -6,8 +6,7 @@ export interface EditJtpModalProps {
 }
 
 export interface DeleteJtpModalProps {
-  id?: string | number,
-  jtp?: IJtp,
+  jtp: IJtp,
 }
 
 export interface NewJtpModalProps {

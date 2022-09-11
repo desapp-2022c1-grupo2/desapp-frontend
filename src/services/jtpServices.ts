@@ -46,9 +46,9 @@ export const updateJtp = async (jtp: IJtp) => {
   }
 }
 
-export const deleteJtp = async (id: number) => {
+export const deleteJtp = async (jtp: IJtp) => {
   try {
-    const response = await axios.delete(`${API_URL}/jtp/${id}`)
+    const response = await axios.delete(`${API_URL}/jtp/${jtp.id}`)
     return Promise.resolve(response.data)
   } catch (err) {
     console.error(err)

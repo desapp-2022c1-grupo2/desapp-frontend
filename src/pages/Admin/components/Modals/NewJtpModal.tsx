@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { SelectChangeEvent } from '@mui/material'
-import { createJtp } from '@services'
+import { createJtp } from '@store/users'
 import { inputChangeEvent } from '@const'
 import { Content, RequiredFieldText } from './styles'
 import { NewJtpModalProps } from './props'
@@ -13,8 +13,10 @@ import {
   Modal,
   Select,
 } from '@components'
+import { useDispatch } from 'react-redux'
 
 export const NewJtpModal = ({ courses, id }: NewJtpModalProps) => {
+  const dispatch = useDispatch()
   const [open, setOpen] = useState(false)
   const [name, setName] = useState("")
   const [lastName, setLastname] = useState("")
@@ -49,15 +51,15 @@ export const NewJtpModal = ({ courses, id }: NewJtpModalProps) => {
     setSelectedCourse(event.target.value as string)
   }
 
-  const handleCreateJtp = async () => {
+  const handleCreateJtp = () => {
     if (!formIsCompleted) return
     setLoading(true)
-    await createJtp({
+    dispatch(createJtp({
       name,
       lastName,
       email,
       courseId: parseInt(selectedCourse),
-    })
+    }))
     setLoading(false)
     handleClose()
   }
@@ -78,20 +80,23 @@ export const NewJtpModal = ({ courses, id }: NewJtpModalProps) => {
         open={open}
         title='Agregar nuevo usuario'
         footer={
-          <Button
-            children={loading ? <CircularProgress/> : "Confirmar"}
-            color='unahurGreen'
-            disabled={!formIsCompleted}
-            onClick={handleCreateJtp}
-            startIcon={<CheckOutlined/>}
-            title='Crear usuario'
-            variant='contained'
-          />
+          loading
+            ? <CircularProgress/>
+            : <Button
+                children="Confirmar"
+                color='unahurGreen'
+                disabled={!formIsCompleted}
+                onClick={handleCreateJtp}
+                startIcon={<CheckOutlined/>}
+                title='Crear usuario'
+                variant='contained'
+              />
         }
       >
         <Content>
           <Field
             required
+            disabled={loading}
             error={!name}
             label={"Nombre"}
             onChange={(event: inputChangeEvent) => handleChange(setName, event)}
@@ -100,6 +105,7 @@ export const NewJtpModal = ({ courses, id }: NewJtpModalProps) => {
           />
           <Field
             required
+            disabled={loading}
             error={!lastName}
             label={"Apellido"}
             onChange={(event: inputChangeEvent) => handleChange(setLastname, event)}
@@ -108,6 +114,7 @@ export const NewJtpModal = ({ courses, id }: NewJtpModalProps) => {
           />
           <Field
             required
+            disabled={loading}
             error={!email}
             label={"Email"}
             onChange={(event: inputChangeEvent) => handleChange(setEmail, event)}
@@ -116,6 +123,7 @@ export const NewJtpModal = ({ courses, id }: NewJtpModalProps) => {
           />
           <Select
             required
+            disabled={loading}
             items={courses ? courses.map(course => course.name ? course.name : '') : []}
             label='Materia'
             onChange={handleSelectCourse}
