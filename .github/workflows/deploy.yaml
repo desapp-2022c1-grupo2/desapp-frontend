@@ -6,8 +6,13 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest    #instala ubuntu
     steps:
-      - uses: actions/checkout@v2
-      - name: Deploy test
-        run: echo "Deploying v1.0.0"
+      - uses: actions/checkout@v2  # Actions para clonar el repositorio
+        with:
+          fetch-depth: 0  # Descarga solo el ultimo commit
+      - uses: actions/setup-node@v1  # Actions para instalar node
+        with:
+          node-version:  '14.x'# Version de node
+      - name: Install dependencies
+        run: yarn install # Instala las dependencias
