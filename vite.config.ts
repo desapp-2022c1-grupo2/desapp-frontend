@@ -6,9 +6,6 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   publicDir: "public",
-  server:{
-    port: Number(process.env.VITE_FRONTEND_PORT) || 3002
-  },
   resolve: {
     alias: {
       "@assets": path.resolve(__dirname, './src/assets'),
