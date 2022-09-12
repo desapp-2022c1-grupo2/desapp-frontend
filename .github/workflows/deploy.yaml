@@ -1,0 +1,13 @@
+name: Deploy v1.0.0
+on:
+  push:
+    branches:
+      - deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy test
+        run: echo "Deploying v1.0.0"
