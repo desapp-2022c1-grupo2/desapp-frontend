@@ -16,3 +16,5 @@ jobs:
           node-version:  '14.x'# Version de node
       - name: Install dependencies
         run: yarn install # Instala las dependencias
+      - name: Build
+        run: yarn build # Construye el proyecto
