@@ -16,8 +16,8 @@ export const LoginPage = () => {
   const [password, setPassword] = React.useState('')
   const dispatch = useDispatch()
 
-  const emailListener = (event: React.FormEvent<HTMLInputElement>) => setEmail(event.currentTarget.value)
-  const passwordListener = (event: React.FormEvent<HTMLInputElement>) => setPassword(event.currentTarget.value)
+  const emailListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => setEmail(event.currentTarget.value)
+  const passwordListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => setPassword(event.currentTarget.value)
   const handleLogin = () => {
     dispatch(requestLogin({ email, password }))
     localStorage.setItem('email', email)

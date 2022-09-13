@@ -4,13 +4,12 @@ import {
   takeLatest,
 } from 'redux-saga/effects'
 import { setJtps } from './slice'
-import { IJtp } from './IJtp'
-
-const url = import.meta.env.VITE_BACKEND_URL + '/api/jtp'
+import { IJtp } from '@models'
+import { API_URL } from '@const'
 
 async function fetchJtp(){
   try {
-        const response = await fetch(url)
+        const response = await fetch(API_URL + '/jtp')
         return await response.json()
     } catch (err) {
         return console.error(err)

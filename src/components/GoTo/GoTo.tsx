@@ -1,6 +1,5 @@
 import React from 'react'
 import { GoToProps } from './props'
-
 import {
   GoToContainer,
   ArrowLeft,

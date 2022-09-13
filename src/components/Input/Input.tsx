@@ -1,14 +1,13 @@
 import React from 'react'
 import { OutlinedInput } from './styles'
 import { InputProps } from './props'
-
 import {
   EmailOutlined,
   LockOutlined,
   SearchOutlined,
-} from '../Icon'
+} from '@components/Icon'
 
-const SearchInput = ({ hideIcon = false, ...props } : InputProps) => (
+const SearchInput = ({ hideIcon, ...props } : InputProps) => (
   <OutlinedInput
     startAdornment={!hideIcon && <SearchOutlined />}
     type='search'
@@ -16,7 +15,7 @@ const SearchInput = ({ hideIcon = false, ...props } : InputProps) => (
   />
 )
 
-const EmailInput = ({ hideIcon = false, ...props } : InputProps) => (
+const EmailInput = ({ hideIcon, ...props } : InputProps) => (
   <OutlinedInput
     startAdornment={!hideIcon && <EmailOutlined />}
     type='email'
@@ -24,7 +23,7 @@ const EmailInput = ({ hideIcon = false, ...props } : InputProps) => (
   />
 )
 
-const PasswordInput = ({ hideIcon = false, ...props } : InputProps) => (
+const PasswordInput = ({ hideIcon, ...props } : InputProps) => (
   <OutlinedInput
     startAdornment={!hideIcon && <LockOutlined />}
     type='password'

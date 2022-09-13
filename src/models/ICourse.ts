@@ -4,6 +4,4 @@ export interface ICourse {
   parentCourseId?: number,
   year?: number,
   isPreviousCourse?: number,
-  createdAt?: string,
-  updatedAt?: string,
 }

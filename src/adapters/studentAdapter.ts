@@ -1,4 +1,4 @@
-import {IStudent} from "../models/IStudent";
+import { IStudent } from "@models"
 
 export interface IStudentResponse {
   id?: number,

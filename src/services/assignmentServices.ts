@@ -1,11 +1,11 @@
 import axios from "axios"
 import { API_URL } from "../const"
-import { IAssignment } from "../models"
+import { IAssignment } from "@models"
 import {
   assignmentAdapter,
   assignmentResponseAdapter,
   IAssignmentResponse,
-} from "../adapters"
+} from "@adapters"
 
 export const getAllAssignments = async (): Promise<IAssignment[]> => {
     try {

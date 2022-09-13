@@ -4,7 +4,7 @@ import {
   ReadOnlyFieldContainer,
   ReadOnlyFieldContent,
   ReadOnlyFieldLabel,
-} from './styled'
+} from './styles'
 
 export const ReadOnlyField = ({ text, label, icon}: ReadOnlyFieldProps) => {
   return (
