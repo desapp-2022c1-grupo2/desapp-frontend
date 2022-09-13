@@ -2,32 +2,21 @@ import React, { useEffect, useState } from "react"
 import {
   DataGrid,
   GridColDef,
-  GridEventListener,
 } from '@mui/x-data-grid'
-import { selectJtps, selectCourses } from '@store'
-import { updateJtp } from '@services'
+import { IJtp } from "@models"
+import { selectJtps } from '@store'
 import { DataGridLocaleText } from "./DataGridLocaleText"
 import { MuiCustomToolbar } from "../MuiCustomToolbar"
 import { getJtpColumns } from "./JtpColumns"
-import { IJtp, ICourse } from "@models"
 import { NewJtpModal } from "@adminPages/components"
 
 export const JtpTable = () => {
   const jtps: IJtp[] = selectJtps()
-  const courses: ICourse[] = selectCourses()
   const [pageSize, setPageSize] = useState<number>(10)
-  const [loading, setLoading] = useState<boolean>(false)
   const [flag, setFlag] = useState<boolean>(false)
   const columns: GridColDef[] = getJtpColumns()
 
-  useEffect(() => {setFlag(true) }, [])
-
-  const handleCommit: GridEventListener<"cellEditCommit"> | undefined = (e) => {
-    if (jtps.find(jtp => jtp.id === e.id)[e.field] !== e.value) {
-      const jtp: IJtp = {id: e.id, [e.field]: e.value}
-      updateJtp(jtp)
-    }
-  }
+  useEffect(() => { setFlag(true) }, [])
 
   useEffect(() => {
     try {
@@ -42,7 +31,7 @@ export const JtpTable = () => {
   return (
     <div style={{height: '100%'}}>
       <h4>Jefes de Trabajos Prácticos</h4>
-      <NewJtpModal id="btnAgregarJTP" courses={courses} />
+      <NewJtpModal id="btnAgregarJTP" />
       <div style={{height: '100%'}}>
         <DataGrid
           pagination
@@ -56,9 +45,8 @@ export const JtpTable = () => {
           }}
           density='comfortable'
           disableDensitySelector={true}
-          loading={loading || !jtps.length}
+          loading={!jtps.length}
           localeText={DataGridLocaleText}
-          onCellEditCommit={handleCommit}
           onPageSizeChange={(newPage) => setPageSize(newPage)}
           pageSize={pageSize}
           rows={jtps}

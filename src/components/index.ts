@@ -1,5 +1,6 @@
 export {
   Avatar,
+  Chip,
   CircularProgress,
   Typography,
 } from "@mui/material"

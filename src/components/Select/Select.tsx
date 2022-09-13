@@ -22,12 +22,7 @@ export const Select = ({ items, placeholder, ...props } : SelectProps) => {
     <SelectContainer>
       <SelectLabel htmlFor={props.id || ''}>{props.label}</SelectLabel>
       <MuiSelect
-        defaultValue=''
         displayEmpty
-        renderValue={(select) => (value === '')
-          ? <span>{placeholder}</span>
-          : items[select]
-        }
         input={<Input />}
         onChange={handleChange}
         value={value}

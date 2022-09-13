@@ -3,40 +3,33 @@ import { useDispatch } from 'react-redux'
 import { SelectChangeEvent } from '@mui/material'
 import { ICourse } from '@models'
 import { selectCourses } from '@store'
-import { createJtp } from '@store/users'
+import { updateJtp } from '@store/users'
 import { inputChangeEvent } from '@const'
 import { Content, RequiredFieldText } from './styles'
-import { NewJtpModalProps } from './props'
+import { EditJtpModalProps } from './props'
 import {
-  AddOutlined,
   Button,
   CircularProgress,
   CheckOutlined,
+  EditOutlined,
   Field,
   Modal,
   Select,
 } from '@components'
 
-export const NewJtpModal = ({ id }: NewJtpModalProps) => {
+export const EditJtpModal = ({ jtp }: EditJtpModalProps) => {
   const courses: ICourse[] = selectCourses()
   const dispatch = useDispatch()
   const [open, setOpen] = useState(false)
-  const [name, setName] = useState("")
-  const [lastName, setLastname] = useState("")
-  const [email, setEmail] = useState("")
-  const [selectedCourse, setSelectedCourse] = useState('')
+  const [name, setName] = useState(jtp.name)
+  const [lastName, setLastname] = useState(jtp.lastName)
+  const [email, setEmail] = useState(jtp.email)
+  const [selectedCourse, setSelectedCourse] = useState(jtp.courseId)
   const [loading, setLoading] = useState(false)
   const [formIsCompleted, setFormIsCompleted] = useState(false)
 
   const handleOpen = () => { setOpen(true) }
-  const handleClose = () => {
-    setOpen(false)
-    setName('')
-    setLastname('')
-    setEmail('')
-    setSelectedCourse('')
-    setFormIsCompleted(false)
-  }
+  const handleClose = () => { setOpen(false) }
 
   useEffect(() => {
     setFormIsCompleted(!!(name && lastName && email && selectedCourse))
@@ -51,17 +44,18 @@ export const NewJtpModal = ({ id }: NewJtpModalProps) => {
   }
 
   const handleSelectCourse = (event: SelectChangeEvent<unknown>) => {
-    setSelectedCourse(event.target.value as string)
+    setSelectedCourse(parseInt(event.target.value as string))
   }
 
   const handleCreateJtp = () => {
     if (!formIsCompleted) return
     setLoading(true)
-    dispatch(createJtp({
+    dispatch(updateJtp({
+      id: jtp.id,
       name,
       lastName,
       email,
-      courseId: courses[parseInt(selectedCourse)].id,
+      courseId: courses[selectedCourse || -1].id,
     }))
     setLoading(false)
     handleClose()
@@ -70,18 +64,18 @@ export const NewJtpModal = ({ id }: NewJtpModalProps) => {
   return (
     <>
       <Button
-        color='unahurGreen'
-        id={id ? id.toString() : ''}
+        children={<EditOutlined/>}
+        color='unahurCyan'
         onClick={handleOpen}
-        startIcon={<AddOutlined/>}
+        sx={{borderRadius: '50px', minHeight: 'fit-content', minWidth: 'fit-content', padding: '8px'}}
         variant='contained'
-        text='Agregar'
-        title='Agregar'
+        title='Editar'
       />
       <Modal
+      className='modalEditJtp'
         onClose={handleClose}
         open={open}
-        title='Agregar nuevo usuario'
+        title='Editar Jefe de trabajos Practicos'
         footer={
           loading
             ? <CircularProgress/>
@@ -91,7 +85,7 @@ export const NewJtpModal = ({ id }: NewJtpModalProps) => {
                 disabled={!formIsCompleted}
                 onClick={handleCreateJtp}
                 startIcon={<CheckOutlined/>}
-                title='Crear usuario'
+                title='Editar JTP '
                 variant='contained'
               />
         }
@@ -130,8 +124,8 @@ export const NewJtpModal = ({ id }: NewJtpModalProps) => {
             items={courses ? courses.map(course => course.name ? course.name : '') : []}
             label='Materia'
             onChange={handleSelectCourse}
-            placeholder={selectedCourse.toString()}
-            value={selectedCourse}
+            placeholder={selectedCourse?.toString()}
+            value={selectedCourse?.toString()}
           />
           { !formIsCompleted && <RequiredFieldText>* Completa todos los campos</RequiredFieldText> }
         </Content>
