@@ -1,10 +1,11 @@
 import React from 'react'
-import { AdminPage } from '../../AdminPage'
-import { AssignmentTable } from '../../components'
-import {StudentTable} from "../../components/Table/StudentTable";
+import {
+  AdminLayout,
+  StudentTable,
+} from '@adminPages/components'
 
-export const AdminStudentsTable = () => {
+export const AdminStudentsPage = () => {
   return (
-    <AdminPage content={<StudentTable/>}/>
+    <AdminLayout content={<StudentTable/>}/>
   )
 }

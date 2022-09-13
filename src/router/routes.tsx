@@ -2,17 +2,16 @@ import React from 'react'
 import {
   AdminAccountPage,
   AdminAssignmentsPage,
-  AdminUsersPage,
+  AdminStudentsPage,
+  AdminJtpsPage,
   LoginPage,
 } from '@pages'
-import { AdminStudentsTable } from "@pages/Admin/pages/Students";
-
 
 export const paths = {
   login: '/login',
   admin: {
     home: '/admin',
-    jtps: '/admin/users',
+    jtps: '/admin/jtps',
     assignments: '/admin/assignments',
     students: '/admin/students',
     account: '/admin/account'
@@ -29,12 +28,12 @@ export const routes = {
     home: {
       path: paths.admin.home,
       exact: true,
-      element: <AdminUsersPage />,
+      element: <AdminJtpsPage />,
     },
     jtps: {
       path: paths.admin.jtps,
       exact: true,
-      element: <AdminUsersPage />,
+      element: <AdminJtpsPage />,
       label: "JTPs",
     },
     assignments: {
@@ -46,7 +45,7 @@ export const routes = {
     students: {
       path: paths.admin.students,
       exact: true,
-      element: <AdminStudentsTable />,
+      element: <AdminStudentsPage />,
       label: "Estudiantes"
     },
     account: {

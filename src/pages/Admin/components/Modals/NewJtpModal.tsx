@@ -1,45 +1,52 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { CircularProgress, Typography } from "@mui/material"
-import { createJtp } from "../../../../services"
-import { WriteModalProps } from "./WriteModalProps"
+import React, { useEffect, useState } from 'react'
+import { SelectChangeEvent } from '@mui/material'
+import { createJtp } from '@services'
+import { inputChangeEvent } from '@const'
+import { Content, RequiredFieldText } from './styles'
+import { NewJtpModalProps } from './props'
 import {
   AddOutlined,
   Button,
+  CircularProgress,
   CheckOutlined,
   Field,
   Modal,
   Select,
 } from '@components'
 
-const Content = styled.div`
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  flex-grow: 2;
-  gap: 8px;
-  height: 80%;
-  justify-content: center;
-`
-type changeEvent = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-
-export const NewJtpModal = ({ courses, id }: WriteModalProps) => {
+export const NewJtpModal = ({ courses, id }: NewJtpModalProps) => {
   const [open, setOpen] = useState(false)
   const [name, setName] = useState("")
   const [lastName, setLastname] = useState("")
   const [email, setEmail] = useState("")
-  const [selectedCourse, setSelectedCourse] = useState(0)
+  const [selectedCourse, setSelectedCourse] = useState('')
   const [loading, setLoading] = useState(false)
-  const formIsCompleted = name && lastName && email && selectedCourse;
+  const [formIsCompleted, setFormIsCompleted] = useState(false)
 
   const handleOpen = () => { setOpen(true) }
-  const handleClose = () => { setOpen(false) }
+  const handleClose = () => {
+    setOpen(false)
+    setName('')
+    setLastname('')
+    setEmail('')
+    setSelectedCourse('')
+    setFormIsCompleted(false)
+  }
 
-  const handleChange = (setState: Function, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    const value = event.target.value;
-    if (value !== '') {
-      setState(value);
-    }
+  useEffect(() => {
+    setFormIsCompleted(!!(name && lastName && email && selectedCourse))
+  }, [name, lastName, email, selectedCourse])
+  
+
+  const handleChange = (
+    setState: Function,
+    event: inputChangeEvent
+  ) => {
+    setState(event.target.value)
+  }
+
+  const handleSelectCourse = (event: SelectChangeEvent<unknown>) => {
+    setSelectedCourse(event.target.value as string)
   }
 
   const handleCreateJtp = async () => {
@@ -49,7 +56,7 @@ export const NewJtpModal = ({ courses, id }: WriteModalProps) => {
       name,
       lastName,
       email,
-      courseId: selectedCourse,
+      courseId: parseInt(selectedCourse),
     })
     setLoading(false)
     handleClose()
@@ -59,7 +66,7 @@ export const NewJtpModal = ({ courses, id }: WriteModalProps) => {
     <>
       <Button
         color='unahurGreen'
-        id={id}
+        id={id ? id.toString() : ''}
         onClick={handleOpen}
         startIcon={<AddOutlined/>}
         variant='contained'
@@ -87,31 +94,35 @@ export const NewJtpModal = ({ courses, id }: WriteModalProps) => {
             required
             error={!name}
             label={"Nombre"}
-            onChange={(event: changeEvent) => handleChange(setName, event)}
+            onChange={(event: inputChangeEvent) => handleChange(setName, event)}
             placeholder={"Ingresá el nombre"}
+            value={name}
           />
           <Field
             required
             error={!lastName}
             label={"Apellido"}
-            onChange={(event: changeEvent) => handleChange(setLastname, event)}
+            onChange={(event: inputChangeEvent) => handleChange(setLastname, event)}
             placeholder={"Ingresá el apellido"}
+            value={lastName}
           />
           <Field
             required
             error={!email}
             label={"Email"}
-            onChange={(event: changeEvent) => handleChange(setEmail, event)}
+            onChange={(event: inputChangeEvent) => handleChange(setEmail, event)}
             placeholder={"Ingresá el email"}
+            value={email}
           />
           <Select
-            defaultValue={selectedCourse}
-            items={courses.map(course => course.name)}
+            required
+            items={courses ? courses.map(course => course.name ? course.name : '') : []}
             label='Materia'
-            onChange={(event: changeEvent) => handleChange(setSelectedCourse, event)}
-            placeholder={selectedCourse}
+            onChange={handleSelectCourse}
+            placeholder={selectedCourse.toString()}
+            value={selectedCourse}
           />
-          { !formIsCompleted && <Typography color={'error'}>Tenés que completar los campos</Typography> }
+          { !formIsCompleted && <RequiredFieldText>* Completa todos los campos</RequiredFieldText> }
         </Content>
       </Modal>
     </>

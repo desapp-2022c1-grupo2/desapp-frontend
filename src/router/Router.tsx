@@ -30,7 +30,7 @@ export const Router = () => {
       <Route {...routes.admin.account} />
       <Route {...routes.admin.assignments} />
       <Route {...routes.admin.students} />
-      <Route {...routes.admin.users} />
+      <Route {...routes.admin.jtps} />
       <Route path='*' element={<Navigate to='/admin' />} />
     </Routes>
   )

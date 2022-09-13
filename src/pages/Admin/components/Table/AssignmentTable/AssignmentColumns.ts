@@ -3,7 +3,7 @@ import {GridColDef} from "@mui/x-data-grid"
 export function getAssignmentColumns(): GridColDef[] {
   return [
     {headerName: "ID", field: "id",  editable: false},
-    {headerName: "JTP asignado", field: "jtpId",  editable: false},
+    {headerName: "JTP", field: "jtpId",  editable: false},
     {headerName: "Número", field: "number",  editable: false},
     {headerName: "Nombre", field: "name",  editable: false},
     {headerName: "url", field: "url",  editable: false},
@@ -23,5 +23,4 @@ export function getAssignmentColumns(): GridColDef[] {
     {headerName: "Curso", field: "courseId",  editable: false},
     {headerName: "Proceso individual", field: "individualProcess",  editable: false},
   ];
-
 }

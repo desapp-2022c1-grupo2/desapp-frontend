@@ -5,8 +5,9 @@ import {
   GridToolbarExport,
   GridToolbarFilterButton,
   GridToolbarQuickFilter,
-} from '@mui/x-data-grid';
-import React from 'react';
+} from '@mui/x-data-grid'
+import React from 'react'
+//import { NewJtpModal } from '@adminPages/components/Modals'
 
 export const MuiCustomToolbar = () => {
   return (
@@ -16,6 +17,7 @@ export const MuiCustomToolbar = () => {
       <GridToolbarFilterButton />
       <GridToolbarDensitySelector />
       <GridToolbarExport />
+      {/*<NewJtpModal />*/}
     </GridToolbarContainer>
   );
 }

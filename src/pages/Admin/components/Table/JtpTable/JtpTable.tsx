@@ -13,7 +13,7 @@ import { DataGridLocaleText } from "./DataGridLocaleText"
 import { MuiCustomToolbar } from "../MuiCustomToolbar"
 import { getJtpColumns } from "./JtpColumns"
 import { IJtp, ICourse } from "@models"
-import { NewJtpModal } from "../../Modals"
+import { NewJtpModal } from "@adminPages/components"
 
 export const JtpTable = () => {
   const [jtps, setJtps] = useState<IJtp[]>([])
@@ -56,10 +56,10 @@ export const JtpTable = () => {
 }, [flag])
 
   return (
-    <div>
-      <h4>Jefes de Trabajos Practicos</h4>
+    <div style={{height: '100%'}}>
+      <h4>Jefes de Trabajos Prácticos</h4>
       <NewJtpModal id="btnAgregarJTP" setRows={setJtps} courses={courses} style='display: none'/>
-      <div style={{height: 'calc(100vh - 320px)'}}>
+      <div style={{height: '100%'}}>
         <DataGrid
           pagination
           columns={columns}

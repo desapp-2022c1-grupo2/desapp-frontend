@@ -1,6 +1,6 @@
-import {GridColDef} from "@mui/x-data-grid"
+import { GridColDef } from "@mui/x-data-grid"
 
-export function getAssignmentColumns(): GridColDef[] {
+export function getStudentColumns(): GridColDef[] {
   return [
     {field: "id", headerName: "ID", editable: false, maxWidth: 50},
     {field: "name", headerName: "Nombre", editable: false},

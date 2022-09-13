@@ -1,9 +1,9 @@
 import React from 'react'
 import { AccountContent } from './AccountContent'
-import { AdminPage } from '../../AdminPage'
+import { AdminLayout } from '@adminPages/components'
 
 export const AdminAccountPage = () => {
   return (
-    <AdminPage content={<AccountContent />}/>
+    <AdminLayout content={<AccountContent />}/>
   )
 }
