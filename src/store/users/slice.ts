@@ -22,9 +22,11 @@ export const usersSlice = createSlice({
   reducers: {
     getJtps(){},
     getStudents(){},
-    createJtp(state, { payload }: PayloadAction<IJtpResponse>){ state.aux = payload },
+    createJtp(state, { payload }: PayloadAction<IJtpResponse>){
+      state.aux = payload
+    },
     updateJtp(state, { payload }: PayloadAction<IJtp>){ 
-      state.jtps = state.jtps.map( jtp => (jtp.id !== payload.id) ? payload : jtp)
+      state.jtps = state.jtps.map( jtp => (jtp.id === payload.id) ? payload : jtp)
       state.aux = payload
     },
     deleteJtp(state, { payload }: PayloadAction<IJtp>){
