@@ -7,7 +7,8 @@ name: Deploy v1.0.0
 on:
   push:
     branches:
-      - deploy  # branch deploy name donde se encuentra el código a desplegar en desarrollo
+      - deploy  # branch deploy name donde se encuentra el código a feauture
+      - develop # branch develop name donde se encuentra el código a develop
       - main  # branch main name donde se encuentra el código a desplegar en producción
 
 jobs:
