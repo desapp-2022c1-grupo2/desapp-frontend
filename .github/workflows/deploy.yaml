@@ -7,13 +7,12 @@ name: Deploy v1.0.0
 on:
   push:
     branches:
-      - deploy  # branch deploy name donde se encuentra el código a feauture
-      - develop # branch develop name donde se encuentra el código a develop
+      - deploy  # branch deploy name donde se encuentra el código a desplegar en desarrollo
       - main  # branch main name donde se encuentra el código a desplegar en producción
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest    #instala ubuntu
+    runs-on: ubuntu-latest    #instala ubuntu lastest
     steps:
       - uses: actions/checkout@v2  # Actions para clonar el repositorio
         with:
