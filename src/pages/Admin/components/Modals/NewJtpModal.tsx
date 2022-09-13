@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { SelectChangeEvent } from '@mui/material'
+import { ICourse } from '@models'
+import { selectCourses } from '@store'
 import { createJtp } from '@store/users'
 import { inputChangeEvent } from '@const'
 import { Content, RequiredFieldText } from './styles'
@@ -13,9 +16,9 @@ import {
   Modal,
   Select,
 } from '@components'
-import { useDispatch } from 'react-redux'
 
-export const NewJtpModal = ({ courses, id }: NewJtpModalProps) => {
+export const NewJtpModal = ({ id }: NewJtpModalProps) => {
+  const courses: ICourse[] = selectCourses()
   const dispatch = useDispatch()
   const [open, setOpen] = useState(false)
   const [name, setName] = useState("")
@@ -58,7 +61,7 @@ export const NewJtpModal = ({ courses, id }: NewJtpModalProps) => {
       name,
       lastName,
       email,
-      courseId: parseInt(selectedCourse),
+      courseId: courses[parseInt(selectedCourse)].id,
     }))
     setLoading(false)
     handleClose()
