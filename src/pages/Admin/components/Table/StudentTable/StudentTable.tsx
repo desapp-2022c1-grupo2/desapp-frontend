@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { getStudentColumns } from "./StudentColumns"
 import { DataGridLocaleText } from "../JtpTable"
 import { MuiCustomToolbar } from "../MuiCustomToolbar"
-import { getAllStudents } from '@services'
 import { IStudent } from '@models'
+import { selectStudents } from "@src/store"
 
 export const StudentTable = () => {
-  const [students, setStudents] = useState<IStudent[]>([])
+  const students: IStudent[] = selectStudents()
   const [pageSize, setPageSize] = useState<number>(50)
   const [loading, setLoading] = useState<boolean>(false)
   const columns: GridColDef[] = getStudentColumns()
-
-  useEffect(() => {
-    const fetchStudents = async () => {
-      const students = await getAllStudents();
-      setStudents(students)
-    }
-    fetchStudents()
-  }, [])
 
   return (
     <div style={{height: '100%'}}>

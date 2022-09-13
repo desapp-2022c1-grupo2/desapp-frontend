@@ -1,4 +1,5 @@
 import { ICourse } from '@models'
+import { fixString } from '@util'
 
 export interface ICourseResponse {
   id?: number,
@@ -10,7 +11,7 @@ export interface ICourseResponse {
 
 export const courseAdapter = (course: ICourseResponse): ICourse => ({
   id: course.id,
-  name: course.name,
+  name: fixString(course.name || ''),
   parentCourseId: course.parentCourseId,
   year: course.year,
   isPreviousCourse: course.isPreviousCourse,

@@ -4,11 +4,8 @@ import {
   GridColDef,
   GridEventListener,
 } from '@mui/x-data-grid'
-import {
-  getAllJtps,
-  updateJtp,
-  getAllCourses,
-} from '@services'
+import { selectJtps, selectCourses } from '@store'
+import { updateJtp } from '@services'
 import { DataGridLocaleText } from "./DataGridLocaleText"
 import { MuiCustomToolbar } from "../MuiCustomToolbar"
 import { getJtpColumns } from "./JtpColumns"
@@ -16,27 +13,14 @@ import { IJtp, ICourse } from "@models"
 import { NewJtpModal } from "@adminPages/components"
 
 export const JtpTable = () => {
-  const [jtps, setJtps] = useState<IJtp[]>([])
-  const [courses, setCourses] = useState<ICourse[]>([])
+  const jtps: IJtp[] = selectJtps()
+  const courses: ICourse[] = selectCourses()
   const [pageSize, setPageSize] = useState<number>(10)
   const [loading, setLoading] = useState<boolean>(false)
   const [flag, setFlag] = useState<boolean>(false)
-  const columns: GridColDef[] = getJtpColumns(courses, setLoading)
+  const columns: GridColDef[] = getJtpColumns()
 
-  useEffect(() => {
-    const fetchJtps = async () => {
-      const jtps: IJtp[] = await getAllJtps()
-      setJtps(jtps)
-    }
-    const fetchCourses = async () =>{
-        const courses: ICourse[] = await getAllCourses()
-        setCourses(courses)
-    }
-
-    fetchCourses()
-    setFlag(true)
-    fetchJtps()
-  }, [])
+  useEffect(() => {setFlag(true) }, [])
 
   const handleCommit: GridEventListener<"cellEditCommit"> | undefined = (e) => {
     if (jtps.find(jtp => jtp.id === e.id)[e.field] !== e.value) {
@@ -53,12 +37,12 @@ export const JtpTable = () => {
         btnNewJTP.className = btnNewJTP.className.replace('hide', '')
       }
     } catch (err){ console.error(err)}
-}, [flag])
+  }, [flag])
 
   return (
     <div style={{height: '100%'}}>
       <h4>Jefes de Trabajos Prácticos</h4>
-      <NewJtpModal id="btnAgregarJTP" setRows={setJtps} courses={courses} style='display: none'/>
+      <NewJtpModal id="btnAgregarJTP" courses={courses} />
       <div style={{height: '100%'}}>
         <DataGrid
           pagination

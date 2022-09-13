@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { deleteJtp } from "@services"
+import { deleteJtp } from '@store/users'
 import { DeleteJtpModalProps } from "./props"
 import {
   Button,
@@ -7,19 +7,19 @@ import {
   DeleteOutlined,
   SmallModal,
 } from '@components'
+import { useDispatch } from 'react-redux'
 
-export const DeleteJtpModal = ({ jtp, id }: DeleteJtpModalProps) => {
+export const DeleteJtpModal = ({ jtp }: DeleteJtpModalProps) => {
+  const dispatch = useDispatch()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   
   const handleOpen = () => { setOpen(true) }
   const handleClose = () => { setOpen(false) }
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     setLoading(true)
-    let _id: number | undefined = id ? parseInt(id.toString()) : undefined
-    _id = (jtp && jtp.id) || _id
-    _id && await deleteJtp(_id)
+    dispatch(deleteJtp(jtp))
     setLoading(false)
     handleClose()
   }
@@ -49,11 +49,7 @@ export const DeleteJtpModal = ({ jtp, id }: DeleteJtpModalProps) => {
         />
       }
     >
-      {
-        jtp
-          ? <p>Está a punto de eliminar el JTP con nombre "<b>{jtp.name} {jtp.lastName}</b>" y con id <b>{jtp.id}</b>, este cambio es permanente</p>
-          : <p>Está a punto de eliminar el JTP con id <b>{id}</b>, este cambio es permanente</p>
-      }
+      <p>Está a punto de eliminar el JTP "<b>{jtp.name} {jtp.lastName}</b>", id <b>{jtp.id}</b> <br/> este cambio es permanente</p>
     </SmallModal>
     </>
   )
