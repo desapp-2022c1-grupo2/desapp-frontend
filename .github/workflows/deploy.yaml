@@ -1,0 +1,28 @@
+#Archivo para hacer CI/CD con github actions
+#Se ejecuta cada vez que se hace un push a la rama main o deploy
+#Primer version
+#Despues realizar el deploy a heroku
+
+name: Deploy v1.0.0
+on:
+  push:
+    branches:
+      - deployV1.1.0  # branch deploy name donde se encuentra el código a desplegar en desarrollo
+      #- main  # branch main name donde se encuentra el código a desplegar en producción
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest    #instala ubuntu lastest
+    steps:
+      - uses: actions/checkout@v2  # Actions para clonar el repositorio
+        with:
+          fetch-depth: 0  # Descarga solo el ultimo commit
+      - uses: actions/setup-node@v1  # Actions para instalar node
+        with:
+          node-version:  '14.x'# Version de node
+      - name: Install dependencies
+        run: yarn install # Instala las dependencias
+      - name: Build
+        run: yarn build # Construye el proyecto
+      - name: Test
+        run: yarn test # Ejecuta los test si los hay
