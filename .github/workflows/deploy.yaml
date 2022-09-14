@@ -24,5 +24,9 @@ jobs:
         run: yarn install # Instala las dependencias
       - name: Build
         run: yarn build # Construye el proyecto
-      - name: Test
-        run: yarn test # Ejecuta los test si los hay
+      - name: Deploy Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{ secrets.HEROKU_APP }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
