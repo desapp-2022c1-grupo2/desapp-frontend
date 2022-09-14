@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { ArrowRightAltOutlined } from '../Icon'
+import { ArrowRightAltOutlined } from '@components/Icon'
 
 export const GoToContainer = styled.div`
   align-items: center;

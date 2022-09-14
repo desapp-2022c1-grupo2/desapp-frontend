@@ -49,4 +49,10 @@ h4 { font-size: 1.75rem; }
 h5 { font-size: 1.25rem; }
 h6 { font-size: 1rem; }
 
-.hide { display: none !important;}
+.hide { display: none !important; }
+
+.active {
+  color: #56A42C !important;
+  border-bottom: 3px solid #56A42C !important;
+  border-top: 3px solid #00000000 !important;
+}

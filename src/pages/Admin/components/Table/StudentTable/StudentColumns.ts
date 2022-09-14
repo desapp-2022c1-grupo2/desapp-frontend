@@ -1,16 +1,15 @@
-import {GridColDef} from "@mui/x-data-grid"
+import { GridColDef } from "@mui/x-data-grid"
 
-export function getAssignmentColumns(): GridColDef[] {
+export function getStudentColumns(): GridColDef[] {
   return [
     {field: "id", headerName: "ID", editable: false, maxWidth: 50},
-    {field: "name", headerName: "Nombre", editable: false},
-    {field: "lastName", headerName: "Apellido", editable: false},
+    {field: "lastName", headerName: "Nombre", editable: false, width: 300,
+      renderCell: (params) => `${params.row.lastName}, ${params.row.name}`
+    },
     {field: "email", headerName: "Email", editable: false, minWidth: 200},
     {field: "password", headerName: "Contraseña", editable: false, minWidth: 200,
-      renderCell: (params) => {
-      return params.value;
-    }
-    }, // Use component to hide passwords
+      renderCell: (params) => params.value
+    },
     {field: "phone", headerName: "Telefono", editable: false, minWidth: 200},
     {field: "dni", headerName: "DNI", editable: false},
     {field: "birthDate", headerName: "Fecha de nacimiento", editable: false},

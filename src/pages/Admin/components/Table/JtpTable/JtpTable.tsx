@@ -2,48 +2,21 @@ import React, { useEffect, useState } from "react"
 import {
   DataGrid,
   GridColDef,
-  GridEventListener,
 } from '@mui/x-data-grid'
-import {
-  getAllJtps,
-  updateJtp,
-  getAllCourses,
-} from '@services'
+import { IJtp } from "@models"
+import { selectJtps } from '@store'
 import { DataGridLocaleText } from "./DataGridLocaleText"
 import { MuiCustomToolbar } from "../MuiCustomToolbar"
 import { getJtpColumns } from "./JtpColumns"
-import { IJtp, ICourse } from "@models"
-import { NewJtpModal } from "../../Modals"
+import { NewJtpModal } from "@adminPages/components"
 
 export const JtpTable = () => {
-  const [jtps, setJtps] = useState<IJtp[]>([])
-  const [courses, setCourses] = useState<ICourse[]>([])
+  const jtps: IJtp[] = selectJtps()
   const [pageSize, setPageSize] = useState<number>(10)
-  const [loading, setLoading] = useState<boolean>(false)
   const [flag, setFlag] = useState<boolean>(false)
-  const columns: GridColDef[] = getJtpColumns(courses, setLoading)
+  const columns: GridColDef[] = getJtpColumns()
 
-  useEffect(() => {
-    const fetchJtps = async () => {
-      const jtps: IJtp[] = await getAllJtps()
-      setJtps(jtps)
-    }
-    const fetchCourses = async () =>{
-        const courses: ICourse[] = await getAllCourses()
-        setCourses(courses)
-    }
-
-    fetchCourses()
-    setFlag(true)
-    fetchJtps()
-  }, [])
-
-  const handleCommit: GridEventListener<"cellEditCommit"> | undefined = (e) => {
-    if (jtps.find(jtp => jtp.id === e.id)[e.field] !== e.value) {
-      const jtp: IJtp = {id: e.id, [e.field]: e.value}
-      updateJtp(jtp)
-    }
-  }
+  useEffect(() => { setFlag(true) }, [])
 
   useEffect(() => {
     try {
@@ -53,13 +26,13 @@ export const JtpTable = () => {
         btnNewJTP.className = btnNewJTP.className.replace('hide', '')
       }
     } catch (err){ console.error(err)}
-}, [flag])
+  }, [flag])
 
   return (
-    <div>
-      <h4>Jefes de Trabajos Practicos</h4>
-      <NewJtpModal id="btnAgregarJTP" setRows={setJtps} courses={courses} style='display: none'/>
-      <div style={{height: 'calc(100vh - 320px)'}}>
+    <div style={{height: '100%'}}>
+      <h4>Jefes de Trabajos Prácticos</h4>
+      <NewJtpModal id="btnAgregarJTP" />
+      <div style={{height: '100%'}}>
         <DataGrid
           pagination
           columns={columns}
@@ -72,9 +45,8 @@ export const JtpTable = () => {
           }}
           density='comfortable'
           disableDensitySelector={true}
-          loading={loading || !jtps.length}
+          loading={!jtps.length}
           localeText={DataGridLocaleText}
-          onCellEditCommit={handleCommit}
           onPageSizeChange={(newPage) => setPageSize(newPage)}
           pageSize={pageSize}
           rows={jtps}

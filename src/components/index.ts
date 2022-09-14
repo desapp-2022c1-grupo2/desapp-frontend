@@ -1,4 +1,9 @@
-export { Avatar } from '@mui/material' 
+export {
+  Avatar,
+  Chip,
+  CircularProgress,
+  Typography,
+} from "@mui/material"
 
 export * from './Button'
 export * from './Field'

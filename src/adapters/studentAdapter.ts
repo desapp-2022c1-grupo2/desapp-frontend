@@ -1,4 +1,5 @@
-import {IStudent} from "../models/IStudent";
+import { IStudent } from "@models"
+import { fixString } from '@util'
 
 export interface IStudentResponse {
   id?: number,
@@ -22,8 +23,8 @@ export interface IStudentResponse {
 export const studentAdapter = (student: IStudentResponse): IStudent => {
   return ({
     id: student.id,
-    name: student.name,
-    lastName: student.lastName,
+    name: fixString(student.name || ''),
+    lastName: fixString( student.lastName || ''),
     email: student.email,
     password: student.password,
     phone: student.phone,
@@ -34,9 +35,9 @@ export const studentAdapter = (student: IStudentResponse): IStudent => {
     materia_padre_cursada: student.materia_padre_cursada,
     comision: student.comision,
     rondina: student.rondina,
-    about: student.about,
+    about: fixString( student.about || ''),
     picture: student.picture,
-    materia2: student.materia2,
+    materia2: fixString( student.materia2 || ''),
     habilitado: student.habilitado,
   })
 }

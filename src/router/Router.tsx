@@ -6,21 +6,34 @@ import {
   Routes,
   Route,
 } from 'react-router-dom'
-import { Iauth, requestLogin } from '@store/auth'
-import { RootState } from 'store' 
+import { IAuth } from '@models'
+import { requestLogin } from '@store/auth'
+import { RootState } from '@store' 
 import { routes } from './routes'
 
+import { getAssignments } from '@store/Assignments'
+import { getCourses } from '@store/courses'
+import { getJtps, getStudents } from '@store/users'
+
+
 export const Router = () => {
-  const { isLogged } = useSelector<RootState, Iauth>((state) => state.auth)
+  const { isLogged } = useSelector<RootState, IAuth>((state) => state.auth)
   const dispatch = useDispatch()
-  
+
   React.useEffect(
     () => {
-      const localEmail = localStorage.getItem("email")
-      const localPass = localStorage.getItem("password")
-      if (localEmail && localPass) dispatch(requestLogin({ email: localEmail, password: localPass }))
+      if(!isLogged) {
+        const localEmail = localStorage.getItem("email")
+        const localPass = localStorage.getItem("password")
+        if (localEmail && localPass) dispatch(requestLogin({ email: localEmail, password: localPass }))
+      } else {
+        dispatch(getAssignments())
+        dispatch(getCourses())
+        dispatch(getJtps())
+        dispatch(getStudents())
+      }
     },
-    []
+    [isLogged]
   )
 
   const AdminRoutes = (
@@ -29,7 +42,7 @@ export const Router = () => {
       <Route {...routes.admin.account} />
       <Route {...routes.admin.assignments} />
       <Route {...routes.admin.students} />
-      <Route {...routes.admin.users} />
+      <Route {...routes.admin.jtps} />
       <Route path='*' element={<Navigate to='/admin' />} />
     </Routes>
   )

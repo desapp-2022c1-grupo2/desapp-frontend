@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   MenuItem,
   SelectChangeEvent,
 } from '@mui/material'
-import { MuiSelect, SelectContainer, SelectLabel } from './styles'
-import { Input } from '../Input'
+import {
+  MuiSelect,
+  SelectContainer,
+  SelectLabel,
+} from './styles'
+import { Input } from '@components/Input'
 import { SelectProps } from './props'
 
 export const Select = ({ items, placeholder, ...props } : SelectProps) => {
@@ -18,12 +22,7 @@ export const Select = ({ items, placeholder, ...props } : SelectProps) => {
     <SelectContainer>
       <SelectLabel htmlFor={props.id || ''}>{props.label}</SelectLabel>
       <MuiSelect
-        defaultValue=''
         displayEmpty
-        renderValue={(select) => (value === '')
-          ? <span>{placeholder}</span>
-          : items[select]
-        }
         input={<Input />}
         onChange={handleChange}
         value={value}

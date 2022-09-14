@@ -1,9 +1,11 @@
 import React from 'react'
-import { AdminPage } from '../../AdminPage'
-import { AssignmentTable } from '../../components'
+import {
+  AdminLayout,
+  AssignmentTable,
+} from '@adminPages/components'
 
 export const AdminAssignmentsPage = () => {
   return (
-    <AdminPage content={<AssignmentTable/>}/>
+    <AdminLayout content={<AssignmentTable/>}/>
   )
 }

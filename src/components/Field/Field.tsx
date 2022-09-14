@@ -1,10 +1,10 @@
 import React from 'react'
-import { Input } from '../Input'
+import { Input } from '@components'
 import { FieldProps } from './props'
 import {
   FieldContainer,
   FieldLabel,
-} from './styled' 
+} from './styles' 
 
 export const Field = ({ label, ...props}: FieldProps) => {
   return (

@@ -1,51 +1,44 @@
 import React from "react"
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid"
-import { DeleteJtpModal } from "../../Modals"
-import { ICourse } from "@models"
+import { GridColDef } from "@mui/x-data-grid"
+import { DeleteJtpModal, EditJtpModal } from "@adminPages/components"
+import { ICourse, IJtp } from "@models"
+import { selectCourses, selectJtpById } from "@store"
+import { Chip } from "@components"
 
-
-export function getJtpColumns(courses: ICourse[], setLoading: Function): GridColDef[] {
+export function getJtpColumns(): GridColDef[] {
+  const courses: ICourse[] = selectCourses()
 
   return [
-    {headerName: "ID", field: 'id', flex: 1, editable: false},
-    {headerName: "Nombre", field: 'name', flex: 2, editable: true},
-    {headerName: "Apellido", field: 'lastName', flex: 2, editable: true},
-    {headerName: "Email", field: "email", flex: 2, editable: true},
-      // {headerName: "Materia",
-      //     field: "courseId",
-      //     flex: 5,
-      //     editable: true,
-      //     renderCell: (params: GridRenderCellParams) => {
-      //         console.log(params.field)
-      //         return (
-      //             <Select items={courses.map(course => course.name)}/>
-      //         )
-      //     }
-      // },
+    {headerName: "ID", field: 'id', maxWidth: 50 },
+    {headerName: "Nombre", field: 'lastName', flex: 2,
+      renderCell: (params) => `${params.row.lastName}, ${params.row.name}`
+    },
+    {headerName: "Email", field: "email", flex: 2 },
     {
       headerName: "Materia",
       field: "courseId",
-      flex: 3,
-      editable: true,
+      flex: 2,
       type: "singleSelect",
-      valueOptions: courses ? courses.map(course => {
-        return {
-          value: course.id,
-          label: course.name
-        }
-      }) : []
+      renderCell: (params) => <Chip disabled color='success' label={
+        courses.find(x => { return x.id == params.value})?.name || params.value} />,
     },
-    {headerName: "Fecha de creación", field: "createdAt", flex: 3, editable: true, type: "date"},
-    {headerName: "Última actualización", field: "updatedAt", flex: 3, editable: false, type: "date"},
     {
-      field: "delete",
-      headerName: "Eliminar",
+      field: "actions",
+      headerName: "",
       flex: 1,
       minWidth: 100,
       align: "center",
       sortable: false,
       disableColumnMenu: true,
-      renderCell: (params: GridRenderCellParams) => <DeleteJtpModal id={params.id}/>,
+      renderCell: (params) => {
+        const jtp: IJtp = selectJtpById(params.id) || {}
+        return (
+          <>
+          <EditJtpModal jtp={jtp}/>
+          <DeleteJtpModal jtp={jtp}/>
+          </>
+        )
+      }
     },
   ]
 }

@@ -1,4 +1,6 @@
 export * from './IAssignment'
+export * from './IAuth'
 export * from './ICourse'
 export * from './IJtp'
+export * from './IStudent'
 export * from './IUser'

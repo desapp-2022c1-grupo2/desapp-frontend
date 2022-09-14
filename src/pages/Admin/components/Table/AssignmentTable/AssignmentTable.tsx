@@ -1,29 +1,21 @@
-import React, { useEffect, useState } from "react"
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { getAllAssignments } from "@services"
+import React, { useState } from "react"
+import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { IAssignment } from "@models"
+import { selectAssignments } from "@store"
 import { getAssignmentColumns } from "./AssignmentColumns"
 import { DataGridLocaleText } from "../JtpTable"
 import { MuiCustomToolbar } from "../MuiCustomToolbar"
 
 export const AssignmentTable = () => {
-  const [assignments, setAssignments] = useState<IAssignment[]>([])
+  const assignments: IAssignment[] = selectAssignments()
   const [pageSize, setPageSize] = useState<number>(10)
   const [loading, setLoading] = useState<boolean>(false)
   const columns: GridColDef[] = getAssignmentColumns()
 
-  useEffect(() => {
-    const fetchAssignments = async () => {
-      const assignments = await getAllAssignments()
-      setAssignments(assignments)
-    }
-    fetchAssignments()
-  }, [])
-
   return (
-    <div>
-      <h4>Trabajos Practicos</h4>
-      <div style={{height: 'calc(100vh - 320px)'}}>
+    <div style={{height: '100%'}}>
+      <h4>Trabajos Prácticos</h4>
+      <div style={{height: '100%'}}>
         <DataGrid
           pagination
           columns={columns}
@@ -34,7 +26,6 @@ export const AssignmentTable = () => {
               quickFilterProps: {debounceMs: 500},
             },
           }}
-          getRowHeight={() => 'auto'}
           loading={loading || !assignments.length}
           localeText={DataGridLocaleText}
           onPageSizeChange={(newPage) => setPageSize(newPage)}
