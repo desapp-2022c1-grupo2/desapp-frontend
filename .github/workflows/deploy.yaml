@@ -1,4 +1,4 @@
-#Archivo para hacer CI/CD con github actions
+#Archivo para hacer CI/CD con GitHub actions
 #Se ejecuta cada vez que se hace un push a la rama main o deploy
 #Primer version
 #Despues realizar el deploy a heroku
@@ -7,8 +7,8 @@ name: Deploy v1.0.0
 on:
   push:
     branches:
-      - deployV1.1.0  # branch deploy name donde se encuentra el código a desplegar en desarrollo
-      #- main  # branch main name donde se encuentra el código a desplegar en producción
+      - test  # branch deploy name donde se encuentra el código a desplegar en desarrollo
+      - main  # branch main name donde se encuentra el código a desplegar en producción
 
 jobs:
   deploy:
@@ -29,4 +29,4 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ${{ secrets.HEROKU_APP }}
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}git push heroku YOUR_BRANCH:refs/heads/main
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
