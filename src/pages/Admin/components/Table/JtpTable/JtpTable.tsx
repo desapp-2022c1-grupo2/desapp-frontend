@@ -30,7 +30,6 @@ export const JtpTable = () => {
 
   return (
     <div style={{height: '100%'}}>
-      <h4>Jefes de Trabajos Prácticos</h4>
       <NewJtpModal id="btnAgregarJTP" />
       <div style={{height: '100%'}}>
         <DataGrid

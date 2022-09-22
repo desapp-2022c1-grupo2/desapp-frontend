@@ -12,12 +12,13 @@ export const AdminContent = styled.div`
   margin: 112px 24px 24px 24px;
   background-color: white;
   border-radius: 20px;
+  border: 1px solid var(--unahurGrey);
   align-items: center;
   flex-direction: column;
   height: 100%;
   justify-content: center;
   overflow: hidden;
-  padding: 40px 24px;
+  padding: 24px;
   max-width: 1800px;
   width: 96%;
 `

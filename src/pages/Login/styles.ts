@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { Button, Field } from '@components'
 
 export const LoginLayout = styled.div`
+  background-color: var(--unahurBlack);
   align-items: center;
   display: flex;
   justify-content: center;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import logo from '@assets/LogoUnahur.svg'
 import { requestLogin } from '@store/auth'
 import {

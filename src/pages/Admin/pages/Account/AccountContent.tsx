@@ -11,7 +11,7 @@ import {
   Container,
   Content,
   Profile,
-} from './styled'
+} from './styles'
 
 export const AccountContent = () => {
   return (
