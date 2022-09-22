@@ -1,7 +1,9 @@
 export {
     AddOutlined,
+    AssignmentOutlined,
     CheckOutlined,
     ClearOutlined,
+    DashboardOutlined,
     DeleteOutlined,
     EditOutlined,
     EmailOutlined,

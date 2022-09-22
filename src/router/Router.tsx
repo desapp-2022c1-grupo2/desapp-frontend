@@ -25,6 +25,8 @@ const AppRoutes = () => (
       <Route {...routes.admin.assignments} />
       <Route {...routes.admin.students} />
       <Route {...routes.admin.jtps} />
+      <Route {...routes.stats.dashboard} />
+      <Route {...routes.stats.assignments} />
       <Route path='/login' element={<Navigate to='/admin/jtps' />} />
     </Routes>
   </BrowserRouter>
