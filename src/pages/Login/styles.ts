@@ -40,3 +40,9 @@ export const LoginLogo = styled.img`
   height: 112px;
   width: 102px;
 `
+
+export const Error = styled.p`
+  color: var(--unahurRed);
+  font-size: 1rem;
+  margin: 8px auto;
+`
