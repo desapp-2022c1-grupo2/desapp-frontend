@@ -7,11 +7,12 @@ export const StatsContainer = styled.div`
 `
 
 export const StatsContent = styled.div`
-  background-color: white;
-  border-radius: 20px;
-  border: 1px solid var(--unahurGrey);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 16px;
   height: auto;
-  margin: 24px 24px 24px 0px;
+  padding: 8px 8px 8px 0px;
   overflow-y: auto;
   width: 100%;
 `
