@@ -34,5 +34,7 @@ const AppRoutes = () => (
 
 export const Router = () => {
   const isLogged = useAuth()
-  return isLogged ? <AppRoutes /> : <LoginRoutes />
+  return isLogged
+    ? <AppRoutes />
+    : <LoginRoutes />
 }

@@ -1,5 +1,4 @@
-import axios from "axios"
-import { API_URL } from "../const"
+import axios from "@util/axios"
 import { IAssignment } from "@models"
 import {
   assignmentAdapter,
@@ -9,7 +8,7 @@ import {
 
 export const getAllAssignments = async (): Promise<IAssignment[]> => {
     try {
-      const response = await axios.get(`${API_URL}/assignment`)
+      const response = await axios.get('/assignment')
       const assignmentList: IAssignmentResponse[] = await Promise.resolve(response.data)
       return assignmentList.map(assignment => assignmentAdapter(assignment))
     } catch (err) {
@@ -20,7 +19,7 @@ export const getAllAssignments = async (): Promise<IAssignment[]> => {
   
   export const getAssignment = async (id: number): Promise<IAssignment | undefined> => {
     try {
-      const response = await axios.get(`${API_URL}/assignment/${id}`)
+      const response = await axios.get(`/assignment/${id}`)
       const assignment: IAssignmentResponse = await Promise.resolve(response.data)
       return assignmentAdapter(assignment)
     } catch (err) {
@@ -31,7 +30,7 @@ export const getAllAssignments = async (): Promise<IAssignment[]> => {
   export const createAssignment = async (newAssignment: IAssignment) => {
     try {
       const response = await axios.post(
-        `${API_URL}/assignment`,
+        '/assignment',
         assignmentResponseAdapter(newAssignment),
       )
       return Promise.resolve(response.data)
@@ -43,7 +42,7 @@ export const getAllAssignments = async (): Promise<IAssignment[]> => {
   export const updateAssignment = async (assignment: IAssignment) => {
     try {
       const response = await axios.patch(
-        `${API_URL}/assignment/${assignment.id}`,
+        `/assignment/${assignment.id}`,
         assignmentResponseAdapter(assignment),
       )
       return Promise.resolve(response.data)
@@ -54,7 +53,7 @@ export const getAllAssignments = async (): Promise<IAssignment[]> => {
   
   export const deleteAssignment = async (id: number) => {
     try {
-      const response = await axios.delete(`${API_URL}/assignment/${id}`)
+      const response = await axios.delete(`/assignment/${id}`)
       return Promise.resolve(response.data)
     } catch (err) {
       console.error(err)

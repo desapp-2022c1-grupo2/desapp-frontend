@@ -7,3 +7,5 @@ export const selectCourses = () => useSelector<RootState, ICourse[]>(state => st
 export const selectJtps = () => useSelector<RootState, IJtp[]>(state => state.user.jtps)
 export const selectJtpById = (id: number | string) => useSelector<RootState, IJtp[]>(state => state.user.jtps).find(x => x.id == id)
 export const selectStudents = () => useSelector<RootState, IStudent[]>(state => state.user.students)
+export const selectIsAuthenticated = () => useSelector<RootState, boolean | undefined >((state) => state.auth.isAuthenticated)
+export const selectToken = () => useSelector<RootState, string | undefined >((state) => state.auth.token)

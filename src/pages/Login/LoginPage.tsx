@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import logo from '@assets/LogoUnahur.svg'
-import { requestLogin } from '@store/auth'
+import { setCredentials, login } from '@store/auth'
 import {
   Error,
   LoginConfirmButton,
@@ -27,9 +27,8 @@ export const LoginPage = () => {
   const emailListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => setEmail(event.currentTarget.value)
   const passwordListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => setPassword(event.currentTarget.value)
   const handleLogin = () => {
-    dispatch(requestLogin({ email, password }))
-    localStorage.setItem('email', email)
-    localStorage.setItem('password', password)
+    dispatch(setCredentials({ email, password }))
+    dispatch(login())
     setEmail('')
     setPassword('')
     setCredentialError(true)

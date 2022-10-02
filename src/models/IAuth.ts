@@ -1,5 +1,9 @@
+import { IUser } from "./IUser"
+
 export interface IAuth {
-  isLogged?: boolean,
+  isAuthenticated?: boolean,
+  password?: string,
+  token?: string,
+  user?: IUser,
   email: string,
-  password: string,
 }
