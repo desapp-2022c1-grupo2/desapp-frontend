@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { Button, Field } from '@components'
 
 export const LoginLayout = styled.div`
+  background-color: var(--unahurBlack);
   align-items: center;
   display: flex;
   justify-content: center;
@@ -38,4 +39,10 @@ export const LoginConfirmButton = styled(Button)`
 export const LoginLogo = styled.img`
   height: 112px;
   width: 102px;
+`
+
+export const Error = styled.p`
+  color: var(--unahurRed);
+  font-size: 1rem;
+  margin: 8px auto;
 `

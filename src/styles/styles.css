@@ -1,6 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+:root{
+  --unahurBlack: #575756;
+  --unahurBlue: #0089CD;
+  --unahurCyan: #06A3C9;
+  --unahurCyanHover: #06A3C922;
+  --unahurGreen: #56A42C;
+  --unahurGreenAlt: #56A42C22;
+  --unahurGrey: #CECECE;
+  --unahurOrange: #F08100;
+  --unahurRed: #E74924;
+  --unahurRedAlt: #EA4F51;
+  --unahurSoftGrey: #F1F1F1;
+  --unahurSoftWhite: #FAFAFA;
+  --unahurWhite: #FFFFFF;
+}
+
 *,
 *::after,
 *::before {
@@ -10,6 +26,8 @@
   list-style: none;
   text-decoration: none;
   user-select: none;
+  font-size: 0.875rem;
+  font-family: 'Roboto', sans-serif;
 }
 
 html {
@@ -20,39 +38,29 @@ html {
 }
 
 body {
-  background: #575756;
-  font-family: 'Roboto', sans-serif;
-  font-size: 1rem;
+  background: var(--unahurSoftGrey);
   width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6, p, label { color: #575756; }
+h1, h2, h3, h4, h5, h6, p, label { color: var(--unahurBlack); }
+h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
 
 label {
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 500;
 }
 
 p { font-family: 'Roboto', sans-serif; }
 
-
-h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
-
 h1 {
-  font-size: 3.5rem;
+  font-size: 2.25rem;
   font-weight: 700;
 }
 
-h2 { font-size: 3rem; }
-h3 { font-size: 2.5rem; }
-h4 { font-size: 1.75rem; }
-h5 { font-size: 1.25rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.125rem; }
 h6 { font-size: 1rem; }
 
 .hide { display: none !important; }
-
-.active {
-  color: #56A42C !important;
-  border-bottom: 3px solid #56A42C !important;
-  border-top: 3px solid #00000000 !important;
-}

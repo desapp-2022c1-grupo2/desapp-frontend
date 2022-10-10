@@ -10,10 +10,12 @@ export const GoToContainer = styled.div`
 `
 
 export const ArrowRight = styled(ArrowRightAltOutlined)`
+  color: var(--unahurBlack);
   font-size: 2rem !important;
 `
 
 export const ArrowLeft = styled(ArrowRightAltOutlined)`
+  color: var(--unahurBlack);
   font-size: 2rem !important;
   transform: rotate(180deg);
 `

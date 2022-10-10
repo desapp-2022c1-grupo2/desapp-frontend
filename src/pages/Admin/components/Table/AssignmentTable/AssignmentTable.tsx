@@ -13,8 +13,6 @@ export const AssignmentTable = () => {
   const columns: GridColDef[] = getAssignmentColumns()
 
   return (
-    <div style={{height: '100%'}}>
-      <h4>Trabajos Prácticos</h4>
       <div style={{height: '100%'}}>
         <DataGrid
           pagination
@@ -34,7 +32,6 @@ export const AssignmentTable = () => {
           rowsPerPageOptions={[10, 25, 50]}
           sx={{border: 0}}
         />
-      </div>
     </div>
   )
 }

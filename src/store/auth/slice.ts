@@ -7,30 +7,33 @@ import { IAuth } from '@models'
 const initialState: IAuth = {
   email: '',
   password: '',
-  isLogged: false,
+  token: '',
+  isAuthenticated: false,
 }
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout(state){
-      state.email = ''
-      state.password = ''
-      state.isLogged = false
+    login() {},
+    logout(state){ state = initialState },
+    setCredentials(state, { payload }: PayloadAction<IAuth>){
+      state.email = payload.email 
+      state.password = payload.password
+      state.token = payload.token
     },
-    requestLogin(state, { payload }: PayloadAction<IAuth>) {
-      const { email, password } = payload
-      state.email = email
-      state.password = password
-      state.isLogged = email === 'admin@unahur.edu.ar' && password === 'admin'
+    setToken(state, { payload }: PayloadAction<string | undefined>){
+      state.token = payload
+      state.isAuthenticated = state.token != ''
     },
   }
 })
 
 export const {
   logout,
-  requestLogin,
+  login,
+  setToken,
+  setCredentials
 } = authSlice.actions
 
 export const auth = authSlice.reducer

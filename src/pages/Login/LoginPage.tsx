@@ -1,8 +1,9 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import logo from '@assets/LogoUnahur.svg'
-import { requestLogin } from '@store/auth'
+import { setCredentials, login } from '@store/auth'
 import {
+  Error,
   LoginConfirmButton,
   LoginContainer,
   LoginField,
@@ -12,43 +13,54 @@ import {
 } from './styles'
 
 export const LoginPage = () => {
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
   const dispatch = useDispatch()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [disableConfirm, setDisableConfirm] = useState(false)
+  const [credentialError, setCredentialError] = useState(false)
+
+  useEffect(
+    () => { setDisableConfirm(email == '' || password == '') },
+    [email, password]
+  )
 
   const emailListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => setEmail(event.currentTarget.value)
   const passwordListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => setPassword(event.currentTarget.value)
   const handleLogin = () => {
-    dispatch(requestLogin({ email, password }))
-    localStorage.setItem('email', email)
-    localStorage.setItem('password', password)
+    dispatch(setCredentials({ email, password }))
+    dispatch(login())
+    setEmail('')
+    setPassword('')
+    setCredentialError(true)
   }
 
   return (
-    <LoginLayout>
+    <LoginLayout onKeyUp={(e) => { if (!disableConfirm && e.key == 'Enter') handleLogin()}} >
       <LoginContainer>
         <LoginLogo src={logo} alt="logo-unahur"/>
         <LoginTitle>Ingresá a tu cuenta</LoginTitle>
         <LoginField
           label='Email'
+          value={email}
           variant='email'
           placeholder='Ingresá tu correo'
           onChange={emailListener}
           />
         <LoginField
           label='Contraseña'
+          value={password}
           variant='password'
           placeholder='Ingresá tu contraseña'
           onChange={passwordListener}
           />
+          { credentialError && <Error>Email o contraseña incorrectos</Error> }
         <LoginConfirmButton
-          fullWidth
+          disabled={disableConfirm}
           color='unahurGreen'
-          variant='contained'
           onClick={handleLogin}
-          >
-          Ingresar
-        </LoginConfirmButton>
+          variant='contained'
+          text='Ingresar'
+        />
       </LoginContainer>
     </LoginLayout>
   )

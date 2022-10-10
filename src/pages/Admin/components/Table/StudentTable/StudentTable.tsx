@@ -14,8 +14,6 @@ export const StudentTable = () => {
 
   return (
     <div style={{height: '100%'}}>
-      <h4>Estudiantes</h4>
-    <div style={{height: '100%'}}>
         <DataGrid
           pagination
           columns={columns}
@@ -35,7 +33,6 @@ export const StudentTable = () => {
           rowsPerPageOptions={[25, 50, 75, 100]}
           sx={{border: 0}}
         />
-      </div>
     </div>
   )
 }

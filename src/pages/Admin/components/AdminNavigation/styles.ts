@@ -5,8 +5,14 @@ export const TabsContainer = styled.div`
   display: flex;
   align-items: center;
   height: 80px;
-  margin: 16px;
+  margin: 0 16px;
   width: 100%;
+
+  & .active {
+    color: var(--unahurGreen) !important;
+    background-color: #56A42C11 !important;
+    border-radius: 10px;
+  }
 `
 
 export const Tab = styled(NavLink)`
@@ -16,7 +22,7 @@ export const Tab = styled(NavLink)`
   display: flex;
   font-size: 0.875rem;
   font-weight: 500;
-  height: 79px;
+  height: fit-content;
   justify-content: center;
   line-height: 1.25;
   max-width: 360px;
