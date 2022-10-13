@@ -5,6 +5,7 @@ import {
   MenuItem
 } from "@mui/material"
 import { logout } from "@store/auth"
+import { selectLogedUser } from "@store"
 import {
   Avatar,
   Button,
@@ -14,6 +15,7 @@ import {
 // TODO: Actualizar dinamicamente avatar src y name
 export const ProfileDropdown = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const user = selectLogedUser()
   const dispatch = useDispatch()
   const open = Boolean(anchorEl)
   
@@ -22,7 +24,10 @@ export const ProfileDropdown = () => {
   }
   
   const handleClose = () => { setAnchorEl(null) }
-  const handleLogout = () => { dispatch(logout()) }
+  const handleLogout = () => {
+    dispatch(logout())
+    location.reload()
+  }
   
   return (
     <>
@@ -32,9 +37,9 @@ export const ProfileDropdown = () => {
       aria-controls={open ? 'resources-menu' : undefined}
       aria-haspopup='true'
       aria-expanded={open ? 'true' : undefined}
-      startIcon={<Avatar src="https://randomuser.me/api/portraits/men/17.jpg" />}
+      startIcon={<Avatar />}
       endIcon={<KeyboardArrowDownOutlined />}
-      text="Administrador"
+      text={user?.name + ' ' + user?.lastName}
     />
     <Menu
       open={open}

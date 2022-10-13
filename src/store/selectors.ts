@@ -1,6 +1,12 @@
 import { useSelector } from "react-redux"
 import { RootState } from "@store"
-import { IAssignment, ICourse, IJtp, IStudent } from "@models"
+import {
+  IAssignment,
+  ICourse,
+  IJtp,
+  IStudent,
+  IUser
+} from "@models"
 
 export const selectAssignments = () => useSelector<RootState, IAssignment[]>(state => state.assignments.all)
 export const selectCourses = () => useSelector<RootState, ICourse[]>(state => state.courses.all)
@@ -9,3 +15,4 @@ export const selectJtpById = (id: number | string) => useSelector<RootState, IJt
 export const selectStudents = () => useSelector<RootState, IStudent[]>(state => state.user.students)
 export const selectIsAuthenticated = () => useSelector<RootState, boolean | undefined >((state) => state.auth.isAuthenticated)
 export const selectToken = () => useSelector<RootState, string | undefined >((state) => state.auth.token)
+export const selectLogedUser = () => useSelector<RootState, IUser | undefined >((state) => state.auth.user)

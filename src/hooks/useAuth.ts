@@ -15,10 +15,12 @@ const setupData = () => {
 
 const tryLoginFromLocalStorage = () => {
   const dispatch = useDispatch()
+  const user = localStorage.getItem("user")
   const email = localStorage.getItem("email")
   const token = localStorage.getItem("token")
-  if (email && token) {
-    dispatch(setCredentials({email, token}))
+  
+  if (email && token && user) {
+    dispatch(setCredentials({email, token, user: JSON.parse(user)}))
     dispatch(login())
   }
 }

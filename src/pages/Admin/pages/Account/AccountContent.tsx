@@ -12,17 +12,19 @@ import {
   Content,
   Profile,
 } from './styles'
+import { selectLogedUser } from '@store'
 
 export const AccountContent = () => {
+  const user = selectLogedUser()
   return (
     <Container>
-      <Profile src="https://randomuser.me/api/portraits/men/17.jpg" />
-      <h4>Usuario Administrador</h4>
+      <Profile />
+      <h4>{user?.name + ' ' + user?.lastName}</h4>
       <Content>
         <ReadOnlyField
           icon={<EmailOutlined />}
           label='Email'
-          text='admin@unahur.edu.ar'
+          text={user?.email}
         />
         <ReadOnlyField
           icon={<PersonOutlined />}

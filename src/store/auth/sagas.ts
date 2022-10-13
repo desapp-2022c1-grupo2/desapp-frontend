@@ -4,25 +4,33 @@ import {
   select,
   takeLatest,
 } from 'redux-saga/effects'
-import { setCredentials, setToken } from './slice'
-import { IAuth } from '@models'
-import { auth } from '@services'
+import { setCredentials, setToken, setUser } from './slice'
+import { IAuth, IUser } from '@models'
+import { auth, updateAdmin } from '@services'
 import { RootState } from '@store'
 
 function* authUser() {
   try {
-    const user: IAuth = yield select((state: RootState) => state.auth)
-    if(user.token && user.email) {
-      yield put(setToken(user.token))
+    const authData: IAuth = yield select((state: RootState) => state.auth)
+    if(authData.token && authData.email) {
+      const userData = JSON.parse(localStorage.getItem("user") || '{}')
+      yield put(setToken(authData.token))
+      yield put(setUser(userData))
     } else {
-      const response: IAuth = yield call(auth, user)
+      const response: IAuth = yield call(auth, authData)
+      
+      const x: string | null = localStorage.getItem('token')
       localStorage.setItem('email', response.email)
       localStorage.setItem('token', response.token || '')
+      if(x !== localStorage.getItem('token')) { location.reload()}
+      localStorage.setItem('user', JSON.stringify(response.user) || '')
       yield put(setToken(response.token))
+      yield put(setUser(response.user))
       yield put(setCredentials({
         email: response.email,
         password: '',
         token: response.token,
+        user: response.user
       }))
     }
   } catch (err){
@@ -39,7 +47,18 @@ function* logoutUser(){
   }
 }
 
+function* updateCurrentUser(){
+  try {
+    const user: IUser | undefined = yield select((state: RootState) => state.auth.user)
+    localStorage.setItem('user', JSON.stringify(user))
+    yield call(updateAdmin, user)
+  } catch (err){
+    console.error(err)
+  }
+}
+
 export function* authWatcher(){
   yield takeLatest('auth/login', authUser)
   yield takeLatest('auth/logout', logoutUser)
+  yield takeLatest('auth/updateUserInfo', updateCurrentUser)
 }

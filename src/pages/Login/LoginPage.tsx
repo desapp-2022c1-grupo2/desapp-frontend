@@ -11,6 +11,7 @@ import {
   LoginLogo,
   LoginTitle,
 } from './styles'
+import { verifyCredentials } from '@src/services'
 
 export const LoginPage = () => {
   const dispatch = useDispatch()
@@ -26,12 +27,12 @@ export const LoginPage = () => {
 
   const emailListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => setEmail(event.currentTarget.value)
   const passwordListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => setPassword(event.currentTarget.value)
-  const handleLogin = () => {
+  const handleLogin = async () => {
     dispatch(setCredentials({ email, password }))
     dispatch(login())
     setEmail('')
     setPassword('')
-    setCredentialError(true)
+    if (await !verifyCredentials(email, password)) setCredentialError(true)
   }
 
   return (
