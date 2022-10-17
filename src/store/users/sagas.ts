@@ -4,9 +4,15 @@ import {
   select,
   takeLatest,
 } from 'redux-saga/effects'
-import { setJtps, setStudents, onFinish } from './slice'
-import { IJtp, IStudent } from '@models'
 import {
+  setAdmins,
+  setJtps,
+  setStudents,
+  onFinish,
+} from './slice'
+import { IAdmin, IJtp, IStudent } from '@models'
+import {
+  getAllAdmins,
   getAllJtps,
   createJtp,
   deleteJtp,
@@ -65,7 +71,18 @@ function* getStudents() {
   }
 }
 
+function* getAdmins() {
+  try {
+    const response: IAdmin[] = yield call(getAllAdmins)
+    console.log(response)
+    yield put(setAdmins(response))
+  } catch (err){
+    console.error(err)
+  }
+}
+
 export function* jtpWatcher(){
+  yield takeLatest('users/getAdmins', getAdmins)
   yield takeLatest('users/getJtps', getJtps)
   yield takeLatest('users/getStudents', getStudents)
   yield takeLatest('users/createJtp', postJtp)

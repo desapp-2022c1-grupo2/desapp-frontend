@@ -2,9 +2,9 @@ import styled from 'styled-components'
 import { Select } from '@mui/material'
 
 export const MuiSelect = styled(Select)`
-  background-color: #F1F1F1;
-  minHeight: '52px';
-  minWidth: '192px';
+  background-color: var(--unahurWhite);
+  min-height: '52px';
+  width: '100%';
   padding: '8px 16px';
 `
 

@@ -1,4 +1,3 @@
-import { useAuth } from '@src/hooks/useAuth'
 import React from 'react'
 import {
   BrowserRouter,
@@ -6,6 +5,7 @@ import {
   Routes,
   Route,
 } from 'react-router-dom'
+import { useAuth } from '@src/hooks/useAuth'
 import { routes } from './routes'
 
 const LoginRoutes = () => (
@@ -20,14 +20,16 @@ const LoginRoutes = () => (
 const AppRoutes = () => (
   <BrowserRouter>
     <Routes>
-      <Route {...routes.admin.home} />
-      <Route {...routes.admin.account} />
-      <Route {...routes.admin.assignments} />
-      <Route {...routes.admin.students} />
-      <Route {...routes.admin.jtps} />
-      <Route {...routes.stats.dashboard} />
-      <Route {...routes.stats.assignments} />
-      <Route path='/login' element={<Navigate to='/admin/jtps' />} />
+      <Route path='/login' element={<Navigate to='/overview' />} />
+      <Route {...routes.account} />
+      <Route {...routes.overview} />
+      <Route {...routes.login} />
+      <Route {...routes.assignments.list} />
+      <Route {...routes.assignments.stats} />
+      <Route {...routes.assignments.evaluations} />
+      <Route {...routes.users.admins} />
+      <Route {...routes.users.jtps} />
+      <Route {...routes.users.students} />
     </Routes>
   </BrowserRouter>
 )

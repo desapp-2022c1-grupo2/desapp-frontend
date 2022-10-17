@@ -51,11 +51,11 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: '10px',
-          fontSize: '1rem',
+          fontSize: '0.875rem',
           fontWeight: 400,
-          minHeight: '52px',
-          minWidth: '192px',
-          padding: '8px 16px',
+          minHeight: '16px',
+          minWidth: '48px',
+          padding: '16px 32px',
           textTransform: 'none',
           margin: '8px',
         },

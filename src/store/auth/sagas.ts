@@ -5,8 +5,8 @@ import {
   takeLatest,
 } from 'redux-saga/effects'
 import { setCredentials, setToken, setUser } from './slice'
-import { IAuth, IUser } from '@models'
-import { auth, updateAdmin } from '@services'
+import { IAdmin, IAuth, IUser } from '@models'
+import { auth, updateAdmin, getAdmin } from '@src/services'
 import { RootState } from '@store'
 
 function* authUser() {
@@ -18,11 +18,8 @@ function* authUser() {
       yield put(setUser(userData))
     } else {
       const response: IAuth = yield call(auth, authData)
-      
-      const x: string | null = localStorage.getItem('token')
       localStorage.setItem('email', response.email)
       localStorage.setItem('token', response.token || '')
-      if(x !== localStorage.getItem('token')) { location.reload()}
       localStorage.setItem('user', JSON.stringify(response.user) || '')
       yield put(setToken(response.token))
       yield put(setUser(response.user))
@@ -49,9 +46,17 @@ function* logoutUser(){
 
 function* updateCurrentUser(){
   try {
-    const user: IUser | undefined = yield select((state: RootState) => state.auth.user)
+    const user: IAdmin = yield select((state: RootState) => state.auth.user)
     localStorage.setItem('user', JSON.stringify(user))
-    yield call(updateAdmin, user)
+    yield call(
+      updateAdmin,
+      {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        lastName: user.lastName,
+      }
+    )
   } catch (err){
     console.error(err)
   }

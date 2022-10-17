@@ -25,14 +25,26 @@ export const LoginPage = () => {
     [email, password]
   )
 
-  const emailListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => setEmail(event.currentTarget.value)
-  const passwordListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => setPassword(event.currentTarget.value)
+  const emailListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setEmail(event.currentTarget.value)
+    if(email.length > 0) { setCredentialError(false) }
+  }
+  
+  const passwordListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setPassword(event.currentTarget.value)
+    if(password.length > 0) { setCredentialError(false) }
+  }
+
   const handleLogin = async () => {
-    dispatch(setCredentials({ email, password }))
-    dispatch(login())
+    const verifiedUser = await verifyCredentials(email, password)
+    if (verifiedUser) {
+      dispatch(setCredentials({ email, password }))
+      dispatch(login())
+    } else {
+      setCredentialError(true)
+    }
     setEmail('')
     setPassword('')
-    if (await !verifyCredentials(email, password)) setCredentialError(true)
   }
 
   return (

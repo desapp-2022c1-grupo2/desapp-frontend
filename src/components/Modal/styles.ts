@@ -13,7 +13,7 @@ export const ModalDialog = styled.div<ModalDialogProps>`
   top: 0;
   trasitions: 0.5s linear;
   width: 100%;
-  z-index: 9999;
+  z-index: 1300;
 `;
 
 export const ModalContainer = styled.div`
