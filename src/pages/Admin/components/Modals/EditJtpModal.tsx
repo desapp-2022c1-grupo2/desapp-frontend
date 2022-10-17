@@ -24,7 +24,7 @@ export const EditJtpModal = ({ jtp }: EditJtpModalProps) => {
   const [name, setName] = useState(jtp.name)
   const [lastName, setLastname] = useState(jtp.lastName)
   const [email, setEmail] = useState(jtp.email)
-  const [selectedCourse, setSelectedCourse] = useState(jtp.courseId)
+  const [selectedCourse, setSelectedCourse] = useState(jtp?.course?.id)
   const [loading, setLoading] = useState(false)
   const [formIsCompleted, setFormIsCompleted] = useState(false)
 
@@ -55,7 +55,9 @@ export const EditJtpModal = ({ jtp }: EditJtpModalProps) => {
       name,
       lastName,
       email,
-      courseId: courses[selectedCourse || -1].id,
+      course: {
+        id: courses[selectedCourse || -1].id
+      },
     }))
     setLoading(false)
     handleClose()
@@ -124,7 +126,7 @@ export const EditJtpModal = ({ jtp }: EditJtpModalProps) => {
             items={courses ? courses.map(course => course.name ? course.name : '') : []}
             label='Materia'
             onChange={handleSelectCourse}
-            placeholder={selectedCourse?.toString()}
+            placeholder={courses[selectedCourse || -1]?.name}
             value={selectedCourse?.toString()}
           />
           { !formIsCompleted && <RequiredFieldText>* Completa todos los campos</RequiredFieldText> }

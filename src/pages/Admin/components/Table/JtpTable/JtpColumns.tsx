@@ -19,8 +19,10 @@ export function getJtpColumns(): GridColDef[] {
       field: "courseId",
       flex: 2,
       type: "singleSelect",
-      renderCell: (params) => <Chip disabled color='success' label={
-        courses.find(x => { return x.id == params.value})?.name || params.value} />,
+        renderCell: (params) => {
+            return <Chip disabled color='success' label={
+                params.row.course.name || params.value}/>
+        },
     },
     {
       field: "actions",

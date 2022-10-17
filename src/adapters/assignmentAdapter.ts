@@ -1,9 +1,8 @@
-import { IAssignment } from '@models'
-import { fixString } from '@util'
+import {IAssignment, ICourse, IJtp} from '@models'
 
 export interface IAssignmentResponse {
   id: string,
-  jtpId: string,
+  jtp: IJtp,
   number: string,
   name: string,
   url: string,
@@ -20,36 +19,36 @@ export interface IAssignmentResponse {
   var5: string,
   type: string,
   status: string,
-  courseId: string,
+  course: ICourse,
   individualProcess: string,
 }
 
 export const assignmentAdapter = (assignment: IAssignmentResponse): IAssignment => ({
   id: assignment.id,
-  jtpId: assignment.jtpId,
+  jtp: assignment.jtp,
   number: assignment.number,
-  name: fixString(assignment.name),
+  name: assignment.name,
   url: assignment.url,
-  shortDescr: fixString(assignment.shortDescr),
-  description: fixString(assignment.description),
-  taskDescription: fixString(assignment.taskDescription),
+  shortDescr: assignment.shortDescr,
+  description: assignment.description,
+  taskDescription: assignment.taskDescription,
   startDate: assignment.startDate?.slice(0, 10),
   endDate: assignment.endDate?.slice(0, 10),
-  tags: fixString(assignment.tags),
-  var1: fixString(assignment.var1),
-  var2: fixString(assignment.var2),
-  var3: fixString(assignment.var3),
-  var4: fixString(assignment.var4),
-  var5: fixString(assignment.var5),
+  tags: assignment.tags,
+  var1: assignment.var1,
+  var2: assignment.var2,
+  var3: assignment.var3,
+  var4: assignment.var4,
+  var5: assignment.var5,
   type: assignment.type,
   status: assignment.status,
-  courseId: assignment.courseId,
+  course: assignment.course,
   individualProcess: assignment.individualProcess,
 })
 
 export const assignmentResponseAdapter = (assignment: IAssignment): IAssignmentResponse => ({
   id: assignment.id,
-  jtpId: assignment.jtpId,
+  jtp: assignment.jtp,
   number: assignment.number,
   name: assignment.name,
   url: assignment.url,
@@ -66,6 +65,6 @@ export const assignmentResponseAdapter = (assignment: IAssignment): IAssignmentR
   var5: assignment.var5,
   type: assignment.type,
   status: assignment.status,
-  courseId: assignment.courseId,
+  course: assignment.course,
   individualProcess: assignment.individualProcess,
 })

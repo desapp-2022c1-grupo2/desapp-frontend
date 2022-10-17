@@ -1,6 +1,9 @@
+import {IJtp} from "@models/IJtp";
+import {ICourse} from "@models/ICourse";
+
 export interface IAssignment {
   id: string,
-  jtpId: string,
+  jtp: IJtp,
   number: string,
   name: string,
   url: string,
@@ -17,6 +20,6 @@ export interface IAssignment {
   var5: string,
   type: string,
   status: string,
-  courseId: string,
+  course: ICourse,
   individualProcess: string,
 }
