@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Content, RequiredFieldText } from './styles'
-//import { updateJtp } from "@services"
 import { inputChangeEvent } from "@const"
 import {
   Button,
@@ -9,22 +8,50 @@ import {
   Field,
   Modal,
 } from '@components'
+import { selectLogedUser } from '@store'
+import { IAdmin } from '@models'
+import { useDispatch } from 'react-redux'
+import { setUser, updateUserInfo } from '@store/auth'
+import { verifyCredentials } from '@src/services'
 
 export const EditAdminInfoModal = () => {
+  const current: IAdmin = selectLogedUser() || {}
+  const dispatch = useDispatch()
   const [open, setOpen] = useState(false)
-  const [name, setName] = useState("Usuario")
-  const [lastName, setLastname] = useState("Administrador")
+  const [name, setName] = useState(current.name)
+  const [lastName, setLastname] = useState(current.lastName)
   const [pass, setPass] = useState("")
-  const [email, setEmail] = useState("admin@unahur.edu.ar")
-  const passVerify = (pass == 'admin')
+  const [email, setEmail] = useState(current.email)
+  const [showPasswordAlert, setShowPasswordAlert] = useState(false)
 
   const handleOpen = () => { setOpen(true) }
-  const handleClose = () => { setOpen(false) }
+  const handleClose = () => { 
+    setOpen(false)
+    setPass('')
+    setShowPasswordAlert(false)
+  }
+  
+  const handleConfirm = async () => {
+    if (await verifyCredentials(email || '', pass)) {
+      dispatch(setUser({
+        ...current,
+        name,
+        lastName,
+        email,
+      }))
+      dispatch(updateUserInfo())
+      handleClose()
+    } else {
+      setPass('')
+      setShowPasswordAlert(true)
+    }
+  }
   const handleChange = (
     setState: Function,
     event: inputChangeEvent,
   ) => {
     setState(event.target.value)
+    setShowPasswordAlert(false)
   }
 
   return (
@@ -43,10 +70,10 @@ export const EditAdminInfoModal = () => {
         title='Editar información'
         footer={
           <Button
-            disabled={!passVerify}
+            disabled={pass === ''}
             children="Confirmar"
             color='unahurGreen'
-            onClick={handleClose}
+            onClick={handleConfirm}
             startIcon={<CheckOutlined/>}
             variant='contained'
             title='Confirmar cambios'
@@ -55,21 +82,18 @@ export const EditAdminInfoModal = () => {
       >
         <Content>
           <Field
-            disabled={true}
             value={name}
             label="Nombre"
             onChange={(event: inputChangeEvent) => handleChange(setName, event)}
             placeholder={"Ingresá tu nombre"}
           />
           <Field
-            disabled={true}
             value={lastName}
             label="Apellido"
             onChange={(event: inputChangeEvent) => handleChange(setLastname, event)}
             placeholder={"Ingresá tu apellido"}
           />
           <Field
-            disabled={true}
             value={email}
             label="Email"
             onChange={(event: inputChangeEvent) => handleChange(setEmail, event)}
@@ -83,7 +107,6 @@ export const EditAdminInfoModal = () => {
             onChange={(event: inputChangeEvent) => handleChange(setPass, event)}
           />
           <Field
-            disabled={true}
             value={pass}
             label="Contraseña actual"
             onChange={(event: inputChangeEvent) => handleChange(setPass, event)}
@@ -91,8 +114,8 @@ export const EditAdminInfoModal = () => {
             variant="password"
           />
         </Content>
-        {/* { !passVerify && <RequiredFieldText>* Ingrese su contraseña para confirmar los cambios</RequiredFieldText>} */}
-        <RequiredFieldText>* Momentaneamente no es posible realizar cambios en tu información</RequiredFieldText>
+        { (!showPasswordAlert && pass === '') && <RequiredFieldText>* Ingrese su contraseña para confirmar los cambios</RequiredFieldText> }
+        { showPasswordAlert && <RequiredFieldText>* Contraseña incorrecta</RequiredFieldText> }
       </Modal>
     </>
   )

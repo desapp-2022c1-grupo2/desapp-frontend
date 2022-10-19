@@ -3,23 +3,27 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit'
 import { IJtpResponse } from '@adapters'
-import { IJtp, IStudent, IUser } from '@models'
+import { IAdmin, IJtp, IStudent, IUser } from '@models'
 
 interface IUsers {
   aux?: IUser,
+  admins: IAdmin[],
   jtps: IJtp[],
   students: IStudent[],
 }
 
 const initialState: IUsers = {
+  admins: [],
   jtps: [],
   students: [],
+
 }
 
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
+    getAdmins(){},
     getJtps(){},
     getStudents(){},
     createJtp(state, { payload }: PayloadAction<IJtpResponse>){
@@ -34,14 +38,17 @@ export const usersSlice = createSlice({
       state.aux = payload
     },
     onFinish(state){ state.aux = undefined},
+    setAdmins(state, { payload }: PayloadAction<IAdmin[]>) { state.admins = payload },
     setJtps(state, { payload }: PayloadAction<IJtp[]>) { state.jtps = payload },
     setStudents(state, { payload }: PayloadAction<IStudent[]>) { state.students = payload },
   }
 })
 
 export const {
+  getAdmins,
   getJtps,
   getStudents,
+  setAdmins,
   setJtps,
   setStudents,
   createJtp,

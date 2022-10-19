@@ -1,69 +1,71 @@
 import React from 'react'
 import {
-  AdminAccountPage,
-  AdminAssignmentsPage,
-  AdminStudentsPage,
-  AdminJtpsPage,
+  AssignmentsPage,
+  AccountPage,
+  EvaluationsPage,
+  StatsPage,
+  AdminsPage,
+  StudentsPage,
+  JtpsPage,
   LoginPage,
-  StatsDashboard,
-  StatsAssignments,
+  OverviewPage,
 } from '@pages'
 
 export const paths = {
+  account: '/account',
+  overview: '/overview',
   login: '/login',
-  admin: {
-    home: '/admin',
-    jtps: '/admin/jtps',
-    assignments: '/admin/assignments',
-    students: '/admin/students',
-    account: '/admin/account'
+  assignments: {
+    list: '/assignments/list',
+    stats: '/assignments/stats',
+    evaluations: '/assignments/evaluations',
   },
-  stats: {
-    dashboard: '/stats/dashboard',
-    assignments: '/stats/assignments',
-  }
-};
+  users: {
+    admins: '/users/admins',
+    jtps: '/users/jtp',
+    students: '/users/students',
+  },
+}
 
 export const routes = {
-  stats: {
-    dashboard : {
-      path: paths.stats.dashboard,
-      element: <StatsDashboard />,
-    },
-    assignments: {
-      path: paths.stats.assignments,
-      element: <StatsAssignments />,
-
-    }
+  account: {
+    path: paths.account,
+    element: <AccountPage />,
+  },
+  overview: {
+    path: paths.overview,
+    element: <OverviewPage />,
   },
   login: {
     path: paths.login,
     element: <LoginPage/>,
   },
-  admin: {
-    home: {
-      path: paths.admin.home,
-      element: <AdminJtpsPage />,
+  assignments: {
+    list: {
+      path: paths.assignments.list,
+      element: <AssignmentsPage />,
+    },
+    stats: {
+      path: paths.assignments.stats,
+      element: <StatsPage />,
+    },
+    evaluations: {
+      path: paths.assignments.evaluations,
+      element: <EvaluationsPage />,
+    },
+  },
+  users: {
+    admins: {
+      path: paths.users.admins,
+      element: <AdminsPage />,
     },
     jtps: {
-      path: paths.admin.jtps,
-      element: <AdminJtpsPage />,
-      label: "JTPs",
-    },
-    assignments: {
-      path: paths.admin.assignments,
-      element: <AdminAssignmentsPage />,
-      label: "Trabajos Practicos"
+      path: paths.users.jtps,
+      element: <JtpsPage />,
     },
     students: {
-      path: paths.admin.students,
-      element: <AdminStudentsPage />,
-      label: "Estudiantes"
+      path: paths.users.students,
+      element: <StudentsPage />,
     },
-    account: {
-      path: paths.admin.account,
-      element: <AdminAccountPage />,
-      label: "Mi cuenta"
-    },
-  }
+  },
 }

@@ -1,3 +1,4 @@
+export * from './IAdmin'
 export * from './IAssignment'
 export * from './IAuth'
 export * from './ICourse'

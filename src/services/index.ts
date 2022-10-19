@@ -1,3 +1,4 @@
+export * from './admins'
 export * from './assignments'
 export * from './auth'
 export * from './courses'

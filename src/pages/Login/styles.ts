@@ -32,8 +32,9 @@ width: 100%;
 `
 
 export const LoginConfirmButton = styled(Button)`
-  width: 100%;
+  cursor: pointer;
   margin: 32px 0;
+  width: 100%;
 `
 
 export const LoginLogo = styled.img`
