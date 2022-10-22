@@ -1,26 +1,23 @@
-import { IJtp, IUser } from '@models'
+import {
+  IJtp,
+  IJtpResponse,
+} from '@models'
 import { fixString } from '@util'
-
-export interface IJtpResponse extends IUser{
-  id?: number,
-  name?: string,
-  lastName?: string,
-  email?: string,
-  courseId?: number,
-}
 
 export const jtpAdapter = (jtp: IJtpResponse): IJtp => ({
   id: jtp.id,
-  name: fixString(jtp.name || ''),
-  lastName: fixString(jtp.lastName || ''),
+  name: {
+    first: fixString(jtp.name || ''),
+    last: fixString(jtp.lastName || ''),
+  },
   email: jtp.email,
-  courseId: jtp.courseId,
+  course: jtp.course,
 })
 
-export const jtpResponseAdapter = (jtp: IJtp): IJtpResponse => ({
+export const jtpRequestAdapter = (jtp: IJtp): IJtpResponse => ({
   id: jtp.id,
-  name: jtp.name,
-  lastName: jtp.lastName,
+  name: jtp.name.first,
+  lastName: jtp.name.last,
   email: jtp.email,
-  courseId: jtp.courseId
+  course: jtp.course
 })

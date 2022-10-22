@@ -1,16 +1,16 @@
 import React from 'react'
 import { Settings } from '@mui/icons-material'
-import { HeaderContainer } from './styles'
+import { HeaderContainer, HeaderTitle } from './styles'
 import { headerProps } from './props'
 import { UserButton } from './UserButton'
+import { selectSidebar } from '@src/store'
 
-export const Header = ({
-  title,
-  large,
-}: headerProps) => {
+export const Header = ({ title }: headerProps) => {
+  const sidebarOpen = selectSidebar()
+
   return (
-    <HeaderContainer lg={large}>
-      <h1>{title}</h1>
+    <HeaderContainer slim={sidebarOpen}>
+      <HeaderTitle>{title}</HeaderTitle>
       <div style={{ alignItems: 'center', display: 'flex', gap: '8px'}}>
         <Settings />
         <UserButton />

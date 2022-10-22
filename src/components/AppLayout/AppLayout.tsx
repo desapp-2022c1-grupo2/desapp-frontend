@@ -12,8 +12,8 @@ export const AppLayout = ({ children, title}: appLayoutProps) => {
     <LayoutContainer>
       <Sidebar />
       <PageContent>
-        <Header title={title} large/>
-        <div style={{height: '100px'}}></div>
+        <Header title={title}/>
+        <div style={{ margin: '40px'}}></div>
         {children}
       </PageContent>
     </LayoutContainer>

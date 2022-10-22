@@ -1,5 +1,6 @@
 export {
   Avatar,
+  Box,
   Chip,
   CircularProgress,
   IconButton,
@@ -9,9 +10,10 @@ export {
 export * from './AppLayout'
 export * from './Button'
 export * from './Field'
+export * from './FloatingCard'
 export * from './GoTo'
 export * from './Input'
 export * from './Icon'
 export * from './Modal'
 export * from './Select'
-export * from './FloatingCard'
+export * from './Table'

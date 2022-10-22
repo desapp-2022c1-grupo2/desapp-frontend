@@ -1,5 +1,5 @@
 import axios from "@util/axios"
-import { IAuth, IUser } from "@models"
+import { IAuth, IUser } from "@src/models_copy"
 
 export const auth = async (_user: IUser): Promise<IAuth> => {
   try {

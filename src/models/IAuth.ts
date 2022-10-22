@@ -1,9 +1,7 @@
-import { IUser } from "./IUser"
+import { IUser } from "@models"
 
 export interface IAuth {
   isAuthenticated?: boolean,
-  password?: string,
   token?: string,
   user?: IUser,
-  email: string,
 }

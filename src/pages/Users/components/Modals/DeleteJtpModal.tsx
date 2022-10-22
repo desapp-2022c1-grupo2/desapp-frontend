@@ -1,39 +1,44 @@
 import React, { useState } from 'react'
 import { deleteJtp } from '@store/users'
-import { DeleteJtpModalProps } from "./props"
+import toast, { Toaster } from 'react-hot-toast'
+import { deleteJtp as deleteJtpService } from '@services'
 import {
   Button,
   CircularProgress,
-  DeleteOutlined,
   SmallModal,
 } from '@components'
 import { useDispatch } from 'react-redux'
+import { getJtpSelected, selectDeleteJtpModal } from '@store'
+import { selectJtp, setDeleteJtpModal } from '@store/modals'
+import { IJtp } from '@src/models_copy'
 
-export const DeleteJtpModal = ({ jtp }: DeleteJtpModalProps) => {
+export const DeleteJtpModal = () => {
   const dispatch = useDispatch()
-  const [open, setOpen] = useState(false)
+  const jtp: IJtp = getJtpSelected()
+  const open: boolean = selectDeleteJtpModal()
   const [loading, setLoading] = useState(false)
   
-  const handleOpen = () => { setOpen(true) }
-  const handleClose = () => { setOpen(false) }
+  const handleClose = () => { dispatch(setDeleteJtpModal(false)) }
 
   const handleDelete = () => {
     setLoading(true)
+    toast.promise(
+      deleteJtpService(jtp),
+      {
+        loading: <>Eliminando a {jtp.name} {jtp.lastName}...</>,
+        success: <>Usuario ${jtp.name} ${jtp.lastName} eliminado con éxito</>,
+        error: <>Error al eliminar a {jtp.name} {jtp.lastName}</>
+      }, { id: jtp.id?.toString() }
+    )
     dispatch(deleteJtp(jtp))
+    dispatch(dispatch(selectJtp({})))
     setLoading(false)
     handleClose()
   }
 
   return (
     <>
-    <Button
-      children={<DeleteOutlined />}
-      color='unahurRed'
-      onClick={handleOpen}
-      sx={{borderRadius: '50px', minHeight: 'fit-content', minWidth: 'fit-content', padding: '8px'}}
-      title='Eliminar'
-      variant='contained'
-    />
+    <Toaster toastOptions={{ duration: 3000}} />
     <SmallModal
       className='modalDeleteJtp'
       onClose={handleClose}
@@ -49,7 +54,7 @@ export const DeleteJtpModal = ({ jtp }: DeleteJtpModalProps) => {
         />
       }
     >
-      <p>Está a punto de eliminar el JTP "<b>{jtp.name} {jtp.lastName}</b>", id <b>{jtp.id}</b> <br/> este cambio es permanente</p>
+      <p>Estas a punto de eliminar el/la JTP "<b>{jtp.name} {jtp.lastName}</b>". <br/> Este cambio es permanente</p>
     </SmallModal>
     </>
   )

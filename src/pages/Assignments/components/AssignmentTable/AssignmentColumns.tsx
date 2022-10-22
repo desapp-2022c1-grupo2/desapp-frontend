@@ -1,7 +1,7 @@
 import React from "react"
 import {GridColDef} from "@mui/x-data-grid"
 import { Button, Chip, GoToFoward } from "@components"
-import { ICourse, IJtp } from "@models"
+import { ICourse, IJtp } from "@src/models_copy"
 import { selectCourses, selectJtps } from "@store"
 
 export function getAssignmentColumns(): GridColDef[] {

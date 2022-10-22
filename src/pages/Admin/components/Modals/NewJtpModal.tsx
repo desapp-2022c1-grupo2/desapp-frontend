@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { SelectChangeEvent } from '@mui/material'
-import { ICourse } from '@models'
+import { ICourse } from '@src/models_copy'
 import { selectCourses } from '@store'
 import { createJtp } from '@store/users'
 import { inputChangeEvent } from '@const'

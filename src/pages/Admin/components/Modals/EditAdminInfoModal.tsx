@@ -9,7 +9,7 @@ import {
   Modal,
 } from '@components'
 import { selectLogedUser } from '@store'
-import { IAdmin } from '@models'
+import { IAdmin } from '@src/models_copy'
 import { useDispatch } from 'react-redux'
 import { setUser, updateUserInfo } from '@store/auth'
 import { verifyCredentials } from '@src/services'

@@ -1,5 +1,11 @@
 import React from 'react'
 import { AppLayout } from "@components"
-import { AssignmentTable } from "@src/pages/Users/components"
+import { AssignmentTable } from "../components"
 
-export const AssignmentsPage = () => <AppLayout title="Trabajos Prácticos" children={<AssignmentTable />} />
+const Content = () => {
+  return (
+    <AssignmentTable />
+  )
+}
+
+export const AssignmentsPage = () => <AppLayout title="Trabajos Prácticos" children={<Content />} />

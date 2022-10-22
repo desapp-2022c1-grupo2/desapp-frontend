@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { SelectChangeEvent } from '@mui/material'
-import { ICourse } from '@models'
+import { ICourse } from '@src/models_copy'
 import { selectCourses } from '@store'
 import { createJtp } from '@store/users'
 import { inputChangeEvent } from '@const'
 import { Content, RequiredFieldText } from './styles'
 import { NewJtpModalProps } from './props'
+import toast from 'react-hot-toast'
+import { createJtp as postJTP } from '@services'
 import {
   AddOutlined,
   Button,
@@ -16,6 +18,7 @@ import {
   Modal,
   Select,
 } from '@components'
+import { Toaster } from 'react-hot-toast'
 
 export const NewJtpModal = ({ id }: NewJtpModalProps) => {
   const courses: ICourse[] = selectCourses()
@@ -57,6 +60,7 @@ export const NewJtpModal = ({ id }: NewJtpModalProps) => {
   const handleCreateJtp = () => {
     if (!formIsCompleted) return
     setLoading(true)
+    toast.success('Listo')
     dispatch(createJtp({
       name,
       lastName,
@@ -69,6 +73,7 @@ export const NewJtpModal = ({ id }: NewJtpModalProps) => {
 
   return (
     <>
+      <Toaster toastOptions={{ duration: 3000}}/>
       <Button
         color='unahurGreen'
         id={id ? id.toString() : ''}

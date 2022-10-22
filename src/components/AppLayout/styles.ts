@@ -7,6 +7,7 @@ export const LayoutContainer = styled.div`
 `
 
 export const PageContent = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
   gap: 16px;

@@ -1,19 +1,43 @@
 import React from 'react'
-import { AppLayout, FloatingCard } from '@components'
+import { AppLayout, Box, FloatingCard } from '@components'
 import { Cards, EvaluationStats } from './Components'
+import { Pie, Bar } from './Components'
+import pieJson from './Components/Charts/pie.json'
+import barJson from './Components/Charts/bar.json'
 
 export const OverviewPage = () => {
   return (
     <AppLayout title='Vista General'>
         <Cards />
-        <div style={{display: 'flex', gap: '40px'}}>
+        <Box
+          display='flex'
+          gap='40px'
+          flexWrap='wrap'
+          width='100%'
+          maxWidth='1800px'
+          justifyContent='space-evenly'
+        >
           <FloatingCard
             title='PORCENTAJE DE APROBACIÓN'
+            width='40%'
+            height='348px'
+            minWidth='368px'
+            children={<Pie data={pieJson}/>}
+            />
+          <EvaluationStats />
+          <FloatingCard
+            title='Mejores Promedios'
+            minWidth='256px'
             width='30%'
             height='100%'
           />
-          <EvaluationStats />
-        </div>
+        </Box>
+        <FloatingCard
+            title='APROBACIÓN POR TP'
+            width='60%'
+            height='300px'
+            children={<Bar data={barJson}/>}
+          />
     </AppLayout>
   )
 }

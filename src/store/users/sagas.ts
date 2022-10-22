@@ -10,14 +10,12 @@ import {
   setStudents,
   onFinish,
 } from './slice'
-import { IAdmin, IJtp, IStudent } from '@models'
+import { IAdmin, IJtp, IStudent } from '@src/models_copy'
 import {
   getAllAdmins,
   getAllJtps,
   createJtp,
-  deleteJtp,
   getAllStudents,
-  updateJtp,
 } from '@services'
 import { RootState } from '@store'
 
@@ -36,26 +34,6 @@ function* postJtp() {
     yield call(createJtp, jtp)
     const response: IJtp[] = yield call(getAllJtps)
     yield put(setJtps(response))
-    yield put(onFinish())
-  } catch (err){
-    console.error(err)
-  }
-}
-
-function* putJtp() {
-  try {
-    const jtp: IJtp = yield select((state: RootState) => state.user.aux)
-    yield call(updateJtp, jtp)
-    yield put(onFinish())
-  } catch (err){
-    console.error(err)
-  }
-}
- 
-function* deleteOneJtp() {
-  try {
-    const jtp: IJtp = yield select((state: RootState) => state.user.aux)
-    yield call(deleteJtp, jtp)
     yield put(onFinish())
   } catch (err){
     console.error(err)
@@ -86,6 +64,4 @@ export function* jtpWatcher(){
   yield takeLatest('users/getJtps', getJtps)
   yield takeLatest('users/getStudents', getStudents)
   yield takeLatest('users/createJtp', postJtp)
-  yield takeLatest('users/updateJtp', putJtp)
-  yield takeLatest('users/deleteJtp', deleteOneJtp)
 }

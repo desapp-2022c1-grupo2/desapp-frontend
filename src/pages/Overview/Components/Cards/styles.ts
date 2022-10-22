@@ -3,7 +3,11 @@ import styled from 'styled-components'
 export const CardsContainer = styled.div`
   align-items: center;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-evenly;
+  width: 100%;
+  max-width: 1800px;
 `
 
 export const CardContainer = styled.div<{color?: string}>`

@@ -1,5 +1,5 @@
 import axios from "@util/axios"
-import { IAdmin } from "@models"
+import { IAdmin } from "@src/models_copy"
 
 export const getAllAdmins = async (): Promise<IAdmin[]> => {
   try {

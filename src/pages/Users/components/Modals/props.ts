@@ -1,4 +1,4 @@
-import { IJtp } from "@models"
+import { IJtp } from "@src/models_copy"
 
 export interface EditJtpModalProps{ jtp: IJtp }
 export interface DeleteJtpModalProps { jtp: IJtp }

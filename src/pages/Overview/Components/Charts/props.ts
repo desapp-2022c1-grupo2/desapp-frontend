@@ -1,8 +1,9 @@
 import { BarDatum } from '@nivo/bar'
 
 export interface barData extends BarDatum {
-  average: number,
-  student: number,
+  approved: number,
+  disapproved: number,
+  unrated: number,
   tp: string
 }
 
@@ -28,6 +29,5 @@ export interface pieProps { data: pieData[] }
 export interface radarProps { data: radarData[] }
 
 export interface chartProps extends containerProps{
-  title?: string,
   children?: React.ReactNode,
 }

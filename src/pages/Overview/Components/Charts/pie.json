@@ -1,0 +1,20 @@
+[
+  {
+    "id": "Aprobados",
+    "label": "make",
+    "value": 24
+  }, {
+    "id": "Desaprobados",
+    "label": "make",
+    "value": 8,
+    "color": "#ff0000"
+  }, {
+    "id": "Sin Calificar",
+    "label": "No Corregidos",
+    "value": 4
+  }, {
+    "id": "Sin Entregar",
+    "label": "No Entregados",
+    "value": 6
+  }
+]

@@ -1,22 +1,26 @@
+import {
+  IJtp,
+  ICourse,
+} from "@models"
+
 export interface IAssignment {
   id: string,
-  jtpId: string,
+  course: ICourse,
+  jtp: IJtp,
+  description: {
+    short: string,
+    long: string,
+    task: string,
+  }
+  date: {
+    start: Date,
+    end: Date
+  },
+  evaluationsVar: string[],
+  type: number,
+  status: boolean,
+  individualProcess: boolean,
   number: string,
   name: string,
   url: string,
-  shortDescr: string,
-  description: string,
-  taskDescription: string,
-  startDate: string,
-  endDate: string,
-  tags: string,
-  var1: string,
-  var2: string,
-  var3: string,
-  var4: string,
-  var5: string,
-  type: string,
-  status: string,
-  courseId: string,
-  individualProcess: string,
 }

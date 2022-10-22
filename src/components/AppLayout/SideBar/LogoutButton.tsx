@@ -2,8 +2,10 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, IconButton, LogoutOutlined } from '@components'
 import { logout } from "@store/auth"
+import { selectSidebar } from '@src/store'
 
-export const LogoutButton = ({open}: {open: boolean}) => {
+export const LogoutButton = () => {
+  const open: boolean = selectSidebar()
   const dispatch = useDispatch()
 
   const handleLogout = () => {

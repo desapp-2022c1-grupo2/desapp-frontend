@@ -1,6 +1,6 @@
 import axios from "@util/axios"
 import { IStudentResponse, studentAdapter } from "@adapters"
-import { IStudent } from "@models"
+import { IStudent } from "@src/models_copy"
 
 export const getAllStudents = async (): Promise<IStudent[]> => {
   try {

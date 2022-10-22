@@ -1,18 +1,26 @@
 import styled from 'styled-components'
 
 interface headerProp {
-  lg: boolean,
+  slim: boolean,
 }
 
+export const HeaderTitle = styled.h1`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+`
+
 export const HeaderContainer = styled.div<headerProp>`
+  align-items: center;
   background-color: var(--unahurWhite);
   border-radius: 20px;
   box-shadow: var(--box-shadow);
-  align-items: center;
   display: flex;
-  padding: 16px 24px;
   justify-content: space-between;
+  max-width: 1800px;
+  padding: 16px 24px;
   position: fixed;
-  width: ${({lg}) => lg ? 'calc(100% - 176px)' : 'calc(100% - 320px)' };
+  transition: 0.3s linear;
+  width: ${({slim}) => slim ? 'calc(100vw - 320px)' : 'calc(100vw - 168px)' };
   z-index: 1000;
 `

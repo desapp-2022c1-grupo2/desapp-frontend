@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { getAssignments } from '@store/Assignments'
+import { getAssignments, getSubmited } from '@store/Assignments'
 import { getCourses } from '@store/courses'
 import { getAdmins, getJtps, getStudents } from '@store/users'
 import { login, setCredentials } from '@store/auth'
@@ -9,9 +9,10 @@ const setupData = () => {
   const dispatch = useDispatch()
   dispatch(getAssignments())
   dispatch(getCourses())
-  dispatch(getAdmins())
+  //dispatch(getAdmins())
   dispatch(getJtps())
   dispatch(getStudents())
+  dispatch(getSubmited())
 }
 
 const tryLoginFromLocalStorage = () => {

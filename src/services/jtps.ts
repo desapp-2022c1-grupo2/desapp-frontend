@@ -1,5 +1,5 @@
 import axios from "@util/axios"
-import { IJtp } from "@models"
+import { IJtp } from "@src/models_copy"
 import {
   jtpAdapter,
   jtpResponseAdapter,
@@ -54,6 +54,7 @@ export const updateJtp = async (jtp: IJtp) => {
 export const deleteJtp = async (jtp: IJtp) => {
   try {
     const response = await axios.delete(`/jtp/${jtp.id}`)
+    console.log('metodo delete jtp')
     return Promise.resolve(response.data)
   } catch (err) {
     console.error(err)

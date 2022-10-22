@@ -3,7 +3,7 @@ import {
   DataGrid,
   GridColDef,
 } from '@mui/x-data-grid'
-import { IJtp } from "@models"
+import { IJtp } from "@src/models_copy"
 import { selectJtps } from '@store'
 import { DataGridLocaleText } from "./DataGridLocaleText"
 import { MuiCustomToolbar } from "../MuiCustomToolbar"

@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 import { floatingCardStyles } from './props'
+import { Box } from '@components'
 
-export const FLoatingCardContainer = styled.div<floatingCardStyles>`
-  height: ${(props) => props.height || '100%'};
-  width: ${(props) => props.width || '100%'};
+export const FLoatingCardContainer = styled(Box)`
   display: flex;
   flex-direction: column;
   gap: 8px;

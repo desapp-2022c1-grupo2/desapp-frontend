@@ -3,9 +3,9 @@ import {
   put,
   takeLatest,
 } from 'redux-saga/effects'
-import { setAssignments } from './slice'
-import { IAssignment } from '@models'
-import { getAllAssignments } from '@services'
+import { setAssignments, setSubmited } from './slice'
+import { IAssignment, ISubmitedAssignment } from '@src/models_copy'
+import { getAllAssignments, getSubmitedAssignment } from '@services'
 
 function* getAssignments() {
   try {
@@ -16,6 +16,16 @@ function* getAssignments() {
   }
 }
 
+function* fetchSubmited() {
+  try {
+    const response: ISubmitedAssignment[] = yield call(getSubmitedAssignment)
+    yield put(setSubmited(response))
+  } catch (err){
+    console.error(err)
+  }
+}
+
 export function* assignmentsWatcher(){
   yield takeLatest('assignments/getAssignments', getAssignments)
+  yield takeLatest('assignments/getSubmited', fetchSubmited)
 }

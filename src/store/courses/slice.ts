@@ -2,7 +2,7 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit'
-import { ICourse } from '@models'
+import { ICourse } from '@src/models_copy'
 
 interface IState { all: ICourse[] }
 const initialState: IState = { all: []}

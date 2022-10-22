@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import toast, { Toaster } from 'react-hot-toast'
+import { updateAdmin } from '@services'
 import { inputChangeEvent } from "@const"
-import { IAdmin } from '@models'
+import { IAdmin } from '@src/models_copy'
 import { verifyCredentials } from '@services'
 import { selectLogedUser } from '@store'
 import { setUser, updateUserInfo } from '@store/auth'
@@ -33,13 +35,25 @@ export const UpdateInfoModal = () => {
   
   const handleConfirm = async () => {
     if (await verifyCredentials(email || '', pass)) {
+      toast.promise(
+        updateAdmin({
+          id: current.id,
+          email: current.email,
+          name: current.name,
+          lastName: current.lastName,
+        }), {
+          loading: 'Actualizando datos...',
+          success: <b>Datos Actualizados correctamente</b>,
+          error: <b>Ocurrio un error</b>,
+        }
+      )
       dispatch(setUser({
-        ...current,
-        name,
-        lastName,
-        email,
-      }))
-      dispatch(updateUserInfo())
+          ...current,
+          name,
+          lastName,
+          email,
+        }))
+        dispatch(updateUserInfo())
       handleClose()
     } else {
       setPass('')
@@ -53,9 +67,10 @@ export const UpdateInfoModal = () => {
     setState(event.target.value)
     setShowPasswordAlert(false)
   }
-
+  //1149294626
   return (
     <>
+      <Toaster toastOptions={{ duration: 3000}}/>
       <Button
         color='info'
         onClick={handleOpen}

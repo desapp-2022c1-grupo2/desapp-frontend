@@ -1,61 +1,70 @@
-import { IStudent } from "@models"
+import {
+  IStudent,
+  IStudentResponse,
+} from "@models"
 import { fixString } from '@util'
 
-export interface IStudentResponse {
-  id?: number,
-  name?: string,
-  lastName?: string,
-  email?: string,
-  phone?: string,
-  dni?: string,
-  password?: string,
-  birthDate?: string,
-  materia_cursada?: number,
-  fecha_cambio_materia_cursada?: string,
-  materia_padre_cursada?: number,
-  comision?: number,
-  rondina?: number,
-  about?: string,
-  picture?: string,
-  materia2?: string,
-  habilitado?: number
-}
 export const studentAdapter = (student: IStudentResponse): IStudent => {
+  let date: number[] = student.birthDate.split('-').map((x: string) => parseInt(x))
+  let changeDate: number[] = student.fecha_cambio_materia_cursada.split('-').map((x: string) => parseInt(x))
+
   return ({
     id: student.id,
-    name: fixString(student.name || ''),
-    lastName: fixString( student.lastName || ''),
+    name: {
+      first: fixString(student.name || ''),
+      last: fixString(student.lastName || ''),
+    },
     email: student.email,
     password: student.password,
     phone: student.phone,
     dni: student.dni,
-    birthDate: student.birthDate,
-    materia_cursada: student.materia_cursada,
-    fecha_cambio_materia_cursada: student.fecha_cambio_materia_cursada,
-    materia_padre_cursada: student.materia_padre_cursada,
+    birthdate: new Date(date[0], date[1], date[2]),
+    courses: {
+      main: student.materia_cursada,
+      all: student.materia2.split(',').map(x => parseInt(x)),
+      parent: student.materia_padre_cursada,
+    },
+    courseChange: new Date(changeDate[0], changeDate[1], changeDate[2]),
     comision: student.comision,
     rondina: student.rondina,
     about: fixString( student.about || ''),
     picture: student.picture,
-    materia2: fixString( student.materia2 || ''),
     habilitado: student.habilitado,
   })
 }
-export const studentResponseAdapter = (student: IStudent): IStudentResponse => ({
-  id: student.id,
-  name: student.name,
-  lastName: student.lastName,
-  email: student.email,
-  phone: student.phone,
-  dni: student.dni,
-  birthDate: student.birthDate,
-  materia_cursada: student.materia_cursada,
-  fecha_cambio_materia_cursada: student.fecha_cambio_materia_cursada,
-  materia_padre_cursada: student.materia_padre_cursada,
-  comision: student.comision,
-  rondina: student.rondina,
-  about: student.about,
-  picture: student.picture,
-  materia2: student.materia2,
-  habilitado: student.habilitado,
-})
+
+export const studentResponseAdapter = (student: IStudent): IStudentResponse => {
+  const birthdate = `
+    ${student.birthdate.getFullYear()}-
+    ${student.birthdate.getMonth()}-
+    ${student.birthdate.getDay}
+  `
+
+  const courseChange = `
+    ${student.courseChange.getFullYear()}-
+    ${student.courseChange.getMonth()}-
+    ${student.courseChange.getDay}
+  `
+
+  const allCourses: string = student.courses.all.join()
+  
+  return {
+    id: student.id,
+    name: student.name.first,
+    lastName: student.name.first,
+    email: student.email,
+    phone: student.phone,
+    dni: student.dni,
+    birthDate: birthdate,
+    materia_cursada: student.courses.main,
+    fecha_cambio_materia_cursada: courseChange,
+    materia_padre_cursada: student.courses.parent,
+    comision: student.comision,
+    rondina: student.rondina,
+    about: student.about,
+    picture: student.picture,
+    password: student.password,
+    materia2: allCourses,
+    habilitado: student.habilitado,
+  }
+}

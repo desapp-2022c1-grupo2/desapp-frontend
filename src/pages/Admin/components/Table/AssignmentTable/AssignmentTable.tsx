@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
-import { IAssignment } from "@models"
+import { IAssignment } from "@src/models_copy"
 import { selectAssignments } from "@store"
 import { getAssignmentColumns } from "./AssignmentColumns"
 import { DataGridLocaleText } from "../JtpTable"

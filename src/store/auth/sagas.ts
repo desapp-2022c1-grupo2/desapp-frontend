@@ -5,7 +5,7 @@ import {
   takeLatest,
 } from 'redux-saga/effects'
 import { setCredentials, setToken, setUser } from './slice'
-import { IAdmin, IAuth, IUser } from '@models'
+import { IAdmin, IAuth, IUser } from '@src/models_copy'
 import { auth, updateAdmin, getAdmin } from '@src/services'
 import { RootState } from '@store'
 
@@ -48,17 +48,9 @@ function* updateCurrentUser(){
   try {
     const user: IAdmin = yield select((state: RootState) => state.auth.user)
     localStorage.setItem('user', JSON.stringify(user))
-    yield call(
-      updateAdmin,
-      {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        lastName: user.lastName,
-      }
-    )
   } catch (err){
     console.error(err)
+    return false
   }
 }
 

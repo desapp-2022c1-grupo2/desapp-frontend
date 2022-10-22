@@ -3,7 +3,7 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit'
 import { IJtpResponse } from '@adapters'
-import { IAdmin, IJtp, IStudent, IUser } from '@models'
+import { IAdmin, IJtp, IStudent, IUser } from '@src/models_copy'
 
 interface IUsers {
   aux?: IUser,

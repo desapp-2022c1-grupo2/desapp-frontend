@@ -3,7 +3,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { getStudentColumns } from "./StudentColumns"
 import { DataGridLocaleText } from "../JtpTable"
 import { MuiCustomToolbar } from "../MuiCustomToolbar"
-import { IStudent } from '@models'
+import { IStudent } from '@src/models_copy'
 import { selectStudents } from "@src/store"
 
 export const StudentTable = () => {

@@ -1,13 +1,11 @@
 import React from 'react'
 import { ChevronLeftOutlined, ChevronRightOutlined } from '@components'
 import styled from 'styled-components'
+import { selectSidebar } from '@src/store'
+import { useDispatch } from 'react-redux'
+import { toggleSidebar } from '@src/store/misc'
 
-interface buttonProps {
-  onClick: Function,
-  open?: boolean,
-}
-
-const Container = styled.div`
+const Container = styled.div<{onClick: Function}>`
   align-items: center;
   border-radius: 50px;
   background-color: var(--unahurBlack);
@@ -22,9 +20,13 @@ const Container = styled.div`
   width: 32px;
 `
 
-export const ToggleSidebar = ({ open, ...props }: buttonProps) =>{
+export const ToggleSidebar = () =>{
+  const open: boolean = selectSidebar()
+  const dispatch = useDispatch()
+  const handleToggle = () => { dispatch(toggleSidebar()) }
+
   return (
-    <Container {...props}>
+    <Container onClick={handleToggle}>
       {
         open
           ? <ChevronLeftOutlined htmlColor='var(--unahurWhite)'/>

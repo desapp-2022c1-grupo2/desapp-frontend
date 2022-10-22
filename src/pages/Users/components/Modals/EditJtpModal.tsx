@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { SelectChangeEvent } from '@mui/material'
-import { ICourse } from '@models'
-import { selectCourses } from '@store'
+import { ICourse, IJtp } from '@src/models_copy'
+import { getJtpSelected, selectCourses, selectUpdateJtpModal } from '@store'
 import { updateJtp } from '@store/users'
 import { inputChangeEvent } from '@const'
 import { Content, RequiredFieldText } from './styles'
-import { EditJtpModalProps } from './props'
 import {
   Button,
   CircularProgress,
   CheckOutlined,
-  EditOutlined,
   Field,
   Modal,
   Select,
 } from '@components'
+import { selectJtp, setUpdateJtpModal } from '@src/store/modals'
+import toast, { Toaster } from 'react-hot-toast'
 
-export const EditJtpModal = ({ jtp }: EditJtpModalProps) => {
-  const courses: ICourse[] = selectCourses()
+import { updateJtp as patchJtp } from '@services'
+
+export const EditJtpModal = () => {
   const dispatch = useDispatch()
-  const [open, setOpen] = useState(false)
+  const jtp: IJtp = getJtpSelected()
+  const courses: ICourse[] = selectCourses()
+  const open: boolean = selectUpdateJtpModal()
   const [name, setName] = useState(jtp.name)
   const [lastName, setLastname] = useState(jtp.lastName)
   const [email, setEmail] = useState(jtp.email)
@@ -28,8 +31,9 @@ export const EditJtpModal = ({ jtp }: EditJtpModalProps) => {
   const [loading, setLoading] = useState(false)
   const [formIsCompleted, setFormIsCompleted] = useState(false)
 
-  const handleOpen = () => { setOpen(true) }
-  const handleClose = () => { setOpen(false) }
+  console.log(jtp)
+  
+  const handleClose = () => { dispatch(setUpdateJtpModal(false)) }
 
   useEffect(() => {
     setFormIsCompleted(!!(name && lastName && email && selectedCourse))
@@ -49,87 +53,92 @@ export const EditJtpModal = ({ jtp }: EditJtpModalProps) => {
 
   const handleCreateJtp = () => {
     if (!formIsCompleted) return
-    setLoading(true)
-    dispatch(updateJtp({
+    
+    const newJtp: IJtp = {
       id: jtp.id,
       name,
       lastName,
       email,
       courseId: courses[selectedCourse || -1].id,
-    }))
+    }
+    
+    setLoading(true)
+    toast.promise(
+      patchJtp(newJtp),
+      {
+        loading: <>Actualizando datos de {jtp.name} {jtp.lastName}...</>,
+        success: <>Datos de {jtp.name} {jtp.lastName} actualizados con éxito</>,
+        error: <>Error al modificar los datos de {jtp.name} {jtp.lastName}</>
+      }, { id: jtp.id?.toString() }
+    )
+    dispatch(updateJtp(newJtp))
+    dispatch(dispatch(selectJtp({})))
     setLoading(false)
     handleClose()
   }
 
   return (
     <>
-      <Button
-        children={<EditOutlined/>}
-        color='unahurCyan'
-        onClick={handleOpen}
-        sx={{borderRadius: '50px', minHeight: 'fit-content', minWidth: 'fit-content', padding: '8px'}}
-        variant='contained'
-        title='Editar'
-      />
-      <Modal
+    <Toaster toastOptions={{ duration: 3000}} />
+    <Modal
       className='modalEditJtp'
-        onClose={handleClose}
-        open={open}
-        title='Editar Jefe de trabajos Practicos'
-        footer={
-          loading
-            ? <CircularProgress/>
-            : <Button
-                children="Confirmar"
-                color='unahurGreen'
-                disabled={!formIsCompleted}
-                onClick={handleCreateJtp}
-                startIcon={<CheckOutlined/>}
-                title='Editar JTP '
-                variant='contained'
-              />
-        }
-      >
-        <Content>
-          <Field
-            required
-            disabled={loading}
-            error={!name}
-            label={"Nombre"}
-            onChange={(event: inputChangeEvent) => handleChange(setName, event)}
-            placeholder={"Ingresá el nombre"}
-            value={name}
-          />
-          <Field
-            required
-            disabled={loading}
-            error={!lastName}
-            label={"Apellido"}
-            onChange={(event: inputChangeEvent) => handleChange(setLastname, event)}
-            placeholder={"Ingresá el apellido"}
-            value={lastName}
-          />
-          <Field
-            required
-            disabled={loading}
-            error={!email}
-            label={"Email"}
-            onChange={(event: inputChangeEvent) => handleChange(setEmail, event)}
-            placeholder={"Ingresá el email"}
-            value={email}
-          />
-          <Select
-            required
-            disabled={loading}
-            items={courses ? courses.map(course => course.name ? course.name : '') : []}
-            label='Materia'
-            onChange={handleSelectCourse}
-            placeholder={selectedCourse?.toString()}
-            value={selectedCourse?.toString()}
-          />
-          { !formIsCompleted && <RequiredFieldText>* Completa todos los campos</RequiredFieldText> }
-        </Content>
-      </Modal>
+      onClose={handleClose}
+      open={open}
+      title='Editar Jefe de trabajos Practicos'
+      footer={
+        loading
+          ? <CircularProgress/>
+          : <Button
+              children="Confirmar"
+              color='unahurGreen'
+              disabled={!formIsCompleted}
+              onClick={handleCreateJtp}
+              startIcon={<CheckOutlined/>}
+              title='Editar JTP '
+              variant='contained'
+            />
+      }
+    >
+      <Content>
+        <Field
+          required
+          disabled={loading}
+          error={!name}
+          label={"Nombre"}
+          onChange={(event: inputChangeEvent) => handleChange(setName, event)}
+          placeholder={"Ingresá el nombre"}
+          value={name || jtp.name}
+        />
+        <Field
+          required
+          disabled={loading}
+          error={!lastName}
+          label={"Apellido"}
+          onChange={(event: inputChangeEvent) => handleChange(setLastname, event)}
+          placeholder={"Ingresá el apellido"}
+          value={lastName || jtp.lastName}
+        />
+        <Field
+          required
+          disabled={loading}
+          error={!email}
+          label={"Email"}
+          onChange={(event: inputChangeEvent) => handleChange(setEmail, event)}
+          placeholder={"Ingresá el email"}
+          value={email || jtp.email}
+        />
+        <Select
+          required
+          disabled={loading}
+          items={courses ? courses.map(course => course.name ? course.name : '') : []}
+          label='Materia'
+          onChange={handleSelectCourse}
+          placeholder={selectedCourse?.toString()}
+          value={selectedCourse?.toString() || jtp.courseId?.toString()}
+        />
+        { !formIsCompleted && <RequiredFieldText>* Completa todos los campos</RequiredFieldText> }
+      </Content>
+    </Modal>
     </>
   )
 }

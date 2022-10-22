@@ -1,5 +1,5 @@
 import axios from "@util/axios"
-import { ICourse } from "@models"
+import { ICourse } from "@src/models_copy"
 import {
   courseAdapter,
   courseResponseAdapter,

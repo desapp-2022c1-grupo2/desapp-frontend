@@ -1,7 +1,7 @@
 import React from "react"
 import { GridColDef } from "@mui/x-data-grid"
 import { DeleteJtpModal, EditJtpModal } from "@adminPages/components"
-import { ICourse, IJtp } from "@models"
+import { ICourse, IJtp } from "@src/models_copy"
 import { selectCourses, selectJtpById } from "@store"
 import { Chip } from "@components"
 
