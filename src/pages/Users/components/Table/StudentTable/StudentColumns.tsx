@@ -5,8 +5,6 @@ import { ICourse } from "@models"
 import { selectCourses } from "@store"
 
 export function getStudentColumns(): GridColDef[] {
-  const courses: ICourse[] = selectCourses()
-
   return [
     //{field: "id", headerName: "ID", maxWidth: 50},
     {field: "lastName", headerName: "Nombre", width: 160,
@@ -18,13 +16,17 @@ export function getStudentColumns(): GridColDef[] {
     {field: "dni", flex: 1, headerName: "DNI"},
     //{field: "birthDate", headerName: "Fecha de nacimiento"},
     {field: "materia_cursada", flex: 1, headerName: "Curso",
-      renderCell: (params) => <Chip disabled color='unahurCyan'
-      label={courses.find(x => { return x.id == params.value})?.name || params.value} />
-    },
+      renderCell: (params) => {
+      return <Chip disabled color='unahurCyan'
+              label={`${params.row.materia_cursada.name} ${params.row.materia_cursada.year}`}/>
+      }    },
     //{field: "fecha_cambio_materia_cursada", headerName: "Fecha de cambio de materia cursada", minWidth: 200},
     {field: "materia_padre_cursada", flex: 1, headerName: "Materia padre",
-      renderCell: (params) => <Chip disabled color='unahurCyan'
-      label={courses.find(x => { return x.id == params.value})?.name || params.value} />
+      renderCell: (params) => {
+        console.log(params.row.materia_padre_cursada)
+        return <Chip disabled color='unahurCyan'
+              label={params.row.materia_padre_cursada ? `${params.row.materia_padre_cursada.name} ${params.row.materia_padre_cursada.year}` : `-`}/>
+      }
     },
     {
       field: "actions",

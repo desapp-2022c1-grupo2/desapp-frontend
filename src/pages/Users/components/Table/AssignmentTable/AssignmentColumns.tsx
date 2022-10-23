@@ -16,17 +16,17 @@ export function getAssignmentColumns(): GridColDef[] {
   return [
     {headerName: "#TP", width: 50, field: "number" },
     {headerName: "Nombre", flex: 3 , field: "name" },
-    {headerName: "Curso", flex: 2, field: "courseId", 
-      renderCell: (params) => <Chip disabled color='unahurCyan' label={
-        courses.find(x => { return x.id == params.value})?.name || params.value} />
-    },
+    {headerName: "Curso", flex: 2, field: "courseId",
+      renderCell: (params) => {
+        return <Chip disabled color='success' label={
+          params.row.course? params.row.course.name : "-" }/>
+      }
+      },
     {headerName: "JTP", flex: 2 , field: "jtpId",
-      renderCell: (params) => <Chip
-        disabled
-        color='unahurGreen'
-        title={getJtpName(params.value)}
-        label={getJtpName(params.value)}
-      />,
+      renderCell: (params) => {
+        return <Chip disabled color='success' label={
+          params.row.jtp? `${params.row.jtp.name} ${params.row.jtp.lastName}` : "-" }/>
+      },
     },
     //{headerName: "url", field: "url"},
     //{headerName: "Descripción corta", field: "shortDescr", minWidth: 300 },
