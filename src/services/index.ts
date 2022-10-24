@@ -1,6 +1,6 @@
 export * from './admins'
 export * from './assignments'
-export * from './auth'
+export * from './authenticate'
 export * from './courses'
 export * from './jtps'
 export * from './students'

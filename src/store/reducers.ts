@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { auth } from './auth'
-import { assignments } from './Assignments'
+import { assignments } from './assignments'
 import { courses } from './courses'
 import { user } from './users'
 import { misc } from './misc'

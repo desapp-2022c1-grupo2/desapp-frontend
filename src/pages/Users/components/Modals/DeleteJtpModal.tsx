@@ -1,39 +1,42 @@
 import React, { useState } from 'react'
-import { deleteJtp } from '@store/users'
 import toast, { Toaster } from 'react-hot-toast'
-import { deleteJtp as deleteJtpService } from '@services'
+import { useDispatch } from 'react-redux'
 import {
   Button,
-  CircularProgress,
   SmallModal,
 } from '@components'
-import { useDispatch } from 'react-redux'
-import { getJtpSelected, selectDeleteJtpModal } from '@store'
-import { selectJtp, setDeleteJtpModal } from '@store/modals'
-import { IJtp } from '@src/models_copy'
+import { Jtp } from '@models'
+import { deleteJtp as deleteJtpService } from '@services'
+import { getJtpSelected, selectDeleteJtpModal, deleteJtp, unselectJtp, setDeleteJtpModal } from '@store'
 
 export const DeleteJtpModal = () => {
   const dispatch = useDispatch()
-  const jtp: IJtp = getJtpSelected()
+  const x = getJtpSelected()
+  const jtp = new Jtp(x)
   const open: boolean = selectDeleteJtpModal()
-  const [loading, setLoading] = useState(false)
+  console.log(jtp)
+  const closeModal = () => { dispatch(setDeleteJtpModal(false)) }
   
-  const handleClose = () => { dispatch(setDeleteJtpModal(false)) }
+  const enableAlert = () => {
+    toast.promise(
+      deleteJtpService(jtp.id),
+      {
+        loading: <>Eliminando a {jtp.fullName()}...</>,
+        success: <>Usuario ${jtp.fullName()} eliminado con éxito</>,
+        error: <>Error al eliminar a {jtp.fullName()}</>
+      }, { id: jtp?.id.toString() }
+    )
+  }
+
+  const removeJtpSelected = () => {
+    dispatch(deleteJtp(jtp.json))
+    dispatch(unselectJtp())
+  }
 
   const handleDelete = () => {
-    setLoading(true)
-    toast.promise(
-      deleteJtpService(jtp),
-      {
-        loading: <>Eliminando a {jtp.name} {jtp.lastName}...</>,
-        success: <>Usuario ${jtp.name} ${jtp.lastName} eliminado con éxito</>,
-        error: <>Error al eliminar a {jtp.name} {jtp.lastName}</>
-      }, { id: jtp.id?.toString() }
-    )
-    dispatch(deleteJtp(jtp))
-    dispatch(dispatch(selectJtp({})))
-    setLoading(false)
-    handleClose()
+    enableAlert()
+    removeJtpSelected()
+    closeModal()
   }
 
   return (
@@ -41,12 +44,12 @@ export const DeleteJtpModal = () => {
     <Toaster toastOptions={{ duration: 3000}} />
     <SmallModal
       className='modalDeleteJtp'
-      onClose={handleClose}
+      onClose={closeModal}
       open={open}
       title='Eliminar Jefe de Trabajos Practicos'
       footer={
         <Button
-          children={ loading ? <CircularProgress /> : "Eliminar" }
+          children='Eliminar'
           color='unahurRed'
           onClick={handleDelete}
           variant='contained'
@@ -54,7 +57,7 @@ export const DeleteJtpModal = () => {
         />
       }
     >
-      <p>Estas a punto de eliminar el/la JTP "<b>{jtp.name} {jtp.lastName}</b>". <br/> Este cambio es permanente</p>
+      <p>Estas a punto de eliminar el/la JTP "<b>{jtp.fullName()}</b>". <br/> Este cambio es permanente</p>
     </SmallModal>
     </>
   )

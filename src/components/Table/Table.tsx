@@ -5,7 +5,7 @@ import {
   DataGridProps,
   GridColDef,
 } from '@mui/x-data-grid'
-import { MuiCustomToolbar } from './MuiCustomToolbar'
+import { Toolbar } from './Toolbar'
 import { DataGridLocaleText } from './DataGridLocaleText'
 
 export const TableContainer = styled.div`
@@ -29,9 +29,10 @@ interface tableProps extends DataGridProps {
 export const Table = ({
   columns,
   handleColumns,
+  rows,
   ...props
 }: tableProps) => {
-  const [pageSize, setPageSize] = useState<number>(10)
+  const [pageSize, setPageSize] = useState<number>(25)
   const col: GridColDef[] = handleColumns
     ? handleColumns()
     : columns
@@ -44,14 +45,15 @@ export const Table = ({
   return (
     <TableContainer>
       <DataGrid
-        pagination
+        pagination={true}
         columns={col}
-        components={{ Toolbar: MuiCustomToolbar }}
+        components={{ Toolbar }}
         componentsProps={{ toolbar }}
         localeText={DataGridLocaleText}
-        onPageSizeChange={(newPage: number) => setPageSize(newPage)}
+        onPageSizeChange={(newPage) => setPageSize(newPage)}
         pageSize={pageSize}
-        rowsPerPageOptions={[25, 50, 75, 100]}
+        rows={rows}
+        rowsPerPageOptions={[10, 25, 50]}
         sx={{border: 0}}
         {...props}
       />

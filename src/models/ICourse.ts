@@ -2,6 +2,6 @@ export interface ICourse {
   id: number,
   isPreviousCourse: boolean,
   name: string,
-  parent: ICourse,
+  parent?: ICourse,
   year: number,
 }

@@ -4,7 +4,7 @@ import {
   takeLatest,
 } from 'redux-saga/effects'
 import { setAssignments, setSubmited } from './slice'
-import { IAssignment, ISubmitedAssignment } from '@src/models_copy'
+import { IAssignment, ISubmitedAssignment } from '@models'
 import { getAllAssignments, getSubmitedAssignment } from '@services'
 
 function* getAssignments() {

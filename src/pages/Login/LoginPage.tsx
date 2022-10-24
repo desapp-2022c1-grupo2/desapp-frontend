@@ -1,57 +1,71 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import logo from '@assets/LogoUnahur.svg'
-import { setCredentials, login } from '@store/auth'
+import { setCredentials, login } from '@store'
+import { verifyCredentials } from '@services'
 import {
-  Error,
-  LoginConfirmButton,
+  CredentialsError,
+  SubmitButton,
   LoginContainer,
   LoginField,
   LoginLayout,
-  LoginLogo,
-  LoginTitle,
+  Logo,
+  Title,
 } from './styles'
-import { verifyCredentials } from '@src/services'
 
 export const LoginPage = () => {
   const dispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [disableConfirm, setDisableConfirm] = useState(false)
-  const [credentialError, setCredentialError] = useState(false)
+  const [isSubmitButtonIsEnabled, setSubmitButton] = useState(false)
+  const [isThereCredentialError, setCredentialError] = useState(false)
+
+  const enableSubmitButton = () => { setSubmitButton(true) }
+  const disableSubmitButton = () => { setSubmitButton(false) }
+  const disableCredentialError = () => {setCredentialError(false) }
+  const enableCredentialError = () => {setCredentialError(true) }
+  const isEmailEmpty = () => email.length === 0
+  const isPassEmpty = () => password.length === 0
+  const clearInputs = () => { 
+    setEmail('')
+    setPassword('')
+  }
 
   useEffect(
-    () => { setDisableConfirm(email == '' || password == '') },
+    () => {
+      (isEmailEmpty() || isPassEmpty())
+        ? disableSubmitButton()
+        : enableSubmitButton()
+    },
     [email, password]
   )
 
   const emailListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setEmail(event.currentTarget.value)
-    if(email.length > 0) { setCredentialError(false) }
+    if(!isEmailEmpty()) { disableCredentialError() }
   }
   
   const passwordListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setPassword(event.currentTarget.value)
-    if(password.length > 0) { setCredentialError(false) }
+    if(!isPassEmpty()) { disableCredentialError() }
   }
 
   const handleLogin = async () => {
-    const verifiedUser = await verifyCredentials(email, password)
-    if (verifiedUser) {
+    const isVerifiedUser = await verifyCredentials({ email, password })
+    if (isVerifiedUser) {
       dispatch(setCredentials({ email, password }))
       dispatch(login())
     } else {
-      setCredentialError(true)
+      enableCredentialError()
     }
-    setEmail('')
-    setPassword('')
+    clearInputs()
   }
 
   return (
-    <LoginLayout onKeyUp={(e) => { if (!disableConfirm && e.key == 'Enter') handleLogin()}} >
+    <LoginLayout onKeyUp={(e) => { if (isSubmitButtonIsEnabled && e.key === 'Enter') handleLogin()}} >
       <LoginContainer>
-        <LoginLogo src={logo} alt="logo-unahur"/>
-        <LoginTitle>Ingresá a tu cuenta</LoginTitle>
+        <Logo src={logo} alt="logo-unahur"/>
+        <Title>Ingresá a tu cuenta</Title>
         <LoginField
           label='Email'
           value={email}
@@ -66,9 +80,9 @@ export const LoginPage = () => {
           placeholder='Ingresá tu contraseña'
           onChange={passwordListener}
           />
-          { credentialError && <Error>Email o contraseña incorrectos</Error> }
-        <LoginConfirmButton
-          disabled={disableConfirm}
+          { isThereCredentialError && <CredentialsError>Email o contraseña incorrectos</CredentialsError> }
+        <SubmitButton
+          disabled={!isSubmitButtonIsEnabled}
           color='unahurGreen'
           onClick={handleLogin}
           variant='contained'

@@ -1,12 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import toast, { Toaster } from 'react-hot-toast'
-import { updateAdmin } from '@services'
-import { inputChangeEvent } from "@const"
-import { IAdmin } from '@src/models_copy'
-import { verifyCredentials } from '@services'
-import { selectLogedUser } from '@store'
-import { setUser, updateUserInfo } from '@store/auth'
 import {
   Button,
   CheckOutlined,
@@ -14,16 +8,28 @@ import {
   Field,
   Modal,
 } from '@components'
+import { inputChangeEvent } from "@const"
+import { IAdmin } from '@models'
+import {
+  updateAdmin,
+  verifyCredentials,
+} from '@services'
+import {
+  selectAuthenticatedUser,
+  setUser,
+  updateUserInfo,
+} from '@store'
+
 import { Content, RequiredFieldText } from './styles'
 
 export const UpdateInfoModal = () => {
-  const current: IAdmin = selectLogedUser() || {}
+  const user: IAdmin | undefined = selectAuthenticatedUser()
   const dispatch = useDispatch()
   const [open, setOpen] = useState(false)
-  const [name, setName] = useState(current.name)
-  const [lastName, setLastname] = useState(current.lastName)
-  const [pass, setPass] = useState("")
-  const [email, setEmail] = useState(current.email)
+  const [name, setName] = useState(user?.name)
+  const [lastName, setLastname] = useState(user?.name.first)
+  const [password, setPass] = useState("")
+  const [email, setEmail] = useState(user?.email)
   const [showPasswordAlert, setShowPasswordAlert] = useState(false)
 
   const handleOpen = () => { setOpen(true) }
@@ -34,13 +40,12 @@ export const UpdateInfoModal = () => {
   }
   
   const handleConfirm = async () => {
-    if (await verifyCredentials(email || '', pass)) {
+    if (await verifyCredentials({ email, password })) {
       toast.promise(
         updateAdmin({
-          id: current.id,
-          email: current.email,
-          name: current.name,
-          lastName: current.lastName,
+          id: user.id,
+          email: user.email,
+          name: user.name,
         }), {
           loading: 'Actualizando datos...',
           success: <b>Datos Actualizados correctamente</b>,
@@ -48,9 +53,8 @@ export const UpdateInfoModal = () => {
         }
       )
       dispatch(setUser({
-          ...current,
+          ...user,
           name,
-          lastName,
           email,
         }))
         dispatch(updateUserInfo())
@@ -67,7 +71,7 @@ export const UpdateInfoModal = () => {
     setState(event.target.value)
     setShowPasswordAlert(false)
   }
-  //1149294626
+
   return (
     <>
       <Toaster toastOptions={{ duration: 3000}}/>
@@ -85,7 +89,7 @@ export const UpdateInfoModal = () => {
         title='Editar información'
         footer={
           <Button
-            disabled={pass === ''}
+            disabled={password === ''}
             children="Confirmar"
             color='unahurGreen'
             onClick={handleConfirm}
@@ -122,14 +126,14 @@ export const UpdateInfoModal = () => {
             onChange={(event: inputChangeEvent) => handleChange(setPass, event)}
           />
           <Field
-            value={pass}
+            value={password}
             label="Contraseña actual"
             onChange={(event: inputChangeEvent) => handleChange(setPass, event)}
             placeholder="Ingresá tu contraseña"
             variant="password"
           />
         </Content>
-        { (!showPasswordAlert && pass === '') && <RequiredFieldText>* Ingrese su contraseña para confirmar los cambios</RequiredFieldText> }
+        { (!showPasswordAlert && password === '') && <RequiredFieldText>* Ingrese su contraseña para confirmar los cambios</RequiredFieldText> }
         { showPasswordAlert && <RequiredFieldText>* Contraseña incorrecta</RequiredFieldText> }
       </Modal>
     </>

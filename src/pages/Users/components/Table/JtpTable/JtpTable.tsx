@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react"
-import { IJtp } from "@src/models_copy"
+import { IJtp } from "@models"
 import { selectJtps } from '@store'
 import { getJtpColumns } from "./JtpColumns"
-import { NewJtpModal } from "@adminPages/components"
-import { Table } from "@src/components"
-import { DeleteJtpModal, EditJtpModal } from "../../Modals"
+import { NewJtpModal,DeleteJtpModal, EditJtpModal } from "@pages/Users/components"
+import { Table } from "@components"
 
 export const JtpTable = () => {
   const jtps: IJtp[] = selectJtps()

@@ -1,8 +1,8 @@
-import React, { useState } from "react"
-import { getStudentColumns } from "./StudentColumns"
-import { selectStudents } from "@src/store"
-import { IStudent } from '@src/models_copy'
+import React from "react"
 import { Table } from '@components'
+import { IStudent } from '@models'
+import { selectStudents } from "@store"
+import { getStudentColumns } from "./StudentColumns"
 
 export const StudentTable = () => {
   const students: IStudent[] = selectStudents()

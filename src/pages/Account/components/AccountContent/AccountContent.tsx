@@ -1,6 +1,6 @@
 import React from 'react'
-import { UpdateInfoModal } from '../Modals'
-import { selectLogedUser } from '@store'
+import { UpdateInfoModal } from '@pages/Account/components'
+import { selectAuthenticatedUser } from '@store'
 import {
   Button,
   EmailOutlined,
@@ -15,11 +15,12 @@ import {
 } from './styles'
 
 export const AccountContent = () => {
-  const user = selectLogedUser()
+  const user = selectAuthenticatedUser()
+  
   return (
     <Container>
       <Profile />
-      <h4>{user?.name + ' ' + user?.lastName}</h4>
+      <h4>{user?.name.first + ' ' + user?.name.last}</h4>
       <Content>
         <ReadOnlyField
           icon={<EmailOutlined />}

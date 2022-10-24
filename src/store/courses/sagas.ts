@@ -4,7 +4,7 @@ import {
   takeLatest,
 } from 'redux-saga/effects'
 import { setCourses } from './slice'
-import { ICourse } from '@src/models_copy'
+import { ICourse } from '@models'
 import { getAllCourses } from '@services'
 
 function* getCourses() {

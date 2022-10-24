@@ -1,43 +1,48 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import toast, { Toaster } from 'react-hot-toast'
 import { SelectChangeEvent } from '@mui/material'
-import { ICourse, IJtp } from '@src/models_copy'
-import { getJtpSelected, selectCourses, selectUpdateJtpModal } from '@store'
-import { updateJtp } from '@store/users'
+import { ICourse, IJtp, Jtp } from '@models'
+import { getJtpSelected, selectCourses, selectUpdateJtpModal, updateJtp, unselectJtp, setUpdateJtpModal } from '@store'
 import { inputChangeEvent } from '@const'
-import { Content, RequiredFieldText } from './styles'
 import {
   Button,
-  CircularProgress,
   CheckOutlined,
   Field,
   Modal,
   Select,
 } from '@components'
-import { selectJtp, setUpdateJtpModal } from '@src/store/modals'
-import toast, { Toaster } from 'react-hot-toast'
-
-import { updateJtp as patchJtp } from '@services'
+import { patchJtp } from '@services'
+import { Content, RequiredFieldText } from './styles'
 
 export const EditJtpModal = () => {
   const dispatch = useDispatch()
-  const jtp: IJtp = getJtpSelected()
+  const jtp: Jtp = new Jtp(getJtpSelected())
   const courses: ICourse[] = selectCourses()
   const open: boolean = selectUpdateJtpModal()
-  const [name, setName] = useState(jtp.name)
-  const [lastName, setLastname] = useState(jtp.lastName)
+  const [firstname, setFirstname] = useState(jtp.name.first)
+  const [lastName, setLastname] = useState(jtp.name.last)
   const [email, setEmail] = useState(jtp.email)
-  const [selectedCourse, setSelectedCourse] = useState(jtp.courseId)
-  const [loading, setLoading] = useState(false)
-  const [formIsCompleted, setFormIsCompleted] = useState(false)
+  const [selectedCourse, setSelectedCourse] = useState(jtp.course.id)
+  const [isFormUncompleted, setForm] = useState(true)
 
-  console.log(jtp)
+  const closeModal = () => { dispatch(setUpdateJtpModal(false)) }
   
-  const handleClose = () => { dispatch(setUpdateJtpModal(false)) }
+  const enableAlert = (jtp: Jtp) => {
+    toast.promise(
+      patchJtp(jtp),
+      {
+        loading: <>Actualizando datos de {jtp.fullName()}...</>,
+        success: <>Datos de {jtp.fullName()} actualizados con éxito</>,
+        error: <>Error al modificar los datos de {jtp.fullName()}</>
+      }, { id: jtp?.id.toString() }
+    )
+  }
 
   useEffect(() => {
-    setFormIsCompleted(!!(name && lastName && email && selectedCourse))
-  }, [name, lastName, email, selectedCourse])
+    setForm(!firstname || !lastName || !email || !selectedCourse)
+    }, [firstname, lastName, email, selectedCourse]
+  )
   
 
   const handleChange = (
@@ -51,30 +56,21 @@ export const EditJtpModal = () => {
     setSelectedCourse(parseInt(event.target.value as string))
   }
 
-  const handleCreateJtp = () => {
-    if (!formIsCompleted) return
+  const handleSubmit = () => {
+    if (isFormUncompleted) return
     
-    const newJtp: IJtp = {
+    // makeJtpJsonRequest
+    const newJtp = new Jtp({
       id: jtp.id,
-      name,
-      lastName,
+      name: { first: firstname, last: lastName },
       email,
-      courseId: courses[selectedCourse || -1].id,
-    }
+      course: courses[selectedCourse || -1],
+    })
     
-    setLoading(true)
-    toast.promise(
-      patchJtp(newJtp),
-      {
-        loading: <>Actualizando datos de {jtp.name} {jtp.lastName}...</>,
-        success: <>Datos de {jtp.name} {jtp.lastName} actualizados con éxito</>,
-        error: <>Error al modificar los datos de {jtp.name} {jtp.lastName}</>
-      }, { id: jtp.id?.toString() }
-    )
-    dispatch(updateJtp(newJtp))
-    dispatch(dispatch(selectJtp({})))
-    setLoading(false)
-    handleClose()
+    enableAlert(newJtp)
+    dispatch(updateJtp(newJtp.json))
+    dispatch(dispatch(unselectJtp()))
+    closeModal()
   }
 
   return (
@@ -82,45 +78,41 @@ export const EditJtpModal = () => {
     <Toaster toastOptions={{ duration: 3000}} />
     <Modal
       className='modalEditJtp'
-      onClose={handleClose}
+      onClose={closeModal}
       open={open}
       title='Editar Jefe de trabajos Practicos'
       footer={
-        loading
-          ? <CircularProgress/>
-          : <Button
-              children="Confirmar"
-              color='unahurGreen'
-              disabled={!formIsCompleted}
-              onClick={handleCreateJtp}
-              startIcon={<CheckOutlined/>}
-              title='Editar JTP '
-              variant='contained'
-            />
+        <Button
+            children="Confirmar"
+            color='unahurGreen'
+            disabled={isFormUncompleted}
+            onClick={handleSubmit}
+            startIcon={<CheckOutlined/>}
+            title='Editar JTP'
+            
+            variant='contained'
+          />
       }
     >
       <Content>
         <Field
           required
-          disabled={loading}
-          error={!name}
+          error={!firstname}
           label={"Nombre"}
-          onChange={(event: inputChangeEvent) => handleChange(setName, event)}
+          onChange={(event: inputChangeEvent) => handleChange(setFirstname, event)}
           placeholder={"Ingresá el nombre"}
-          value={name || jtp.name}
+          value={firstname || jtp.name.first}
         />
         <Field
           required
-          disabled={loading}
           error={!lastName}
           label={"Apellido"}
           onChange={(event: inputChangeEvent) => handleChange(setLastname, event)}
           placeholder={"Ingresá el apellido"}
-          value={lastName || jtp.lastName}
+          value={lastName || jtp.name.last}
         />
         <Field
           required
-          disabled={loading}
           error={!email}
           label={"Email"}
           onChange={(event: inputChangeEvent) => handleChange(setEmail, event)}
@@ -129,14 +121,13 @@ export const EditJtpModal = () => {
         />
         <Select
           required
-          disabled={loading}
-          items={courses ? courses.map(course => course.name ? course.name : '') : []}
+          items={courses.map(x => x.name)}
           label='Materia'
           onChange={handleSelectCourse}
-          placeholder={selectedCourse?.toString()}
-          value={selectedCourse?.toString() || jtp.courseId?.toString()}
+          placeholder={selectedCourse.toString()}
+          value={selectedCourse.toString() || jtp.course.id.toString()}
         />
-        { !formIsCompleted && <RequiredFieldText>* Completa todos los campos</RequiredFieldText> }
+        { isFormUncompleted && <RequiredFieldText>* Completa todos los campos</RequiredFieldText> }
       </Content>
     </Modal>
     </>

@@ -1,5 +1,5 @@
 import axios from "@util/axios"
-import { IAssignment } from "@src/models_copy"
+import { IAssignment } from "@models"
 import {
   assignmentAdapter,
   assignmentResponseAdapter,

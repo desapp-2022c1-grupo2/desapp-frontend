@@ -1,5 +1,5 @@
 import axios from "@util/axios"
-import { ISubmitedAssignment } from "@src/models_copy"
+import { ISubmitedAssignment } from "@models"
 
 export const getSubmitedAssignment = async (): Promise<ISubmitedAssignment[]> => {
   try {

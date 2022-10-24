@@ -2,8 +2,12 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit'
-import { IJtpResponse } from '@adapters'
-import { IAdmin, IJtp, IStudent, IUser } from '@src/models_copy'
+import {
+  IAdmin,
+  IJtp,
+  IStudent,
+  IUser,
+} from '@models'
 
 interface IUsers {
   aux?: IUser,
@@ -26,7 +30,7 @@ export const usersSlice = createSlice({
     getAdmins(){},
     getJtps(){},
     getStudents(){},
-    createJtp(state, { payload }: PayloadAction<IJtpResponse>){
+    createJtp(state, { payload }: PayloadAction<IJtp>){
       state.aux = payload
     },
     updateJtp(state, { payload }: PayloadAction<IJtp>){ 
@@ -37,7 +41,6 @@ export const usersSlice = createSlice({
       state.jtps = state.jtps.filter(jtp => jtp.id != payload.id)
       state.aux = payload
     },
-    onFinish(state){ state.aux = undefined},
     setAdmins(state, { payload }: PayloadAction<IAdmin[]>) { state.admins = payload },
     setJtps(state, { payload }: PayloadAction<IJtp[]>) { state.jtps = payload },
     setStudents(state, { payload }: PayloadAction<IStudent[]>) { state.students = payload },
@@ -54,7 +57,6 @@ export const {
   createJtp,
   updateJtp,
   deleteJtp,
-  onFinish,
 } = usersSlice.actions
 
 export const user = usersSlice.reducer

@@ -1,9 +1,12 @@
 import { ICourse } from "@models"
 
-export interface IUser {
-  id: number,
+export interface ICredentials {
   email: string,
   password?: string,
+}
+
+export interface IUser extends ICredentials{
+  id: number,
   role?: string,
   name: {
     first: string,
@@ -13,7 +16,7 @@ export interface IUser {
 
 export interface IAdmin extends IUser { }
 
-export interface IJtp extends IUser { course: ICourse }
+
 
 export interface IStudent extends IUser {
   courses: {

@@ -1,51 +1,19 @@
 import React from "react"
-import { GridColDef } from "@mui/x-data-grid"
-import { DeleteJtpModal, EditJtpModal } from "@adminPages/components"
-import { ICourse, IJtp } from "@src/models_copy"
-import { selectCourses, selectJtpById } from "@store"
-import { Button, Chip, DeleteOutlined, EditOutlined } from "@components"
-import { selectJtp, setDeleteJtpModal, setUpdateJtpModal } from '@src/store/modals'
 import { useDispatch } from "react-redux"
-
-const UpdateJtpButton = ({ jtp }: { jtp: IJtp }) => {
-  const dispatch = useDispatch()
-  
-  const handleClick = () => {
-    dispatch(selectJtp(jtp))
-    dispatch(setUpdateJtpModal(true))
-  }
-
-  return (
-    <Button
-      children={<EditOutlined/>}
-      color='unahurCyan'
-      onClick={handleClick}
-      sx={{borderRadius: '50px', minHeight: 'fit-content', minWidth: 'fit-content', padding: '8px'}}
-      title='Editar'
-      variant='contained'
-    />
-  )
-}
-
-const DeleteJtpButton = ({ jtp }: { jtp: IJtp }) => {
-  const dispatch = useDispatch()
-  
-  const handleClick = () => {
-    dispatch(selectJtp(jtp))
-    dispatch(setDeleteJtpModal(true))
-  }
-
-  return (
-    <Button
-      children={<DeleteOutlined />}
-      color='unahurRed'
-      onClick={handleClick}
-      sx={{borderRadius: '50px', minHeight: 'fit-content', minWidth: 'fit-content', padding: '8px'}}
-      title='Eliminar'
-      variant='contained'
-    />
-  )
-}
+import { GridColDef } from "@mui/x-data-grid"
+import {
+  Button,
+  Chip,
+  DeleteOutlined,
+  EditOutlined,
+} from "@components"
+import { ICourse, IJtp, Jtp } from "@models"
+import {
+  selectCourses,
+  selectJtp,
+  setDeleteJtpModal,
+  setUpdateJtpModal,
+} from '@store'
 
 export function getJtpColumns(): GridColDef[] {
   const courses: ICourse[] = selectCourses()
@@ -53,16 +21,15 @@ export function getJtpColumns(): GridColDef[] {
   return [
     {headerName: "ID", field: 'id', maxWidth: 50 },
     {headerName: "Nombre", field: 'lastName', flex: 2,
-      renderCell: (params) => `${params.row.name} ${params.row.lastName}`
+      renderCell: (params) => `${params.row.name.first} ${params.row.name.last}`
     },
     {headerName: "Email", field: "email", flex: 2 },
     {
       headerName: "Materia",
-      field: "courseId",
+      field: "course",
       flex: 2,
       type: "singleSelect",
-      renderCell: (params) => <Chip disabled color='success' label={
-        courses.find(x => { return x.id == params.value})?.name || params.value} />,
+      renderCell: (params) => <Chip disabled color='success' label={params.value.name} />
     },
     {
       field: "actions",
@@ -73,11 +40,39 @@ export function getJtpColumns(): GridColDef[] {
       sortable: false,
       disableColumnMenu: true,
       renderCell: (params) => {
-        const jtp: IJtp = selectJtpById(params.id) || {}
+        const dispatch = useDispatch()
+        const jtp = new Jtp(params.row)
+
+        const handleUpdate = () => {
+          console.log(jtp.json)
+          dispatch(selectJtp(jtp.json))
+          dispatch(setUpdateJtpModal(true))
+        }
+
+        const handleDelete = () => {
+          dispatch(selectJtp(jtp.json))
+          dispatch(setDeleteJtpModal(true))
+        }
+
         return (
           <>
-          <UpdateJtpButton jtp={jtp}/>
-          <DeleteJtpButton jtp={jtp}/>
+          <Button
+            children={<EditOutlined/>}
+            color='unahurCyan'
+            onClick={handleUpdate}
+            sx={{borderRadius: '50px', minHeight: 'fit-content', minWidth: 'fit-content', padding: '8px'}}
+            title='Editar'
+            variant='contained'
+          />
+
+          <Button
+            children={<DeleteOutlined />}
+            color='unahurRed'
+            onClick={handleDelete}
+            sx={{borderRadius: '50px', minHeight: 'fit-content', minWidth: 'fit-content', padding: '8px'}}
+            title='Eliminar'
+            variant='contained'
+          />
           </>
         )
       }

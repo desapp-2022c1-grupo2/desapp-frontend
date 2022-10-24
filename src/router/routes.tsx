@@ -28,44 +28,17 @@ export const paths = {
 }
 
 export const routes = {
-  account: {
-    path: paths.account,
-    element: <AccountPage />,
-  },
-  overview: {
-    path: paths.overview,
-    element: <OverviewPage />,
-  },
-  login: {
-    path: paths.login,
-    element: <LoginPage/>,
-  },
+  account: { path: paths.account, element: <AccountPage /> },
+  overview: { path: paths.overview, element: <OverviewPage /> },
+  login: { path: paths.login, element: <LoginPage/> },
   assignments: {
-    list: {
-      path: paths.assignments.list,
-      element: <AssignmentsPage />,
-    },
-    stats: {
-      path: paths.assignments.stats,
-      element: <StatsPage />,
-    },
-    evaluations: {
-      path: paths.assignments.evaluations,
-      element: <EvaluationsPage />,
-    },
+    list: { path: paths.assignments.list, element: <AssignmentsPage /> },
+    stats: { path: paths.assignments.stats, element: <StatsPage /> },
+    evaluations: { path: paths.assignments.evaluations, element: <EvaluationsPage /> },
   },
   users: {
-    admins: {
-      path: paths.users.admins,
-      element: <AdminsPage />,
-    },
-    jtps: {
-      path: paths.users.jtps,
-      element: <JtpsPage />,
-    },
-    students: {
-      path: paths.users.students,
-      element: <StudentsPage />,
-    },
+    admins: { path: paths.users.admins, element: <AdminsPage /> },
+    jtps: { path: paths.users.jtps, element: <JtpsPage /> },
+    students: { path: paths.users.students, element: <StudentsPage /> },
   },
 }

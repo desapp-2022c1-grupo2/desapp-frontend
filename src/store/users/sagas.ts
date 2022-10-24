@@ -4,37 +4,41 @@ import {
   select,
   takeLatest,
 } from 'redux-saga/effects'
+import { RootState } from '@store'
+import {
+  IAdmin,
+  IJtp,
+  IStudent,
+} from '@models'
+import {
+  getAllAdmins,
+  fetchAllJtps,
+  postJtp,
+  getAllStudents,
+} from '@services'
 import {
   setAdmins,
   setJtps,
   setStudents,
-  onFinish,
 } from './slice'
-import { IAdmin, IJtp, IStudent } from '@src/models_copy'
-import {
-  getAllAdmins,
-  getAllJtps,
-  createJtp,
-  getAllStudents,
-} from '@services'
-import { RootState } from '@store'
 
 function* getJtps() {
   try {
-    const response: IJtp[] = yield call(getAllJtps)
+    const response: IJtp[] = yield call(fetchAllJtps)
     yield put(setJtps(response))
   } catch (err){
     console.error(err)
   }
 }
 
-function* postJtp() {
+function* createJtp() {
   try {
+    /*
     const jtp: IJtp = yield select((state: RootState) => state.user.aux)
-    yield call(createJtp, jtp)
-    const response: IJtp[] = yield call(getAllJtps)
+    yield call(postJtp, jtp)
+    */
+    const response: IJtp[] = yield call(fetchAllJtps)
     yield put(setJtps(response))
-    yield put(onFinish())
   } catch (err){
     console.error(err)
   }
@@ -63,5 +67,5 @@ export function* jtpWatcher(){
   yield takeLatest('users/getAdmins', getAdmins)
   yield takeLatest('users/getJtps', getJtps)
   yield takeLatest('users/getStudents', getStudents)
-  yield takeLatest('users/createJtp', postJtp)
+  yield takeLatest('users/createJtp', createJtp)
 }

@@ -6,10 +6,9 @@ import {
   GridToolbarFilterButton,
   GridToolbarQuickFilter,
 } from '@mui/x-data-grid'
-import React from 'react'
-//import { NewJtpModal } from '@adminPages/components/Modals'
+import React, { ReactNode } from 'react'
 
-export const MuiCustomToolbar = () => {
+export const Toolbar = ({ readonly, addButton }: { readonly?: boolean, addButton?: ReactNode }) => {
   return (
     <GridToolbarContainer style={{ margin: "10px" }}>
       <GridToolbarQuickFilter />
@@ -17,7 +16,7 @@ export const MuiCustomToolbar = () => {
       <GridToolbarFilterButton />
       <GridToolbarDensitySelector />
       <GridToolbarExport />
-      {/*<NewJtpModal />*/}
+      { !readonly && addButton }
     </GridToolbarContainer>
   );
 }

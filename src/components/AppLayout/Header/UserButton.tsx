@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import styled from 'styled-components'
 import {
   Menu,
   MenuItem
@@ -12,9 +13,10 @@ import {
   PersonOutlined,
 } from "@components"
 
-import { logout } from "@src/store/auth"
-import styled from 'styled-components'
-import { selectLogedUser } from "@src/store"
+import {
+  logout,
+  selectAuthenticatedUser,
+} from "@store"
 
 const Name = styled.h5`
   color: var(--unahurBlack);
@@ -33,7 +35,7 @@ const Role = styled.h5`
 export const UserButton = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const currentUser = selectLogedUser()
+  let currentUser = selectAuthenticatedUser()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   
@@ -64,7 +66,7 @@ export const UserButton = () => {
       transformOrigin={{ vertical:'top', horizontal:'right' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column',gap: '8px', padding: '16px'}}>
-        <Name>{`${currentUser?.name}  ${currentUser?.lastName}`}</Name>
+        <Name>{`${currentUser?.name.first}  ${currentUser?.name.last}`}</Name>
         <Role>{currentUser?.role}</Role>
       </div>
       <MenuItem key='MyAccount' onClick={handleMyAccount}><PersonOutlined /> Mi Cuenta</MenuItem>

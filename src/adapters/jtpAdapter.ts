@@ -4,14 +4,12 @@ import {
 } from '@models'
 import { fixString } from '@util'
 
-export const jtpAdapter = (jtp: IJtpResponse): IJtp => ({
-  id: jtp.id,
+export const jtpAdapter = ({ name, lastName, ...rest}: IJtpResponse): IJtp => ({
+  ...rest,
   name: {
-    first: fixString(jtp.name || ''),
-    last: fixString(jtp.lastName || ''),
+    first: fixString(name || ''),
+    last: fixString(lastName || ''),
   },
-  email: jtp.email,
-  course: jtp.course,
 })
 
 export const jtpRequestAdapter = (jtp: IJtp): IJtpResponse => ({

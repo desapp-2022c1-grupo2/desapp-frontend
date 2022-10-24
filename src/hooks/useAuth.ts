@@ -1,15 +1,23 @@
 import { useDispatch } from 'react-redux'
-import { getAssignments, getSubmited } from '@store/Assignments'
-import { getCourses } from '@store/courses'
-import { getAdmins, getJtps, getStudents } from '@store/users'
-import { login, setCredentials } from '@store/auth'
-import { selectToken } from '@store'
+import {
+  getAdmins,
+  getAssignments,
+  getCourses,
+  getJtps,
+  getStudents,
+  getSubmited,
+  login,
+  selectToken,
+  setToken,
+  setUser,
+} from '@store'
 
-const setupData = () => {
+const updateStore = () => {
   const dispatch = useDispatch()
+
   dispatch(getAssignments())
   dispatch(getCourses())
-  //dispatch(getAdmins())
+  dispatch(getAdmins())
   dispatch(getJtps())
   dispatch(getStudents())
   dispatch(getSubmited())
@@ -18,11 +26,11 @@ const setupData = () => {
 const tryLoginFromLocalStorage = () => {
   const dispatch = useDispatch()
   const user = localStorage.getItem("user")
-  const email = localStorage.getItem("email")
   const token = localStorage.getItem("token")
   
-  if (email && token && user) {
-    dispatch(setCredentials({email, token, user: JSON.parse(user)}))
+  if (token && user) {
+    dispatch(setUser(JSON.parse(user)))
+    dispatch(setToken(token))
     dispatch(login())
   }
 }
@@ -30,7 +38,7 @@ const tryLoginFromLocalStorage = () => {
 export const useAuth = () => {
   const token = selectToken()
 
-  if (token) { setupData() }
+  if (token) { updateStore() }
   else { tryLoginFromLocalStorage() }
 
   return !!token

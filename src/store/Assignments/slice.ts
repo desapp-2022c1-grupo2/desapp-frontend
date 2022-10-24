@@ -2,7 +2,7 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit'
-import { IAssignment, IEvaluation, ISubmitedAssignment } from '@src/models_copy'
+import { IAssignment, IEvaluation, ISubmitedAssignment } from '@models'
 
 interface IState {
   all: IAssignment[],

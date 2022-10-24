@@ -4,58 +4,58 @@ import {
   select,
   takeLatest,
 } from 'redux-saga/effects'
-import { setCredentials, setToken, setUser } from './slice'
-import { IAdmin, IAuth, IUser } from '@src/models_copy'
-import { auth, updateAdmin, getAdmin } from '@src/services'
+import { clearCredentials, setToken, setUser } from './slice'
+import { IAuth, ICredentials, IUser } from '@models'
+import { authenticate } from '@services'
 import { RootState } from '@store'
+import { 
+  isUserAlreadyAuthenticated,
+  cleanLocalStorage,
+  getUserFromLocalStorage,
+  setTokenInLocalStorage,
+  setUserInLocalStorage,
+} from '@util'
 
-function* authUser() {
+function* handleAuthentication() {
   try {
-    const authData: IAuth = yield select((state: RootState) => state.auth)
-    if(authData.token && authData.email) {
-      const userData = JSON.parse(localStorage.getItem("user") || '{}')
-      yield put(setToken(authData.token))
-      yield put(setUser(userData))
+    const auth: IAuth = yield select((state: RootState) => state.auth)
+    if(isUserAlreadyAuthenticated(auth)) {
+      const user = getUserFromLocalStorage()
+      yield put(setToken(auth.token))
+      yield put(setUser(user))
     } else {
-      const response: IAuth = yield call(auth, authData)
-      localStorage.setItem('email', response.email)
-      localStorage.setItem('token', response.token || '')
-      localStorage.setItem('user', JSON.stringify(response.user) || '')
+      const credentials: ICredentials = auth.credentials || { email: '' }
+      const response: IAuth = yield call(authenticate, credentials)
+      setTokenInLocalStorage(response.token)
+      setUserInLocalStorage(response.user)
+      yield put(clearCredentials())
       yield put(setToken(response.token))
       yield put(setUser(response.user))
-      yield put(setCredentials({
-        email: response.email,
-        password: '',
-        token: response.token,
-        user: response.user
-      }))
     }
   } catch (err){
     console.error(err)
   }
 }
 
-function* logoutUser(){
+function* logout(){
   try {
-    localStorage.removeItem("email")
-    localStorage.removeItem("token")
+    cleanLocalStorage()
   } catch (err){
     console.error(err)
   }
 }
 
-function* updateCurrentUser(){
+function* updateAuthenticatedUser(){
   try {
-    const user: IAdmin = yield select((state: RootState) => state.auth.user)
-    localStorage.setItem('user', JSON.stringify(user))
+    const user: IUser = yield select((state: RootState) => state.auth.user)
+    setUserInLocalStorage(user)
   } catch (err){
     console.error(err)
-    return false
   }
 }
 
 export function* authWatcher(){
-  yield takeLatest('auth/login', authUser)
-  yield takeLatest('auth/logout', logoutUser)
-  yield takeLatest('auth/updateUserInfo', updateCurrentUser)
+  yield takeLatest('auth/login', handleAuthentication)
+  yield takeLatest('auth/logout', logout)
+  yield takeLatest('auth/updateUserInfo', updateAuthenticatedUser)
 }

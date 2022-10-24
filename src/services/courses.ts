@@ -1,9 +1,11 @@
 import axios from "@util/axios"
-import { ICourse } from "@src/models_copy"
+import {
+  ICourse,
+  ICourseResponse,
+} from "@models"
 import {
   courseAdapter,
   courseResponseAdapter,
-  ICourseResponse,
 } from "@adapters"
 
 export const getAllCourses = async (): Promise<ICourse[]> => {

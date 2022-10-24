@@ -1,74 +1,73 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import toast, { Toaster } from 'react-hot-toast'
 import { SelectChangeEvent } from '@mui/material'
-import { ICourse } from '@src/models_copy'
-import { selectCourses } from '@store'
-import { createJtp } from '@store/users'
+import { ICourse, IJtp, Jtp } from '@models'
+import { selectCourses, createJtp } from '@store'
 import { inputChangeEvent } from '@const'
 import { Content, RequiredFieldText } from './styles'
 import { NewJtpModalProps } from './props'
-import toast from 'react-hot-toast'
-import { createJtp as postJTP } from '@services'
 import {
   AddOutlined,
   Button,
-  CircularProgress,
   CheckOutlined,
   Field,
   Modal,
   Select,
 } from '@components'
-import { Toaster } from 'react-hot-toast'
+import { postJtp } from '@services'
 
 export const NewJtpModal = ({ id }: NewJtpModalProps) => {
-  const courses: ICourse[] = selectCourses()
   const dispatch = useDispatch()
+  const courses: ICourse[] = selectCourses()
+  const [name, setName] = useState({ first: '', last: '' })
   const [open, setOpen] = useState(false)
-  const [name, setName] = useState("")
-  const [lastName, setLastname] = useState("")
-  const [email, setEmail] = useState("")
-  const [selectedCourse, setSelectedCourse] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [formIsCompleted, setFormIsCompleted] = useState(false)
+  const [email, setEmail] = useState('')
+  const [course, setCourse] = useState('')
+  const [isFormUncompleted, setForm] = useState(false)
 
-  const handleOpen = () => { setOpen(true) }
-  const handleClose = () => {
-    setOpen(false)
-    setName('')
-    setLastname('')
-    setEmail('')
-    setSelectedCourse('')
-    setFormIsCompleted(false)
-  }
-
-  useEffect(() => {
-    setFormIsCompleted(!!(name && lastName && email && selectedCourse))
-  }, [name, lastName, email, selectedCourse])
+  useEffect(() => { setForm(!name.first || !name.last || !email || !course) }, [name, email, course])
   
+  const handleCourse = (event: SelectChangeEvent<unknown>) => { setCourse(event.target.value as string) }
+  const handleEmail = (e: inputChangeEvent) => { setEmail(e.target.value) }
+  const handleFirstName = (e: inputChangeEvent) => { setName({ ...name, first: e.target.value }) }
+  const handleLastName = (e: inputChangeEvent) => { setName({ ...name, last: e.target.value }) }
+  const handleOpen = () => { setOpen(true) }
 
-  const handleChange = (
-    setState: Function,
-    event: inputChangeEvent
-  ) => {
-    setState(event.target.value)
+  const clearInputs = () => {
+    setName({ first: '', last: '' })
+    setEmail('')
+    setCourse('')
   }
 
-  const handleSelectCourse = (event: SelectChangeEvent<unknown>) => {
-    setSelectedCourse(event.target.value as string)
+  const closeModal = () => {
+    setOpen(false)
+    setForm(false)
+    clearInputs()
+  }
+
+  const enableAlert = (jtp: Jtp) => {
+    toast.promise(
+      postJtp(jtp.json),
+      {
+        loading: <>Agregando al JTP {jtp.fullName()}...</>,
+        success: <>JTP {jtp.fullName()} agregado con éxito</>,
+        error: <>Error al crear al JTP {jtp.fullName()}</>
+      }, { id: jtp.id.toString() }
+    )
   }
 
   const handleCreateJtp = () => {
-    if (!formIsCompleted) return
-    setLoading(true)
-    toast.success('Listo')
-    dispatch(createJtp({
+    if (isFormUncompleted) return
+
+    const jtp = new Jtp({
       name,
-      lastName,
       email,
-      courseId: courses[parseInt(selectedCourse)].id,
-    }))
-    setLoading(false)
-    handleClose()
+      course: courses[parseInt(course)],
+    })
+    enableAlert(jtp)
+    dispatch(createJtp(jtp.json))
+    closeModal()
   }
 
   return (
@@ -84,63 +83,61 @@ export const NewJtpModal = ({ id }: NewJtpModalProps) => {
         title='Agregar'
       />
       <Modal
-        onClose={handleClose}
+        onClose={closeModal}
         open={open}
         title='Agregar nuevo usuario'
         footer={
-          loading
-            ? <CircularProgress/>
-            : <Button
-                children="Confirmar"
-                color='unahurGreen'
-                disabled={!formIsCompleted}
-                onClick={handleCreateJtp}
-                startIcon={<CheckOutlined/>}
-                title='Crear usuario'
-                variant='contained'
-              />
+          <Button
+              children="Confirmar"
+              color='unahurGreen'
+              disabled={isFormUncompleted}
+              onClick={handleCreateJtp}
+              startIcon={<CheckOutlined/>}
+              title='Crear usuario'
+              variant='contained'
+            />
         }
       >
         <Content>
           <Field
             required
-            disabled={loading}
-            error={!name}
+            error={!name.first}
             label={"Nombre"}
-            onChange={(event: inputChangeEvent) => handleChange(setName, event)}
+            onChange={handleFirstName}
             placeholder={"Ingresá el nombre"}
-            value={name}
+            value={name.first}
           />
           <Field
             required
-            disabled={loading}
-            error={!lastName}
+            error={!name.last}
             label={"Apellido"}
-            onChange={(event: inputChangeEvent) => handleChange(setLastname, event)}
+            onChange={handleLastName}
             placeholder={"Ingresá el apellido"}
-            value={lastName}
+            value={name.last}
           />
           <Field
             required
-            disabled={loading}
             error={!email}
             label={"Email"}
-            onChange={(event: inputChangeEvent) => handleChange(setEmail, event)}
+            onChange={handleEmail}
             placeholder={"Ingresá el email"}
             value={email}
           />
           <Select
             required
-            disabled={loading}
             items={courses ? courses.map(course => course.name ? course.name : '') : []}
             label='Materia'
-            onChange={handleSelectCourse}
-            placeholder={selectedCourse.toString()}
-            value={selectedCourse}
+            onChange={handleCourse}
+            placeholder={course.toString()}
+            value={course}
           />
-          { !formIsCompleted && <RequiredFieldText>* Completa todos los campos</RequiredFieldText> }
+          { isFormUncompleted && <RequiredFieldText>* Completa todos los campos</RequiredFieldText> }
         </Content>
       </Modal>
     </>
   )
 }
+function dispatch(arg0: any) {
+  throw new Error('Function not implemented.')
+}
+
