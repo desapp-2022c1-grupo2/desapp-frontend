@@ -37,6 +37,10 @@ export const usersSlice = createSlice({
       state.jtps = state.jtps.filter(jtp => jtp.id != payload.id)
       state.aux = payload
     },
+    passwordResetJtp(state, { payload }: PayloadAction<IJtpResponse>){
+      state.jtps = state.jtps.filter(jtp => jtp.id != payload.id)
+      state.aux = payload
+    },
     onFinish(state){ state.aux = undefined},
     setAdmins(state, { payload }: PayloadAction<IAdmin[]>) { state.admins = payload },
     setJtps(state, { payload }: PayloadAction<IJtp[]>) { state.jtps = payload },
@@ -54,6 +58,7 @@ export const {
   createJtp,
   updateJtp,
   deleteJtp,
+  passwordResetJtp,
   onFinish,
 } = usersSlice.actions
 

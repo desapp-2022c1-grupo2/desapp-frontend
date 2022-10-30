@@ -16,6 +16,7 @@ import {
   Modal,
   Select,
 } from '@components'
+import {ResetPasswordJtpModal} from "@adminPages/components/Modals/ResetPasswordJtpModal";
 
 export const EditJtpModal = ({ jtp }: EditJtpModalProps) => {
   const courses: ICourse[] = selectCourses()
@@ -127,6 +128,7 @@ export const EditJtpModal = ({ jtp }: EditJtpModalProps) => {
             placeholder={selectedCourse?.toString()}
             value={selectedCourse?.toString()}
           />
+          <ResetPasswordJtpModal jtp={jtp}/>
           { !formIsCompleted && <RequiredFieldText>* Completa todos los campos</RequiredFieldText> }
         </Content>
       </Modal>

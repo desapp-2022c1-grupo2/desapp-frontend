@@ -17,7 +17,7 @@ import {
   createJtp,
   deleteJtp,
   getAllStudents,
-  updateJtp,
+  updateJtp, resetPasswordJtp,
 } from '@services'
 import { RootState } from '@store'
 
@@ -62,6 +62,16 @@ function* deleteOneJtp() {
   }
 }
 
+function* resetPasswordForJtp() {
+  try {
+    const jtp: IJtp = yield select((state: RootState) => state.user.aux)
+    yield call(resetPasswordJtp, jtp)
+    yield put(onFinish())
+  } catch (err){
+    console.error(err)
+  }
+}
+
 function* getStudents() {
   try {
     const response: IStudent[] = yield call(getAllStudents)
@@ -88,4 +98,5 @@ export function* jtpWatcher(){
   yield takeLatest('users/createJtp', postJtp)
   yield takeLatest('users/updateJtp', putJtp)
   yield takeLatest('users/deleteJtp', deleteOneJtp)
+  yield takeLatest('users/resetPasswordForJtp', resetPasswordForJtp)
 }
