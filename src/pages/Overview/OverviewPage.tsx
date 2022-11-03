@@ -26,18 +26,25 @@ export const OverviewPage = () => {
             />
           <EvaluationStats />
           <FloatingCard
-            title='Mejores Promedios'
+            title='Calificaciones'
             minWidth='256px'
             width='30%'
-            height='100%'
+            height='400px'
           />
+          <Box
+            sx={{
+              width: '100%',
+              backgroundColor: 'var(--unahurWhite)',
+              borderRadius: '20px',
+              margin: '24px',
+              boxShadow: 'var(--box-shadow)',
+              height: '400px',
+            }}
+            >
+            <Bar data={barJson}/>
+          </Box>
         </Box>
-        <FloatingCard
-            title='APROBACIÓN POR TP'
-            width='60%'
-            height='300px'
-            children={<Bar data={barJson}/>}
-          />
     </AppLayout>
   )
 }
+//<FloatingCard title='APROBACIÓN POR TP' width='100%' height='300px' children={<Bar data={barJson}/>} />

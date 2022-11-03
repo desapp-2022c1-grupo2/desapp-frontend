@@ -21,7 +21,9 @@ const AppRoutes = () => (
   <BrowserRouter>
     <Routes>
       <Route path='/login' element={<Navigate to='/overview' />} />
+      <Route path='/' element={<Navigate to='/overview' />} />
       <Route {...routes.account} />
+      <Route {...routes.home} />
       <Route {...routes.overview} />
       <Route {...routes.login} />
       <Route {...routes.assignments.list} />

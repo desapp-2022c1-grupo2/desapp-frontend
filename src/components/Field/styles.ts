@@ -1,3 +1,4 @@
+import { devices } from '@src/util/breakpoints'
 import styled from 'styled-components'
 
 export const FieldLabel = styled.label`
@@ -12,10 +13,17 @@ export const FieldContainer = styled.div`
   margin: 8px;
 `
 
-export const ReadOnlyFieldContainer = styled.div`width: 320px;`
+export const ReadOnlyFieldContainer = styled.div`
+  width: 100%;
+
+  ${devices.tablet} {
+    width: 320px;
+  }
+
+`
 
 export const ReadOnlyFieldContent = styled.label`
-  background-color: var(--unahurGreenAlt);
+  background-color: var(--unahurCyanHover);
   border-radius: 10px;
   padding: 16px 32px;
   align-items: center;

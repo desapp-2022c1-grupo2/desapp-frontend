@@ -1,6 +1,5 @@
 import React from 'react'
 import { UpdateInfoModal } from '@pages/Account/components'
-import { selectAuthenticatedUser } from '@store'
 import {
   Button,
   EmailOutlined,
@@ -8,6 +7,8 @@ import {
   PersonOutlined,
   ReadOnlyField,
 } from '@components'
+import { Jtp } from '@models'
+import { selectAuthenticatedUser } from '@store'
 import {
   Container,
   Content,
@@ -15,22 +16,22 @@ import {
 } from './styles'
 
 export const AccountContent = () => {
-  const user = selectAuthenticatedUser()
+  const user = new Jtp(selectAuthenticatedUser())
   
   return (
     <Container>
       <Profile />
-      <h4>{user?.name.first + ' ' + user?.name.last}</h4>
+      <h4>{user.fullName()}</h4>
       <Content>
         <ReadOnlyField
           icon={<EmailOutlined />}
           label='Email'
-          text={user?.email}
+          text={user.email}
         />
         <ReadOnlyField
           icon={<PersonOutlined />}
           label='Rol'
-          text='Administrador'
+          text={user.role === 'admin' ? 'Administrador' : 'Jefe de TP'}
         />
       </Content>
       <div>

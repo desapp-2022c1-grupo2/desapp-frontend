@@ -2,19 +2,15 @@
   {
     "id": "Aprobados",
     "label": "make",
-    "value": 24
+    "value": 400
   }, {
     "id": "Desaprobados",
     "label": "make",
-    "value": 8,
+    "value": 65,
     "color": "#ff0000"
   }, {
     "id": "Sin Calificar",
     "label": "No Corregidos",
-    "value": 4
-  }, {
-    "id": "Sin Entregar",
-    "label": "No Entregados",
-    "value": 6
+    "value": 373
   }
 ]

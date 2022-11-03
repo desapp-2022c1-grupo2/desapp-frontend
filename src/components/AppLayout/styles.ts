@@ -1,3 +1,4 @@
+import { devices } from '@src/util/breakpoints'
 import styled from 'styled-components'
 
 export const LayoutContainer = styled.div`
@@ -12,7 +13,9 @@ export const PageContent = styled.div`
   flex-direction: column;
   gap: 16px;
   height: auto;
-  padding: 24px;
   overflow-y: auto;
   width: 100%;
+
+  ${devices.tablet} { padding: 0 16px 16px 16px; }
+  ${devices.desktop} { padding: 24px; }
 `

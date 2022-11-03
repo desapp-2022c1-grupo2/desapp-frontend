@@ -1,13 +1,11 @@
 import React from 'react'
-import { Bar as BarChart } from '@nivo/bar'
+import { ResponsiveBar } from '@nivo/bar'
 import { unahurPalette } from '@styles'
 import { barProps } from './props'
 import styled from 'styled-components'
 
 export const Bar = ({ data }: barProps) => (
-  <BarChart
-    width={400}
-    height={248}
+  <ResponsiveBar
     colors={[
       unahurPalette.unahurGreen.main,
       unahurPalette.unahurRed.main,

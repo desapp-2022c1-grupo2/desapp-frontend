@@ -6,6 +6,7 @@ import {
 } from '@models'
 
 interface userModals {
+  logout: boolean,
   jtp: {
     selected?: IJtp,
     delete: boolean,
@@ -24,6 +25,7 @@ interface userModals {
 }
 
 const initialState: userModals = {
+  logout: false,
   jtp: { delete: false, update: false },
   student: { delete: false, update: false },
   admin: { delete: false, update: false }
@@ -38,11 +40,12 @@ export const modalsSlice = createSlice({
     setDeleteJtpModal(state, { payload }: PayloadAction<boolean>) { state.jtp.delete = payload },
     setUpdateJtpModal(state, { payload }: PayloadAction<boolean>) { state.jtp.update = payload },
     setDeleteStudentModal(state, { payload }: PayloadAction<boolean>) { state.student.delete = payload },
+    setLogoutModal(state, { payload }: PayloadAction<boolean>) { state.logout = payload },
     setUpdateStudentModal(state, { payload }: PayloadAction<boolean>) { state.student.update = payload },
     selectAdmin(state, { payload }: PayloadAction<IAdmin>) { state.admin.selected = payload },
-    selectJtp(state, { payload }: PayloadAction<IJtp>) { state.jtp.selected = payload; state.jtp.delete= true},
+    selectJtp(state, { payload }: PayloadAction<IJtp>) { state.jtp.selected = payload },
     selectStudent(state, { payload }: PayloadAction<IStudent>) { state.student.selected = payload },
-    unselectAdmin(state){ state.admin.selected = undefined},
+    unselectAdmin(state){ state.admin.selected = undefined },
     unselectJtp(state){ state.student.selected = undefined },
     unselectStudent(state){ state.student.selected = undefined }
   }
@@ -54,6 +57,7 @@ export const {
   setDeleteJtpModal,
   setUpdateJtpModal,
   setDeleteStudentModal,
+  setLogoutModal,
   setUpdateStudentModal,
   selectAdmin,
   selectJtp,

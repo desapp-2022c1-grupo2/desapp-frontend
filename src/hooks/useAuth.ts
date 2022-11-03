@@ -5,7 +5,7 @@ import {
   getCourses,
   getJtps,
   getStudents,
-  getSubmited,
+  getSubmitted,
   login,
   selectToken,
   setToken,
@@ -20,7 +20,7 @@ const updateStore = () => {
   dispatch(getAdmins())
   dispatch(getJtps())
   dispatch(getStudents())
-  dispatch(getSubmited())
+  dispatch(getSubmitted())
 }
 
 const tryLoginFromLocalStorage = () => {

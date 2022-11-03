@@ -1,5 +1,5 @@
 import axios from "@util/axios"
-import { IAuth, ICredentials } from "@models"
+import { AuthAdapter, IAuth, IAuthResponse, ICredentials } from "@models"
 
 export const authenticate = async (credentials: ICredentials): Promise<IAuth> => {
   try {
@@ -9,8 +9,8 @@ export const authenticate = async (credentials: ICredentials): Promise<IAuth> =>
         password: credentials.password,
       }
     })
-    const { access_token, user } = response.data
-    return { user, token: access_token }
+    const data = await Promise.resolve<IAuthResponse>(response.data)
+    return new AuthAdapter(data).json
   } catch (err) {
     console.error(err)
     return { token: '' }

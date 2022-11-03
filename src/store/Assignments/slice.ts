@@ -2,11 +2,11 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit'
-import { IAssignment, IEvaluation, ISubmitedAssignment } from '@models'
+import { IAssignment, IEvaluation, ISubmitted } from '@models'
 
 interface IState {
   all: IAssignment[],
-  submited: ISubmitedAssignment[],
+  submited: ISubmitted[],
   evaluations: IEvaluation[],
 }
 
@@ -20,8 +20,8 @@ export const assignmentsSlice = createSlice({
   name: 'assignments',
   initialState,
   reducers: {
-    getSubmited(){},
-    setSubmited(state, { payload }: PayloadAction<ISubmitedAssignment[]>) {
+    getSubmitted(){},
+    setSubmitted(state, { payload }: PayloadAction<ISubmitted[]>) {
       state.submited = payload
     },
     getAssignments(){},
@@ -34,8 +34,8 @@ export const assignmentsSlice = createSlice({
 export const {
   getAssignments,
   setAssignments,
-  getSubmited,
-  setSubmited,
+  getSubmitted,
+  setSubmitted,
 } = assignmentsSlice.actions
 
 export const assignments = assignmentsSlice.reducer

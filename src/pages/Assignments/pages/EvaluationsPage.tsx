@@ -1,5 +1,5 @@
 import React from 'react'
 import { AppLayout } from "@components"
-import { SubmitedTable } from "../components"
+import { SubmittedTable } from "../components"
 
-export const EvaluationsPage = () => <AppLayout title="Evaluaciones" children={<SubmitedTable />} />
+export const EvaluationsPage = () => <AppLayout title="Evaluaciones" children={<SubmittedTable />} />

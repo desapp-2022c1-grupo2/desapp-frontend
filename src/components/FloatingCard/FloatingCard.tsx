@@ -4,7 +4,6 @@ import {
   FLoatingCardContainer,
   FLoatingCardContent,
   FloatingCardHeader,
-  FloatingCardTitle,
 } from './styles'
 
 export const FloatingCard = ({
@@ -17,7 +16,7 @@ export const FloatingCard = ({
     <FLoatingCardContainer {...props}>
       { title &&
         <FloatingCardHeader>
-          <FloatingCardTitle>{title}</FloatingCardTitle>
+          <h6>{title}</h6>
           {tooltip}
         </FloatingCardHeader>
       }

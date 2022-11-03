@@ -1,7 +1,7 @@
 import React from "react"
 import { getAssignmentColumns } from "./AssignmentColumns"
 import { Table } from '@components'
-import { IAssignment } from '@src/models_copy'
+import { IAssignment } from '@models'
 import { selectAssignments } from '@store'
 
 export const AssignmentTable = () => {

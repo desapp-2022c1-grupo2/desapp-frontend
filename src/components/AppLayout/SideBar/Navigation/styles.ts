@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
+import { devices } from '@util/breakpoints'
 
 export const NavigationContainer = styled.div`
   display: flex;
@@ -9,25 +10,28 @@ export const NavigationContainer = styled.div`
   justify-content: start;
   width: 100%;
 `
-export const TabContainer = styled(NavLink)`
+export const TabContainer = styled(NavLink)<{ isSidebarOpen: boolean }>`
   align-items: center;
   border-radius: 10px;
   color: var(--unahurBlack);
   display: flex;
+  font-size: 1.25rem;
   gap: 8px;
+  justify-content: ${(props) => props.isSidebarOpen ? '' : 'center'};
   opacity: 70%;
-  padding: 8px 16px;
+  padding: 12px 24px;
   width: 100%;
 
   &:hover {
-    background-color: var(--unahurGreenAlt) !important;
     border: 0 !important;
     border-bottom: 0 !important;
     border-top: 0 !important;
-    color: var(--unahurGreen) !important;
-    opacity: 40%;
+    color: var(--unahurCyan) !important;
   }
-`
+  
+  ${devices.tablet} { font-size: 1rem; }
+  `
+  //opacity: 40%;
 export const SubMenuContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,11 +43,11 @@ export const SubMenuContainer = styled.div`
   }
 
   & .active {
-    background-color: var(--unahurCyan) !important;
+    background-color: var(--unahurCyanHover) !important;
     border: 0 !important;
     border-bottom: 0 !important;
     border-top: 0 !important;
-    color: var(--unahurWhite) !important;
+    color: var(--unahurCyan) !important;
     opacity: 100%;
   }
 `

@@ -11,10 +11,8 @@ import { getJtpSelected, selectDeleteJtpModal, deleteJtp, unselectJtp, setDelete
 
 export const DeleteJtpModal = () => {
   const dispatch = useDispatch()
-  const x = getJtpSelected()
-  const jtp = new Jtp(x)
+  const jtp = new Jtp(getJtpSelected())
   const open: boolean = selectDeleteJtpModal()
-  console.log(jtp)
   const closeModal = () => { dispatch(setDeleteJtpModal(false)) }
   
   const enableAlert = () => {
@@ -22,7 +20,7 @@ export const DeleteJtpModal = () => {
       deleteJtpService(jtp.id),
       {
         loading: <>Eliminando a {jtp.fullName()}...</>,
-        success: <>Usuario ${jtp.fullName()} eliminado con éxito</>,
+        success: <>Usuario {jtp.fullName()} eliminado con éxito</>,
         error: <>Error al eliminar a {jtp.fullName()}</>
       }, { id: jtp?.id.toString() }
     )

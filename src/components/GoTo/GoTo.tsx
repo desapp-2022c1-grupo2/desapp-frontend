@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from '@components'
 import { GoToProps } from './props'
 import {
   GoToContainer,
@@ -8,10 +9,12 @@ import {
 
 export const GoToBack = ({ text, ...props }: GoToProps) => {
   return (
-    <GoToContainer {...props}>
-      <ArrowLeft />
-      <label>{text}</label>
-    </GoToContainer>
+    <Button
+      color='unahurBlack'
+      startIcon={<ArrowLeft />}
+      text={text}
+      {...props}
+    />
   )
 }
 

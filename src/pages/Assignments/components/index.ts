@@ -1,2 +1,2 @@
 export * from './AssignmentTable'
-export * from './SubmitedTable'
+export * from './SubmittedTable'

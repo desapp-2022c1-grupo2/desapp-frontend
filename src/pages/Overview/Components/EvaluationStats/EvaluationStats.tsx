@@ -4,12 +4,13 @@ import {
   AssignmentCounterContainer,
   EvaluationStatsContainer
 } from './styles'
+import { selectSubmitted } from '@store'
 
 interface assignmentCounterProps {
   small?: boolean,
   vertical?: boolean,
   color?: string,
-  count: number,
+  count: number | string,
   label: string,
 }
 const AssignmentCounter = ({color, count, label, small, vertical}: assignmentCounterProps) => {
@@ -23,20 +24,23 @@ const AssignmentCounter = ({color, count, label, small, vertical}: assignmentCou
 }
 
 export const EvaluationStats = () => {
+  const total = selectSubmitted()
+
+  const approved = total.filter(x => x.qualification >= 4 && x.qualification !== 0).length
+  const disapproved = total.filter(x => x.qualification < 4 && x.qualification !== 0).length
+  const unrated = total.length - approved - disapproved
+ 
   return (
     <EvaluationStatsContainer>
-      <FloatingCard title='Entregas' width='180px'>
-        <div style={{ display: 'flex', width: '100%', justifyContent: 'space-evenly'}}>
-          <AssignmentCounter vertical count={42} label='Total' />
-          <AssignmentCounter vertical count={42} label='Total' />
-        </div>
-        <div style={{ display: 'flex', width: '100%', justifyContent: 'center'}}>
-          <AssignmentCounter small color='var(--unahurGrey)' count={4} label='Sin Calificar' />
-          <AssignmentCounter small color='var(--unahurGrey)' count={6} label='Sin Entregar' />
+      <FloatingCard title='Entregas' width='220px'>
+        <div style={{ display: 'flex', width: '220px', justifyContent: 'space-evenly'}}>
+          <AssignmentCounter vertical count={total.length} label='Total' />
+          <AssignmentCounter vertical count={total.length - unrated} label='Corregidos' />
         </div>
       </FloatingCard>
-      <AssignmentCounter color='var(--unahurGreen)' count={24} label='Aprobados' />
-      <AssignmentCounter color='var(--unahurRed)' count={12} label='No Aprobados' />
+      <AssignmentCounter color='var(--unahurGreen)' count={approved} label='Aprobados' />
+      <AssignmentCounter color='var(--unahurRed)' count={disapproved} label='No Aprobados' />
+      <AssignmentCounter color='var(--unahurGrey)' count={unrated} label='Sin Calificar' />
     </EvaluationStatsContainer>
   )
 }

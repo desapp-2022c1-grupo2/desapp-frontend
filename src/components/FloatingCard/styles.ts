@@ -28,10 +28,3 @@ export const FloatingCardHeader = styled.div`
   justify-content: space-between;
   width: 100%;
 `
-
-export const FloatingCardTitle = styled.h5`
-  font-family: Poppins;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-`

@@ -2,15 +2,9 @@ import axios from "@util/axios"
 import {
   IJtp,
   IJtpResponse,
-  JtpList
-  ,
   JtpAdapter,
   Jtp,
 } from "@models"
-import {
-  jtpAdapter,
-  jtpRequestAdapter,
- } from "@adapters"
 
 export const fetchAllJtps = async (): Promise<IJtp[]> => {
   try {
@@ -27,7 +21,7 @@ export const fetchJtp = async (id: number): Promise<IJtp | undefined> => {
   try {
     const response = await axios.get(`/jtp/${id}`)
     const jtp: IJtpResponse = await Promise.resolve(response.data)
-    return jtpAdapter(jtp)
+    return new JtpAdapter(jtp).json
   } catch (err) {
     console.error(err)
   }

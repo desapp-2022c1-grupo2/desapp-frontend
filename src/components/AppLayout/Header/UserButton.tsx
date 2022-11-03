@@ -12,11 +12,11 @@ import {
   LogoutOutlined,
   PersonOutlined,
 } from "@components"
-
 import {
-  logout,
   selectAuthenticatedUser,
+  setLogoutModal,
 } from "@store"
+import { Jtp } from "@models"
 
 const Name = styled.h5`
   color: var(--unahurBlack);
@@ -35,18 +35,18 @@ const Role = styled.h5`
 export const UserButton = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  let currentUser = selectAuthenticatedUser()
+  const user = new Jtp(selectAuthenticatedUser())
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => { setAnchorEl(event.currentTarget) }
   const handleClose = () => { setAnchorEl(null) }
   const handleMyAccount = () => navigate('/account')
-  const handleLogout = () => {
-    dispatch(logout())
-    location.reload()
+  const openLogoutModal = () => {
+    dispatch(setLogoutModal(true))
+    setAnchorEl(null)
   }
-  
+
   return (
     <>
     <IconButton
@@ -66,11 +66,11 @@ export const UserButton = () => {
       transformOrigin={{ vertical:'top', horizontal:'right' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column',gap: '8px', padding: '16px'}}>
-        <Name>{`${currentUser?.name.first}  ${currentUser?.name.last}`}</Name>
-        <Role>{currentUser?.role}</Role>
+        <Name>{user.fullName()}</Name>
+        <Role>{user.role === 'admin' ? 'Administrador' : 'Jefe de TP'}</Role>
       </div>
       <MenuItem key='MyAccount' onClick={handleMyAccount}><PersonOutlined /> Mi Cuenta</MenuItem>
-      <MenuItem key='logout' onClick={handleLogout}><LogoutOutlined /> logout</MenuItem>
+      <MenuItem key='logout' onClick={openLogoutModal}><LogoutOutlined /> logout</MenuItem>
     </Menu>
   </>
   )

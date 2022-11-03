@@ -29,6 +29,7 @@ export const paths = {
 
 export const routes = {
   account: { path: paths.account, element: <AccountPage /> },
+  home: { path: '/', element: <OverviewPage /> },
   overview: { path: paths.overview, element: <OverviewPage /> },
   login: { path: paths.login, element: <LoginPage/> },
   assignments: {

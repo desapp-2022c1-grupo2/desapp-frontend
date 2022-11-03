@@ -6,6 +6,7 @@ import {
   SmallModalContent,
   ModalDialog,
   ModalFooter,
+  Backdrop,
 } from './styles'
 
 export const SmallModal = ({
@@ -33,6 +34,7 @@ export const SmallModal = ({
       open={open}
       {...props}
     >
+      <Backdrop onClick={onClose} />
       <SmallModalContainer>
         { title && <h4>{title}</h4> }
         <SmallModalContent>

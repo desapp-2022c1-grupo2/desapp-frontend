@@ -23,12 +23,12 @@ export const NewJtpModal = ({ id }: NewJtpModalProps) => {
   const [name, setName] = useState({ first: '', last: '' })
   const [open, setOpen] = useState(false)
   const [email, setEmail] = useState('')
-  const [course, setCourse] = useState('')
-  const [isFormUncompleted, setForm] = useState(false)
+  const [course, setCourse] = useState(-1)
+  const [isFormUncompleted, setForm] = useState(true)
 
-  useEffect(() => { setForm(!name.first || !name.last || !email || !course) }, [name, email, course])
-  
-  const handleCourse = (event: SelectChangeEvent<unknown>) => { setCourse(event.target.value as string) }
+  useEffect(() => { setForm(!name.first || !name.last || !email || course === -1) }, [name, email, course])
+
+  const handleCourse = (event: SelectChangeEvent<unknown>) => { setCourse(event.target.value as number) }
   const handleEmail = (e: inputChangeEvent) => { setEmail(e.target.value) }
   const handleFirstName = (e: inputChangeEvent) => { setName({ ...name, first: e.target.value }) }
   const handleLastName = (e: inputChangeEvent) => { setName({ ...name, last: e.target.value }) }
@@ -37,7 +37,7 @@ export const NewJtpModal = ({ id }: NewJtpModalProps) => {
   const clearInputs = () => {
     setName({ first: '', last: '' })
     setEmail('')
-    setCourse('')
+    setCourse(-1)
   }
 
   const closeModal = () => {
@@ -63,7 +63,7 @@ export const NewJtpModal = ({ id }: NewJtpModalProps) => {
     const jtp = new Jtp({
       name,
       email,
-      course: courses[parseInt(course)],
+      course: courses.find(x => x.id === course) || courses[0],
     })
     enableAlert(jtp)
     dispatch(createJtp(jtp.json))
@@ -125,10 +125,15 @@ export const NewJtpModal = ({ id }: NewJtpModalProps) => {
           />
           <Select
             required
-            items={courses ? courses.map(course => course.name ? course.name : '') : []}
+            items={
+              courses.map(x => ({
+                name: x.name,
+                value: x.id,
+              })
+            )}
             label='Materia'
             onChange={handleCourse}
-            placeholder={course.toString()}
+            placeholder='Selecciona un curso'
             value={course}
           />
           { isFormUncompleted && <RequiredFieldText>* Completa todos los campos</RequiredFieldText> }

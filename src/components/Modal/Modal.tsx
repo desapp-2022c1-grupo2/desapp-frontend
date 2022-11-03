@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { ModalProps } from './props'
 import { GoToBack } from '@components/GoTo'
 import {
+  Backdrop,
   ModalContainer,
   ModalContent,
   ModalDialog,
@@ -34,6 +35,7 @@ export const Modal = ({
       open={open}
       {...props}
     >
+      <Backdrop onClick={onClose} />
       <ModalContainer>
         <ModalHeader>
           <GoToBack onClick={onClose} text="Volver"/>

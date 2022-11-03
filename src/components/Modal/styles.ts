@@ -1,5 +1,13 @@
+import { devices } from '@src/util/breakpoints';
 import styled from 'styled-components'
 import { ModalDialogProps } from './props'
+
+export const Backdrop = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 1300;
+`
 
 export const ModalDialog = styled.div<ModalDialogProps>`
   align-items: center;
@@ -16,29 +24,37 @@ export const ModalDialog = styled.div<ModalDialogProps>`
   z-index: 1300;
 `;
 
-export const ModalContainer = styled.div`
-  align-items: space-beetwen;
-  background-color: white;
-  border-radius: 20px;
+export const FullscreenModalContainer = styled.div`
+  background-color: var(--unahurWhite);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 0 80px;
-  height: 600px;
-  text-align: left;
-  width: 900px;
+  height: 100vh;
+  text-align: center;
+  width: 100%;
+  z-index: 1301;
 `
 
-export const SmallModalContainer = styled.div`
+export const ModalContainer = styled(FullscreenModalContainer)`
+  align-items: space-evenly;
+  justify-content: space-evenly;
+  padding: 0 16px;
+  
+  ${devices.tablet} {
+    justify-content: space-between;
+    border-radius: 20px;
+    padding: 0 80px;
+    height: 600px;
+    text-align: left;
+    width: 900px;
+  }
+`
+
+export const SmallModalContainer = styled(FullscreenModalContainer)`
   align-items: center;
-  background-color: white;
   border-radius: 20px;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   padding: 80px 80px 40px 80px;
   height: 400px;
-  text-align: center;
   width: 800px;
 `
 
@@ -59,9 +75,10 @@ export const ModalContent = styled.div`
 export const ModalFooter = styled.div`
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   gap: 0;
   justify-content: center;
-  padding: 24px;
+  padding: 24px 0;
   width: 100%;
 `
 

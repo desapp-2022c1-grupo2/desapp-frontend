@@ -4,11 +4,10 @@ import {
   IAdmin,
   IAssignment,
   ICourse,
-  ICredentials,
   IEvaluation,
   IJtp,
   IStudent,
-  ISubmitedAssignment,
+  ISubmitted,
   IUser
 } from "@models"
 
@@ -23,10 +22,12 @@ export const selectIsAuthenticated = () => useSelector<RootState, boolean | unde
 export const selectToken = () => useSelector<RootState, string | undefined >((state) => state.auth.token)
 export const selectAuthenticatedUser = () => useSelector<RootState, IUser | undefined >((state) => state.auth.user)
 export const selectSidebar = () => useSelector<RootState, boolean >((state) => state.misc.sidebar)
+export const selectRole = () => useSelector<RootState, string>((state) => state.auth.user?.role || '')
 
 export const selectUpdateJtpModal = () => useSelector<RootState, boolean >((state) => state.modals.jtp.update)
 export const selectUpdateAdminModal = () => useSelector<RootState, boolean >((state) => state.modals.admin.update)
 export const selectUpdateStudentModal = () => useSelector<RootState, boolean >((state) => state.modals.student.update)
+export const selectLogoutModal = () => useSelector<RootState, boolean >((state) => state.modals.logout)
 
 export const selectDeleteJtpModal = () => useSelector<RootState, boolean >((state) => state.modals.jtp.delete)
 export const selectDeleteAdminModal = () => useSelector<RootState, boolean >((state) => state.modals.admin.delete)
@@ -37,5 +38,5 @@ export const getJtpSelected = () => useSelector<RootState, IJtp | undefined>((st
 export const getAdminSelected = () => useSelector<RootState, IAdmin | undefined>((state) => state.modals.admin.selected)
 export const getStudentSelected = () => useSelector<RootState, IStudent | undefined>((state) => state.modals.student.selected)
 
-export const selectSubmited = () => useSelector<RootState, ISubmitedAssignment[]>((state) => state.assignments.submited)
+export const selectSubmitted = () => useSelector<RootState, ISubmitted[]>((state) => state.assignments.submited)
 export const selectEvaluationsd = () => useSelector<RootState, IEvaluation[]>((state) => state.assignments.evaluations)

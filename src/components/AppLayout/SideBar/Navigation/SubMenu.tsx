@@ -3,26 +3,27 @@ import { SubMenuContainer } from './styles'
 import { Tab } from './Tab'
 import { TabProps } from './props'
 import { ExpandMore } from "@mui/icons-material"
+import { selectSidebar } from "@store"
 
 interface SubMenuProps {
   label?: string,
-  open?: boolean,
   tabs: TabProps[],
 }
 
 export const SubMenu = ({
   label,
-  open,
   tabs
 }: SubMenuProps ) => {
+  const isSidebarOpen: boolean = selectSidebar()
+
   return (
     <SubMenuContainer>
       {
-        open
+        isSidebarOpen
           ? (
             <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between',}}>
-              <label style={{ fontFamily: 'Poppins', fontWeight: '700',fontSize: '11px', textTransform: 'uppercase'}}>{label}</label>
-              <ExpandMore />
+              <h6>{label}</h6>
+              <ExpandMore sx={{ display: 'none'}}/>
             </div>
           ) : <hr style={{ color: "var(--unahurSoftGrey)", border: '1px solid var(--unahurSoftGrey)' }}/>
       }

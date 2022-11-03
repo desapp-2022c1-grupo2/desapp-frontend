@@ -1,5 +1,4 @@
-import { IJtpResponse, Jtp } from "./Jtp"
-import { IStudentResponse } from "./response/IUserResponse"
+import { ICourseResponse, Jtp } from "@models"
 
 export interface ICredentials {
     email: string,
@@ -18,6 +17,7 @@ export interface IUser extends ICredentials{
 export interface IUserResponse {
     id?: number,
     role?: string,
+    course?: ICourseResponse | null,
     name: string,
     lastName: string,
     email: string,
@@ -58,16 +58,6 @@ export class User {
       name: this._name,
       role: this._role,
     }
-  }  
-
-  adapter(response: IUserResponse | IJtpResponse | IStudentResponse) {
-    if (response.id) this._id = response.id,
-    this._email = response.email
-    this._name = {
-      first: response.name,
-      last: response.lastName
-    }
-    this._role = this.role
   }
 
   fullName(): string {
@@ -96,7 +86,7 @@ export class UserAdapter extends User {
 }
 
 export abstract class UserList {
-  protected users!: User[] | Jtp[]
+  protected users!: User[] | Jtp[] 
 
   get(): IUser[] {
     return this.users.map(x => x.json)

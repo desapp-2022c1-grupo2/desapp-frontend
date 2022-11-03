@@ -1,4 +1,5 @@
 import { createTheme, PaletteColorOptions } from '@mui/material/styles'
+import { devices } from '@src/util/breakpoints';
 import { unahurPalette } from "./unahurPalette"
 
 interface unahurPaletteOptions {
@@ -16,26 +17,50 @@ interface unahurPaletteOptions {
   unahurWhite: PaletteColorOptions,
 }
 
+interface ColorOverrides {
+  unahurBlack: true,
+  unahurBlue: true,
+  unahurCyan: true,
+  unahurGreen: true,
+  unahurGreenAlt: true,
+  unahurGrey: true,
+  unahurOrange: true,
+  unahurRed: true,
+  unahurRedAlt: true,
+  unahurSoftGrey: true,
+  unahurSoftWhite: true,
+  unahurWhite: true,
+}
+
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: false;
+    sm: true;
+    md: false;
+    lg: false;
+    xl: false;
+    mobile: true;
+    tablet: true;
+    laptop: true;
+    desktop: true;
+  }
+}
+
 declare module '@mui/material/styles' {
   interface Palette extends unahurPaletteOptions {}
   interface PaletteOptions extends unahurPaletteOptions {}
 }
 
 declare module '@mui/material/Button' {
-  interface ButtonPropsColorOverrides {
-    unahurBlack: true,
-    unahurBlue: true,
-    unahurCyan: true,
-    unahurGreen: true,
-    unahurGreenAlt: true,
-    unahurGrey: true,
-    unahurOrange: true,
-    unahurRed: true,
-    unahurRedAlt: true,
-    unahurSoftGrey: true,
-    unahurSoftWhite: true,
-    unahurWhite: true,
-  }
+  interface ButtonPropsColorOverrides extends ColorOverrides {}
+}
+
+declare module '@mui/material/Chip' {
+  interface ChipPropsColorOverrides extends ColorOverrides {}
+}
+
+declare module '@mui/material/IconButton' {
+  interface IconButtonPropsColorOverrides extends ColorOverrides {}
 }
 
 export const theme = createTheme({
@@ -45,6 +70,15 @@ export const theme = createTheme({
     secondary: unahurPalette.unahurCyan,
     contrastThreshold: 3,
     tonalOffset: 0.2,
+  },
+  breakpoints:{
+    values: {
+      sm: 425,
+      mobile: 425,
+      tablet: 768,
+      laptop: 1024,
+      desktop: 1200,
+    }
   },
   components: {
     MuiButton: {
@@ -68,8 +102,16 @@ export const theme = createTheme({
           minWidth: '320px',
           minHeight: '48px',
         },
-      }
+      },
     },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: '12px',
+          //padding: '4px',
+        },
+      },
+    }
   },
 });
 

@@ -12,10 +12,10 @@ import { Input } from '@components/Input'
 import { SelectProps } from './props'
 
 export const Select = ({ items, placeholder, ...props } : SelectProps) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(-1);
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
-    setValue(event.target.value as string);
+    setValue(event.target.value as number);
   }
 
   return (
@@ -28,8 +28,8 @@ export const Select = ({ items, placeholder, ...props } : SelectProps) => {
         value={value}
         {...props}
       >
-        <MenuItem disabled value=''><em>{placeholder}</em></MenuItem>
-        { items.map((item, index) => <MenuItem key={index} value={`${index}`}>{item}</MenuItem>) }
+        <MenuItem disabled value={-1}><em>{placeholder}</em></MenuItem>
+        { items.map(({ name, value }) => <MenuItem key={value} value={value}>{name}</MenuItem>) }
       </MuiSelect>
     </SelectContainer>
   )

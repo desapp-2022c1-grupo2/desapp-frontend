@@ -1,31 +1,27 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, IconButton, LogoutOutlined } from '@components'
-import { logout } from "@store/auth"
-import { selectSidebar } from '@src/store'
+import { selectSidebar, setLogoutModal } from '@store'
 
 export const LogoutButton = () => {
   const open: boolean = selectSidebar()
   const dispatch = useDispatch()
 
-  const handleLogout = () => {
-    dispatch(logout())
-    location.reload()
-  }
+  const openLogoutModal = () => { dispatch(setLogoutModal(true)) }
 
   return open
     ? (
       <Button
         color='unahurBlack'
-        onClick={handleLogout}
+        onClick={openLogoutModal}
         variant='contained'
-        sx={{ padding: '16px 32px', minHeight: '0', minWidth: '0', width: 'fit-content'}}
+        sx={{ padding: '16px 32px', minHeight: '0', minWidth: '0'}}
         startIcon={<LogoutOutlined />}
         text='Logout'
       />
     ) : (
       <IconButton
-        onClick={handleLogout}
+        onClick={openLogoutModal}
         sx={{
           backgroundColor: 'var(--unahurBlack)',
           borderRadius: '10px',

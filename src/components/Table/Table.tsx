@@ -7,19 +7,24 @@ import {
 } from '@mui/x-data-grid'
 import { Toolbar } from './Toolbar'
 import { DataGridLocaleText } from './DataGridLocaleText'
+import { devices } from '@util/breakpoints'
 
 export const TableContainer = styled.div`
   align-items: center;
   background-color: var(--unahurWhite);
-  border-radius: 20px;
   box-shadow: var(--box-shadow);
   flex-direction: column;
   height: 100%;
   justify-content: center;
   max-width: 1800px;
   overflow: hidden;
-  padding: 24px;
+  padding: 8px;
   width: 100%;
+
+  ${devices.tablet} {
+    border-radius: 20px;
+    padding: 24px;
+  }
 `
 
 interface tableProps extends DataGridProps {

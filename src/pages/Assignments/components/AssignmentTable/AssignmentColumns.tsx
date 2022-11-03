@@ -1,39 +1,36 @@
 import React from "react"
 import {GridColDef} from "@mui/x-data-grid"
-import { Button, Chip, GoToFoward } from "@components"
-import { ICourse, IJtp } from "@src/models_copy"
-import { selectCourses, selectJtps } from "@store"
+import { Button, Chip } from "@components"
+import { Assignment, Jtp } from "@models"
+import { VisibilityOutlined } from "@mui/icons-material"
 
 export function getAssignmentColumns(): GridColDef[] {
-  const courses: ICourse[] = selectCourses()
-  const jtps: IJtp[] = selectJtps()
-
-  const getJtpName = (id: number): string => {
-    const jtp: IJtp | undefined = jtps.find(x => { return x.id == id})
-    return `${jtp?.name} ${jtp?.lastName}`
-  }
-
   return [
-    {headerName: "#TP", width: 50, field: "number" },
+    {headerName: "#TP", width: 50, field: "number", align: 'center' },
     {headerName: "Nombre", flex: 3 , field: "name" },
-    {headerName: "Curso", flex: 2, field: "courseId", 
-      renderCell: (params) => <Chip disabled color='unahurCyan' label={
-        courses.find(x => { return x.id == params.value})?.name || params.value} />
+    {headerName: "Curso", flex: 2, field: "course", align: 'center',
+      renderCell: (params) => <Chip color='unahurCyan' label={params.value.name} />
     },
-    {headerName: "JTP", flex: 2 , field: "jtpId",
-      renderCell: (params) => <Chip
-        disabled
-        color='unahurGreen'
-        title={getJtpName(params.value)}
-        label={getJtpName(params.value)}
-      />,
+    {headerName: "JTP", flex: 2 , field: "jtp", align: 'center',
+      renderCell: (params) => {
+        const jtp = new Jtp(params.value)
+        return <Chip
+          color='unahurGreen'
+          title={jtp.fullName()}
+          label={jtp.fullName()}
+        />
+      },
     },
     //{headerName: "url", field: "url"},
     //{headerName: "Descripción corta", field: "shortDescr", minWidth: 300 },
     //{headerName: "Despcripción", field: "description", minWidth: 500},
     //{headerName: "Consigna", field: "taskDescription"},
-    {headerName: "Inicio", flex: 1, field: "startDate"},
-    {headerName: "Fin", flex: 1, field: "endDate"},
+    {headerName: "Inicio", flex: 1, field: "start", align: 'center', 
+      renderCell: (params) => new Assignment(params.row).start
+    },
+    {headerName: "Fin", flex: 1, field: "end", align: 'center', 
+      renderCell: (params) => new Assignment(params.row).end
+    },
     //{headerName: "Tags", flex: 1, field: "tags"},
     {
       field: "actions",
@@ -43,7 +40,15 @@ export function getAssignmentColumns(): GridColDef[] {
       align: "center",
       sortable: false,
       disableColumnMenu: true,
-      renderCell: () => <GoToFoward text="Ver Más"/>
+      renderCell: () => (
+        <Button
+          children={<VisibilityOutlined />}
+          color='unahurBlack'
+          onClick={() => {}}
+          sx={{borderRadius: '50px', minHeight: 'fit-content', minWidth: 'fit-content', padding: '8px'}}
+          title='Más detalles'
+        />
+      )
     },
     //{headerName: "variable1", field: "var1"},
     //{headerName: "variable2", field: "var2"},

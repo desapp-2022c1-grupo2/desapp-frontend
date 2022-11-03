@@ -6,10 +6,12 @@ import {
   PageContent
 } from './styles'
 import { appLayoutProps } from './props'
+import { LogoutModal } from './LogoutModal'
 
 export const AppLayout = ({ children, title}: appLayoutProps) => {
   return (
     <LayoutContainer>
+      <LogoutModal />
       <Sidebar />
       <PageContent>
         <Header title={title}/>
