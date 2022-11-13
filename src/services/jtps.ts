@@ -55,3 +55,16 @@ export const deleteJtp = async (id: number) => {
     console.error(err)
   }
 }
+
+export const resetPasswordJtp = async (mail: string, role: string, id: number) => {
+  try {
+    const response = await axios.post(`/passwordReset/`, {
+      mail: mail,
+      role: role,
+      id: id,
+    })
+    return Promise.resolve(response.data)
+  } catch (err) {
+    console.error(err)
+  }
+}

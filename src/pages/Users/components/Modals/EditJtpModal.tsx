@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import toast, { Toaster } from 'react-hot-toast'
-import { SelectChangeEvent } from '@mui/material'
-import { ICourse, Jtp } from '@models'
-import { getJtpSelected, selectCourses, selectUpdateJtpModal, updateJtp, unselectJtp, setUpdateJtpModal } from '@store'
-import { inputChangeEvent } from '@const'
-import {
-  Button,
-  CheckOutlined,
-  Field,
-  Modal,
-  Select,
-} from '@components'
-import { patchJtp } from '@services'
-import { Content, RequiredFieldText } from './styles'
+import React, {useEffect, useState} from 'react'
+import {useDispatch} from 'react-redux'
+import toast, {Toaster} from 'react-hot-toast'
+import {SelectChangeEvent} from '@mui/material'
+import {ICourse, Jtp} from '@models'
+import {getJtpSelected, selectCourses, selectUpdateJtpModal, setUpdateJtpModal, unselectJtp, updateJtp} from '@store'
+import {inputChangeEvent} from '@const'
+import {Button, CheckOutlined, Field, Modal, Select,} from '@components'
+import {patchJtp} from '@services'
+import {Content, RequiredFieldText} from './styles'
+import {PasswordResetModal} from "@pages/Users/components/Modals/PasswordResetModal";
 
 export const EditJtpModal = () => {
   const dispatch = useDispatch()
@@ -146,6 +141,7 @@ export const EditJtpModal = () => {
           value={course?.id || jtp.course?.id || -1}
         />
         { isFormUncompleted && <RequiredFieldText>* Completa todos los campos</RequiredFieldText> }
+        <PasswordResetModal/>
       </Content>
     </Modal>
     </>

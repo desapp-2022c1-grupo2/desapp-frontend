@@ -31,3 +31,16 @@ export const verifyCredentials = async(credentials: ICredentials): Promise<boole
     return false
   }
 }
+
+export const passwordReset = async(resetId: any, password: any): Promise<boolean> => {
+  try {
+    const response = await axios.post(`/passwordReset/validate/${resetId}`, {
+        password: password
+    })
+    return response.status === 200
+  } catch (err) {
+    console.error(err)
+    return false
+  }
+}
+

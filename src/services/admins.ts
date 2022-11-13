@@ -51,3 +51,5 @@ export const deleteAdmin = async (admin: IAdmin) => {
     console.error(err)
   }
 }
+
+

@@ -40,3 +40,5 @@ export const getStudentSelected = () => useSelector<RootState, IStudent | undefi
 
 export const selectSubmitted = () => useSelector<RootState, ISubmitted[]>((state) => state.assignments.submited)
 export const selectEvaluationsd = () => useSelector<RootState, IEvaluation[]>((state) => state.assignments.evaluations)
+
+export const selectPasswordResetJtpModal = () => useSelector<RootState, boolean >((state) => state.modals.jtp.passwordReset)
