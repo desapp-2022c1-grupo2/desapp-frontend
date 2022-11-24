@@ -7,4 +7,5 @@ export interface FieldProps extends InputProps {
 
 export interface ReadOnlyFieldProps extends ChipProps{
   text?: string,
+  fullwidth?: boolean,
 }

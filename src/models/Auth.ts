@@ -1,19 +1,28 @@
-import { IUser, ICredentials, IJtp, IJtpResponse, IUserResponse, JtpAdapter } from "@models"
+import {
+  ICredentials,
+  IJtp,
+  IJtpResponse,
+  IAdminResponse,
+  JtpAdapter,
+  IAdmin
+} from "@models"
+
+type IAuthUser<T, K> = T | K
 
 export interface IAuth {
   isAuthenticated?: boolean,
   token?: string,
-  user?: IUser | IJtp,
+  user?: IAuthUser<IAdmin, IJtp>,
   credentials?: ICredentials,
 }
 
 export interface IAuthResponse {
   access_token: string,
-  user: IUserResponse | IJtpResponse,
+  user: IAdminResponse | IJtpResponse,
 }
 
 export class Auth {
-  private user?: IUser | IJtp
+  private user?: IAdmin | IJtp
   private token: string
   private isAuthenticated: boolean
 

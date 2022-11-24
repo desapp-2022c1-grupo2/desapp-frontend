@@ -2,7 +2,7 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit'
-import { IAuth, ICredentials, IUser } from '@models'
+import { IAdmin, IAuth, ICredentials, IJtp, } from '@models'
 
 const initialState: IAuth = {
   isAuthenticated: false,
@@ -20,7 +20,7 @@ export const authSlice = createSlice({
       state.token = payload
       state.isAuthenticated = state.token != ''
     },
-    setUser(state, { payload }: PayloadAction<IUser | undefined>){ state.user = payload },
+    setUser(state, { payload }: PayloadAction<IAdmin | IJtp | undefined>){ state.user = payload },
     updateUserInfo() {}
   }
 })

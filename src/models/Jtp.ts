@@ -1,6 +1,7 @@
 import {
   Course,
   CourseAdapter,
+  IAdmin,
   ICourse,
   ICourseResponse,
   IUser,

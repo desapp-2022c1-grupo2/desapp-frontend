@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Toaster } from 'react-hot-toast'
-import { Alert, CourseSelector, Modal } from '@components'
+import { Alert, Modal } from '@components'
 import {
   EmailField,
   FirstnameField,
@@ -8,7 +8,6 @@ import {
   UpdateButton,
 } from '@pages/Users/components'
 import { useUpdateAdmin } from '@pages/Users/Admins/hooks'
-import { FieldsRow } from './styles'
 import { AdminContext, ModalContext } from '../../context'
 
 export const UpdateAdminModal = () => {

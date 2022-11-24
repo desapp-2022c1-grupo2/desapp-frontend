@@ -1,46 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-
 import {
   GridToolbarContainer,
   GridToolbarExport,
   DataGrid,
   DataGridProps,
   GridColDef,
-  GridToolbarQuickFilter,
   GridToolbarColumnsButton,
-  GridToolbarFilterButton,
   GridToolbarDensitySelector,
 } from '@mui/x-data-grid'
-import { devices } from '@util/breakpoints'
-
-export const TableContainer = styled.div`
-  align-items: center;
-  background-color: var(--unahurWhite);
-  box-shadow: var(--box-shadow);
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  max-width: 1800px;
-  overflow: hidden;
-  padding: 8px;
-  width: 100%;
-
-  ${devices.tablet} {
-    border-radius: 20px;
-    padding: 24px;
-  }
-`
-
-const Filters = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-
-  & .filter { display: flex; gap: 8px; }
-  & div { margin: 0 !important }
-  & div label { display: none !important }
-`
+import { ButtonsContainer, TableContainer } from './styles'
+import { Toolbar } from './Toolbar'
 
 interface tableProps extends DataGridProps {
   handleColumns?: Function,
@@ -59,7 +28,10 @@ export const Table = ({
   ...props
 }: tableProps) => {
   const [pageSize, setPageSize] = useState<number>(25)
-  
+  const [hideFilters, setFilters] = useState<boolean>(false)
+
+  const handleToggleFilters = () => { setFilters(!hideFilters)}
+
   const col: GridColDef[] = handleColumns
   ? handleColumns()
   : columns
@@ -79,26 +51,23 @@ export const Table = ({
     }, [rows]
   )
 
-  const Toolbar = () => (
-    <GridToolbarContainer>
+  const Buttons = () => (
+    <ButtonsContainer>
       <GridToolbarColumnsButton />
       <GridToolbarDensitySelector />
       <GridToolbarExport/>
       {buttons}
-    </GridToolbarContainer>
+    </ButtonsContainer>
   )
 
   return (
     <>
     <TableContainer>
-      <Filters>
-        <div>{search}</div>
-        <div className='filter'>{filters}</div>
-      </Filters>
+      <Toolbar search={search} filters={filters} handleToggleFilters={handleToggleFilters} hideFilters={hideFilters}/>
       <DataGrid
         pagination={true}
         columns={col}
-        components={{ Toolbar }}
+        components={hideFilters ? undefined : { Toolbar: Buttons }}
         componentsProps={{ toolbar }}
         onPageSizeChange={(newPage) => setPageSize(newPage)}
         pageSize={pageSize}

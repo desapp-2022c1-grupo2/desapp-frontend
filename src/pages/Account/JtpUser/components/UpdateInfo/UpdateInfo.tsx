@@ -5,49 +5,42 @@ import {
   Alert,
   Button,
   CheckOutlined,
+  CourseSelector,
   EditOutlined,
   Field,
   Modal,
 } from '@components'
-import { inputChangeEvent } from "@const"
-import { Admin, IAdmin, IUser, User } from '@models'
+import { verifyCredentials } from '@services'
 import {
-  updateAdmin,
-  verifyCredentials,
-} from '@services'
-import {
-  selectAuthenticatedUser,
   setUser,
   updateUserInfo,
 } from '@store'
-import { Content } from './styles'
+import { FieldsRow } from './styles'
 import { AuthenticatedJtpContext } from '../../context'
 
 
 export const UpdateInfoModal = () => {
   const dispatch = useDispatch()
   const {
-    email,
-    firstname,
-    lastname,
-    password,
+    course, handleCourse,
+    email, handleEmail,
+    firstname, handleFirstname,
+    lastname, handleLastname,
+    password, handlePassword,
     isOpenUpdate,
     openUpdate,
     closeUpdate,
     clearPassword,
     getJtp,
-    handleEmail,
-    handleFirstname,
-    handleLastname,
-    handlePassword,
+    isFormUncompleted
   } = useContext(AuthenticatedJtpContext)
 
   const [isWrongPassword, setWrongPassword] = useState(false)
   const isEmptyPassword = !isWrongPassword && password === ''
 
   const handleOpen = () => { openUpdate() }
-  
-  const handleClose = () => { 
+
+  const handleClose = () => {
     closeUpdate()
     clearPassword()
     setWrongPassword(false)
@@ -55,18 +48,18 @@ export const UpdateInfoModal = () => {
 
   const enableAlert = () => {
     toast.promise(
-      getAdmin().patch(), {
-        loading: 'Actualizando datos...',
-        success: <b>Datos Actualizados correctamente</b>,
-        error: <b>Ocurrio un error</b>,
-      }
+      getJtp().patch(), {
+      loading: 'Actualizando datos...',
+      success: <b>Datos Actualizados correctamente</b>,
+      error: <b>Ocurrio un error</b>,
+    }
     )
   }
 
   const handleSubmit = async () => {
     if (await verifyCredentials({ email, password })) {
       enableAlert()
-      dispatch(setUser(getAdmin().json))
+      dispatch(setUser(getJtp().json))
       dispatch(updateUserInfo())
       handleClose()
     } else {
@@ -77,11 +70,11 @@ export const UpdateInfoModal = () => {
 
   return (
     <>
-      <Toaster toastOptions={{ duration: 3000}}/>
+      <Toaster toastOptions={{ duration: 3000 }} />
       <Button
         color='info'
         onClick={handleOpen}
-        startIcon={<EditOutlined/>}
+        startIcon={<EditOutlined />}
         variant='contained'
         text='Editar'
         title='Editar información'
@@ -96,13 +89,13 @@ export const UpdateInfoModal = () => {
             children="Confirmar"
             color='unahurGreen'
             onClick={handleSubmit}
-            startIcon={<CheckOutlined/>}
+            startIcon={<CheckOutlined />}
             variant='contained'
             title='Confirmar cambios'
           />
         }
       >
-        <Content>
+        <FieldsRow>
           <Field
             value={firstname}
             label="Nombre"
@@ -115,6 +108,8 @@ export const UpdateInfoModal = () => {
             onChange={handleLastname}
             placeholder={"Ingresá tu apellido"}
           />
+        </FieldsRow>
+        <FieldsRow>
           <Field
             value={email}
             label="Email"
@@ -122,28 +117,32 @@ export const UpdateInfoModal = () => {
             placeholder={"Ingresá tu email"}
             variant="email"
           />
-          <Field
-            disabled
-            value="Administrador"
-            label="Rol"
+          <CourseSelector
+            onChange={handleCourse}
+            value={course?.id || -1}
           />
-          <Field
-            value={password}
-            label="Contraseña actual"
-            onChange={handlePassword}
-            placeholder="Ingresá tu contraseña"
-            variant="password"
-          />
-        </Content>
+        </FieldsRow>
+        <Field
+          value={password}
+          label="Contraseña actual"
+          onChange={handlePassword}
+          placeholder="Ingresá tu contraseña"
+          variant="password"
+        />
         <Alert
           severity="error"
           enable={isEmptyPassword}
           text='Ingrese su contraseña para confirmar los cambios'
         />
         <Alert
-          severity="error"
           enable={isWrongPassword}
+          severity="error"
           text='Contraseña incorrecta'
+        />
+        <Alert
+          enable={isFormUncompleted}
+          severity='error'
+          text='Completa todos los campos'
         />
       </Modal>
     </>

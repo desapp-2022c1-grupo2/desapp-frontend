@@ -2,27 +2,41 @@ import { useDispatch } from 'react-redux'
 import {
   getAdmins,
   getAssignments,
+  getAssignmentsByJtp,
   getCourses,
   getEvaluations,
+  getEvaluationsByJtp,
   getJtps,
   getStudents,
+  getStudentsByCourse,
   getSubmitted,
+  getSubmittedByJtp,
   login,
+  selectAuthenticatedUser,
   selectToken,
   setToken,
   setUser,
 } from '@store'
 
 const updateStore = () => {
+  const user = selectAuthenticatedUser()
   const dispatch = useDispatch()
 
-  dispatch(getAssignments())
-  dispatch(getCourses())
-  dispatch(getAdmins())
-  dispatch(getJtps())
-  dispatch(getStudents())
-  dispatch(getSubmitted())
-  dispatch(getEvaluations())
+  if(user?.hasOwnProperty('course')) {
+    dispatch(getSubmittedByJtp())
+    dispatch(getEvaluationsByJtp())
+    dispatch(getAssignmentsByJtp())
+    dispatch(getStudentsByCourse())
+    dispatch(getCourses())
+  } else {
+    dispatch(getAdmins())
+    dispatch(getJtps())
+    dispatch(getSubmitted())
+    dispatch(getEvaluations())
+    dispatch(getAssignments())
+    dispatch(getCourses())
+    dispatch(getStudents())
+  }
 }
 
 const tryAuthenticateFromLocalStorage = () => {

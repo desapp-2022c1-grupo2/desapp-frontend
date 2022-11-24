@@ -30,6 +30,7 @@ export const usersSlice = createSlice({
     getAdmins(){},
     getJtps(){},
     getStudents(){},
+    getStudentsByCourse(){},
     updateJtp(state, { payload }: PayloadAction<IJtp>){ 
       state.jtps = state.jtps.map( jtp => (jtp.id === payload.id) ? payload : jtp)
     },
@@ -61,6 +62,7 @@ export const {
   getAdmins,
   getJtps,
   getStudents,
+  getStudentsByCourse,
   setAdmins,
   setJtps,
   setStudents,

@@ -58,7 +58,6 @@ export const UpdateJtpModal = () => {
           />
           <CourseSelector
             onChange={handleCourse}
-            defaultValue={course?.id}
             value={course?.id || -1}
           />
         </FieldsRow>

@@ -9,7 +9,6 @@ const StyledPie= styled(PieChart)`
   width: 300px;
 `
 
-
 export const Pie = ({data}: pieProps) => (
   <StyledPie
     height={300}

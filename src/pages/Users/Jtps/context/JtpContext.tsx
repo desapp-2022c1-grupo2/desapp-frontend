@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import { ICourse, IJtp, Jtp } from "@models"
+import { ICourse, Jtp } from "@models"
 import { inputChangeEvent } from "@const"
 import { SelectChangeEvent } from "@mui/material"
 import { selectCourses } from "@src/store"

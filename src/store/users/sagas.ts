@@ -1,6 +1,7 @@
 import {
   call,
   put,
+  select,
   takeLatest,
 } from 'redux-saga/effects'
 
@@ -21,6 +22,7 @@ import {
   setJtps,
   setStudents,
 } from './slice'
+import { RootState } from '..'
 
 function* getJtps() {
   try {
@@ -40,6 +42,17 @@ function* getStudents() {
   }
 }
 
+function* getStudentsByCourse() {
+  try {
+    const jtp: IJtp = yield select((state: RootState) => state.auth.user)
+    const response: IStudent[] = yield call(fetchAllStudents)
+    const students = response.filter(x => x.courses.current.id == jtp.course?.id)
+    yield put(setStudents(students))
+  } catch (err){
+    console.error(err)
+  }
+}
+
 function* getAdmins() {
   try {
     const response: IAdmin[] = yield call(fetchAllAdmins)
@@ -53,4 +66,5 @@ export function* jtpWatcher(){
   yield takeLatest('users/getAdmins', getAdmins)
   yield takeLatest('users/getJtps', getJtps)
   yield takeLatest('users/getStudents', getStudents)
+  yield takeLatest('users/getStudentsByCourse', getStudentsByCourse)
 }

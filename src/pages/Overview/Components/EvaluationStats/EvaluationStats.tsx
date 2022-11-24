@@ -4,7 +4,7 @@ import {
   AssignmentCounterContainer,
   EvaluationStatsContainer
 } from './styles'
-import { selectSubmitted } from '@store'
+import { selectEvaluations, selectSubmitted } from '@store'
 
 interface assignmentCounterProps {
   small?: boolean,
@@ -24,10 +24,9 @@ const AssignmentCounter = ({color, count, label, small, vertical}: assignmentCou
 }
 
 export const EvaluationStats = () => {
-  const total = selectSubmitted()
-
-  const approved = total.filter(x => x.qualification >= 4 && x.qualification !== 0).length
-  const disapproved = total.filter(x => x.qualification < 4 && x.qualification !== 0).length
+  const total = selectEvaluations().map(x => x.variables.reduce((a, b) => a + b, 0))
+  const approved = total.filter(x => x >= 4 && x !== 0).length
+  const disapproved = total.filter(x => x < 4 && x !== 0).length
   const unrated = total.length - approved - disapproved
  
   return (

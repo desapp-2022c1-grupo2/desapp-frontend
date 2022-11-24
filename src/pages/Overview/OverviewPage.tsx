@@ -2,12 +2,34 @@ import React from 'react'
 import { AppLayout, Box, FloatingCard } from '@components'
 import { Cards, EvaluationStats } from './Components'
 import { Pie, Bar } from './Components'
-import pieJson from './Components/Charts/pie.json'
 import barJson from './Components/Charts/bar.json'
 
 import { FullscreenModal } from '@components'
+import { selectEvaluations, selectSubmitted } from '@src/store'
 
 export const OverviewPage = () => {
+  const total = selectEvaluations().map(x => x.variables.reduce((a, b) => a + b, 0))
+
+  const approved = total.filter(x => x >= 4 && x !== 0).length
+  const disapproved = total.filter(x => x < 4 && x !== 0).length
+  const unrated = total.length - approved - disapproved
+
+  const stats = [
+    {
+      id: "Aprobados",
+      label: "Aprobados",
+      value: approved
+    }, {
+      id: "Desaprobados",
+      label: "Desaprobados",
+      value: disapproved
+    }, {
+      id: "Sin Calificar",
+      label: "Sin Calificar",
+      value: unrated
+    }
+  ]
+
   return (
     <AppLayout title='Vista General'>
       <FullscreenModal onClose={function (event: React.MouseEvent<Element, MouseEvent>): void {
@@ -27,7 +49,7 @@ export const OverviewPage = () => {
           width='40%'
           height='348px'
           minWidth='368px'
-          children={<Pie data={pieJson} />}
+          children={<Pie data={stats} />}
         />
         <EvaluationStats />
         <FloatingCard
@@ -36,18 +58,6 @@ export const OverviewPage = () => {
           width='30%'
           height='400px'
         />
-        <Box
-          sx={{
-            width: '100%',
-            backgroundColor: 'var(--unahurWhite)',
-            borderRadius: '20px',
-            margin: '24px',
-            boxShadow: 'var(--box-shadow)',
-            height: '400px',
-          }}
-        >
-          <Bar data={barJson} />
-        </Box>
       </Box>
     </AppLayout>
   )

@@ -20,7 +20,7 @@ export const selectStudents = () => useSelector<RootState, IStudent[]>(state => 
 export const selectAdmins = () => useSelector<RootState, IAdmin[]>(state => state.user.admins)
 export const selectIsAuthenticated = () => useSelector<RootState, boolean | undefined >((state) => state.auth.isAuthenticated)
 export const selectToken = () => useSelector<RootState, string | undefined >((state) => state.auth.token)
-export const selectAuthenticatedUser = () => useSelector<RootState, IUser | undefined >((state) => state.auth.user)
+export const selectAuthenticatedUser = () => useSelector<RootState, IAdmin | IJtp | undefined >((state) => state.auth.user)
 export const selectSidebar = () => useSelector<RootState, boolean >((state) => state.misc.sidebar)
 export const selectRole = () => useSelector<RootState, string>((state) => state.auth.user?.role || '')
 

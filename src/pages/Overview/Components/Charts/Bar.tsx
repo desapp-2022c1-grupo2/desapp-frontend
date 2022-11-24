@@ -13,9 +13,9 @@ export const Bar = ({ data }: barProps) => (
     ]}
     data={data}
     keys={[
-      'approved',
-      'disapproved',
-      'unrated'
+      'menor',
+      'promedio',
+      'mayor'
     ]}
     indexBy="tp"
     margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
@@ -44,7 +44,7 @@ export const Bar = ({ data }: barProps) => (
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      legend: 'Cantidad',
+      legend: 'Nota',
       legendPosition: 'middle',
       legendOffset: -40
     }}

@@ -20,6 +20,7 @@ export const useLogin = () => {
   
   const isEmailEmpty = () => email.length === 0
   const isPassEmpty = () => password.length === 0
+  const isShortPassword = () => password.length < 6
   const isInvalidEmail = () => !email.includes('@')
   
   const clearInputs = () => { 
@@ -56,7 +57,7 @@ export const useLogin = () => {
 
   useEffect(
     () => {
-      (isEmailEmpty() || isInvalidEmail() || isPassEmpty())
+      (isEmailEmpty() || isInvalidEmail() || isShortPassword())
         ? disableSubmitButton()
         : enableSubmitButton()
     },

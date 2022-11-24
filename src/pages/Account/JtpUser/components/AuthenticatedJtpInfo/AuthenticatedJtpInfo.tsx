@@ -6,7 +6,7 @@ import {
 } from '@components'
 import { Jtp } from '@models'
 import { selectAuthenticatedUser } from '@store'
-import { UpdateInfoModal } from '@src/pages/Account/AdminUser/components'
+import { UpdateInfoModal } from '@pages/Account/JtpUser/components/UpdateInfo'
 import {
   Container,
   Content,
@@ -23,16 +23,19 @@ export const AuthenticatedJtpInfo = () => {
       <h4>{jtp.fullName()}</h4>
       <Content>
         <ReadOnlyField
+          fullwidth
           icon={<EmailOutlined />}
           label='Correo'
           text={jtp.email}
         />
         <ReadOnlyField
+          fullwidth
           icon={<PersonOutlined />}
           label='Rol'
           text='Jefe de Trabajos Prácticos'
         />
         <ReadOnlyField
+          fullwidth
           icon={<ClassOutlined />}
           label='Materia'
           text={jtp.course?.name}

@@ -1,14 +1,14 @@
 import React from 'react'
 import { AppLayout } from '@components'
-import { AuthenticatedAdminInfo } from './components'
-import { AuthenticatedAdminProvider } from './context'
+import { AuthenticatedJtpInfo } from './components'
+import { AuthenticatedJtpProvider } from './context'
 
-export const AdminAccountPage = () => {
+export const JtpAccountPage = () => {
   return (
-    <AuthenticatedAdminProvider>
+    <AuthenticatedJtpProvider>
       <AppLayout title='Mi Cuenta'>
-        <AuthenticatedAdminInfo />
+        <AuthenticatedJtpInfo />
       </AppLayout>
-    </AuthenticatedAdminProvider>
+    </AuthenticatedJtpProvider>
   )
 }

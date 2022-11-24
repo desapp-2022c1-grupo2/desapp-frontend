@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { getAssignmentColumns } from "./AssignmentColumns"
-import { CourseSelector, Field, JtpSelector, Table } from '@components'
+import { AssignmentSelector, CourseSelector, Field, JtpSelector, Table } from '@components'
 import { IAssignment, ICourse, IJtp } from '@models'
-import { selectAssignments, selectCourses, selectJtps } from '@store'
+import { selectAssignments, selectCourses, selectJtps, selectRole } from '@store'
 import { AssignmentDetailModal } from "../Modals"
 import { SelectChangeEvent } from "@mui/material"
 
 export const AssignmentTable = () => {
+  const role = selectRole().toLocaleLowerCase()
   const assignments: IAssignment[] = selectAssignments()
   const jtps = selectJtps()
   const courses = selectCourses()
@@ -16,13 +17,21 @@ export const AssignmentTable = () => {
   const [jtp, setJtp] = useState<IJtp>()
 
   useEffect(() => {
-    let assignmentsFiltered = assignments
-    if(course) assignmentsFiltered = assignments.filter(x => x.course?.id === course?.id)
-    if(jtp) assignmentsFiltered = assignments.filter(x => x.jtp?.id === jtp?.id)
+    if(course) {
+      setJtp(undefined)
+      setFiltered(assignments.filter(x => x.course?.id === course?.id))
+    }
     if(value) setValue('')
 
-    setFiltered(assignmentsFiltered)
-  }, [course, jtp])
+  }, [course])
+
+  useEffect(() => {
+    if(jtp) {
+      setCourse(undefined)
+      setFiltered(assignments.filter(x => x.jtp?.id === jtp?.id))
+    }
+    if(value) setValue('')
+  }, [jtp])
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     let value = event.target.value.toString()
@@ -54,7 +63,7 @@ export const AssignmentTable = () => {
         columns={[]}
         handleColumns={getAssignmentColumns}
         search={<Field variant='search' value={value} onChange={onChange} placeholder='Buscar...'/>}
-        filters={
+        filters={ role === 'admin' &&
           <>
             <CourseSelector
               onChange={handleCourse}
