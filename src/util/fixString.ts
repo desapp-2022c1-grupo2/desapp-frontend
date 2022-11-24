@@ -1,4 +1,6 @@
-export const fixString = (x: string): string => x
+export const fixString = (x: string | null | undefined): string => !x
+  ? ''
+  : x
   .replace('&aacute;','á')
   .replace('&eacute;','é')
   .replace('&iacute;','í')
@@ -11,4 +13,8 @@ export const fixString = (x: string): string => x
   .replace('Ã±', 'ñ')
   .replace('í±', 'ñ')
   .replace('Ãº', 'ú')
+  .replace('Â¿', '¿')
+  .replace('Â¡', '¡')
   .replace('Ã', 'í')
+  .replace('í©', 'í')
+  .replace('í³', 'ó')

@@ -18,7 +18,6 @@
     "jsx": "react",
     "paths": {
       "@src/*": ["./src/*"],
-      "@adapters/*": ["./src/adapters/*"],
       "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/components/*"],
       "@models/*": ["./src/models/*"],
@@ -28,10 +27,7 @@
       "@store/*": ["./src/store/*"],
       "@styles/*": ["./src/styles/*"],
       "@util/*": ["./src/util/*"],
-      "@adminPages/*": ["./src/pages/Admin/*"],
-      "@LoginPage/*": ["./src/pages/Login/*"],
       // read index
-      "@adapters": ["./src/adapters/index"],
       "@assets": ["./src/assets/index"],
       "@components": ["./src/components/index"],
       "@const": ["./src/const"],
@@ -42,8 +38,6 @@
       "@store": ["./src/store/index"],
       "@styles": ["./src/styles/index"],
       "@util": ["./src/util/index"],
-      "@adminPages": ["./src/pages/Admin/index"],
-      "@LoginPage": ["./src/pages/Login/index"],
     }
   },
   "include": [

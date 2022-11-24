@@ -1,5 +1,4 @@
 import { createTheme, PaletteColorOptions } from '@mui/material/styles'
-import { devices } from '@src/util/breakpoints';
 import { unahurPalette } from "./unahurPalette"
 
 interface unahurPaletteOptions {
@@ -63,6 +62,14 @@ declare module '@mui/material/IconButton' {
   interface IconButtonPropsColorOverrides extends ColorOverrides {}
 }
 
+declare module '@mui/material/Input' {
+  interface InputPropsColorOverrides extends ColorOverrides {}
+}
+
+declare module '@mui/material/Select' {
+  interface SelectColorOverrides extends ColorOverrides {}
+}
+
 export const theme = createTheme({
   palette: {
     ...unahurPalette,
@@ -108,9 +115,13 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: '12px',
-          //padding: '4px',
+          padding: '8px',
+          height: 'fit-content',
         },
       },
+      defaultProps: {
+        variant: 'outlined',
+      }
     }
   },
 });

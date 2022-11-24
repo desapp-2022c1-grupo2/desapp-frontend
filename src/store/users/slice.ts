@@ -10,7 +10,7 @@ import {
 } from '@models'
 
 interface IUsers {
-  aux?: IUser,
+  filtered?: IAdmin[] | IJtp[] | IStudent[],
   admins: IAdmin[],
   jtps: IJtp[],
   students: IStudent[],
@@ -30,16 +30,23 @@ export const usersSlice = createSlice({
     getAdmins(){},
     getJtps(){},
     getStudents(){},
-    createJtp(state, { payload }: PayloadAction<IJtp>){
-      state.aux = payload
-    },
     updateJtp(state, { payload }: PayloadAction<IJtp>){ 
       state.jtps = state.jtps.map( jtp => (jtp.id === payload.id) ? payload : jtp)
-      state.aux = payload
     },
     deleteJtp(state, { payload }: PayloadAction<IJtp>){
       state.jtps = state.jtps.filter(jtp => jtp.id != payload.id)
-      state.aux = payload
+    },
+    updateStudent(state, { payload }: PayloadAction<IStudent>){ 
+      state.students = state.students.map( x => (x.id === payload.id) ? payload : x)
+    },
+    deleteStudent(state, { payload }: PayloadAction<IStudent>){
+      state.students = state.students.filter(x => x.id != payload.id)
+    },
+    updateAdmin(state, { payload }: PayloadAction<IAdmin>){
+      state.admins = state.admins.map( x => (x.id === payload.id) ? payload : x)
+    },
+    deleteAdmin(state, { payload }: PayloadAction<IAdmin>){
+      state.admins = state.admins.filter(x => x.id != payload.id)
     },
     setAdmins(state, { payload }: PayloadAction<IAdmin[]>) { state.admins = payload },
     setJtps(state, { payload }: PayloadAction<IJtp[]>) { state.jtps = payload },
@@ -48,15 +55,18 @@ export const usersSlice = createSlice({
 })
 
 export const {
+  deleteAdmin,
+  deleteJtp,
+  deleteStudent,
   getAdmins,
   getJtps,
   getStudents,
   setAdmins,
   setJtps,
   setStudents,
-  createJtp,
+  updateAdmin,
   updateJtp,
-  deleteJtp,
+  updateStudent,
 } = usersSlice.actions
 
 export const user = usersSlice.reducer

@@ -67,7 +67,7 @@ export const UserButton = () => {
     >
       <div style={{ display: 'flex', flexDirection: 'column',gap: '8px', padding: '16px'}}>
         <Name>{user.fullName()}</Name>
-        <Role>{user.role === 'admin' ? 'Administrador' : 'Jefe de TP'}</Role>
+        <Role>{user.role?.toLowerCase() === 'admin' ? 'Administrador' : 'Jefe de TP'}</Role>
       </div>
       <MenuItem key='MyAccount' onClick={handleMyAccount}><PersonOutlined /> Mi Cuenta</MenuItem>
       <MenuItem key='logout' onClick={openLogoutModal}><LogoutOutlined /> logout</MenuItem>

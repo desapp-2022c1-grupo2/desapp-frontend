@@ -1,11 +1,14 @@
 import React from 'react'
 import { AppLayout } from "@components"
 import { AssignmentTable } from "../components"
+import { ModalProvider, SelectedProvider } from '../context'
 
-const Content = () => {
+export const AssignmentsPage = () => {
   return (
-    <AssignmentTable />
+    <SelectedProvider>
+      <ModalProvider>
+        <AppLayout title="Trabajos Prácticos" children={<AssignmentTable />} />
+      </ModalProvider>
+    </SelectedProvider>
   )
 }
-
-export const AssignmentsPage = () => <AppLayout title="Trabajos Prácticos" children={<Content />} />

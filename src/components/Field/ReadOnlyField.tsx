@@ -1,19 +1,13 @@
 import React from 'react'
+import { Chip } from '@mui/material'
 import { ReadOnlyFieldProps } from './props'
-import {
-  ReadOnlyFieldContainer,
-  ReadOnlyFieldContent,
-  ReadOnlyFieldLabel,
-} from './styles'
 
-export const ReadOnlyField = ({ text, label, icon}: ReadOnlyFieldProps) => {
+
+export const ReadOnlyField = ({ text, label, ...rest }: ReadOnlyFieldProps) => {
   return (
-    <ReadOnlyFieldContainer>
-      <ReadOnlyFieldLabel>{label}</ReadOnlyFieldLabel>
-      <ReadOnlyFieldContent>
-        {icon}
-        {text}
-      </ReadOnlyFieldContent>
-    </ReadOnlyFieldContainer>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      { label && <label>{label}</label> }
+      <Chip label={text} {...rest} />
+    </div>
   )
 }

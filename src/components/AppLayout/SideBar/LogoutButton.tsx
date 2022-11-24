@@ -6,7 +6,6 @@ import { selectSidebar, setLogoutModal } from '@store'
 export const LogoutButton = () => {
   const open: boolean = selectSidebar()
   const dispatch = useDispatch()
-
   const openLogoutModal = () => { dispatch(setLogoutModal(true)) }
 
   return open

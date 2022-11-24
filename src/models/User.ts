@@ -50,7 +50,13 @@ export class User {
   get name(): IName { return this._name }
   get email(): string { return this._email }
   get role(): string | undefined { return this._role }
-  
+  get firstname(): string { return this.name.first }
+  get lastname(): string { return this.name.last }
+
+  set firstname(firstname: string) { this._name.first = firstname }
+  set lastname(lastname: string) { this._name.last = lastname }
+  set email(email: string) { this._email = email }
+
   get json(): IUser {
     return {
       id: this._id,
@@ -80,15 +86,8 @@ export class UserAdapter extends User {
     super({
       ...rest,
       id: response.id || -1,
-      name: { first: '', last: ''}
+      name: { first: name, last: lastName},
+      role: response.role?.toLocaleLowerCase()
     })
   }
 }
-
-export abstract class UserList {
-  protected users!: User[] | Jtp[] 
-
-  get(): IUser[] {
-    return this.users.map(x => x.json)
-  }
-} 

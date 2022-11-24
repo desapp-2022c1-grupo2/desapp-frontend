@@ -29,14 +29,26 @@ export const selectUpdateAdminModal = () => useSelector<RootState, boolean >((st
 export const selectUpdateStudentModal = () => useSelector<RootState, boolean >((state) => state.modals.student.update)
 export const selectLogoutModal = () => useSelector<RootState, boolean >((state) => state.modals.logout)
 
+export const selectJtpDetailModal = () => useSelector<RootState, boolean >((state) => state.modals.jtp.details)
+export const selectStudentDetailModal = () => useSelector<RootState, boolean >((state) => state.modals.student.details)
+export const selectAssignmentDetailModal = () => useSelector<RootState, boolean >((state) => state.modals.assignment.details)
+
 export const selectDeleteJtpModal = () => useSelector<RootState, boolean >((state) => state.modals.jtp.delete)
 export const selectDeleteAdminModal = () => useSelector<RootState, boolean >((state) => state.modals.admin.delete)
 export const selectDeleteStudentModal = () => useSelector<RootState, boolean >((state) => state.modals.student.delete)
-
 
 export const getJtpSelected = () => useSelector<RootState, IJtp | undefined>((state) => state.modals.jtp.selected)
 export const getAdminSelected = () => useSelector<RootState, IAdmin | undefined>((state) => state.modals.admin.selected)
 export const getStudentSelected = () => useSelector<RootState, IStudent | undefined>((state) => state.modals.student.selected)
 
-export const selectSubmitted = () => useSelector<RootState, ISubmitted[]>((state) => state.assignments.submited)
-export const selectEvaluationsd = () => useSelector<RootState, IEvaluation[]>((state) => state.assignments.evaluations)
+export const selectSubmitted = () => useSelector<RootState, ISubmitted[]>((state) => state.assignments.submitted)
+export const selectEvaluations = () => useSelector<RootState, IEvaluation[]>((state) => state.assignments.evaluations)
+
+export const selectJtpByCourse = (id: number) => useSelector<RootState, IJtp[]>((state) => state.user.jtps.filter(x => x.course?.id == id))
+export const selectJtpBySearch = (value: string) => useSelector<RootState, IJtp[]>(
+  (state) => state.user.jtps.filter(x =>
+    x.name.first.includes(value) ||
+    x.name.last.includes(value) ||
+    x.email.includes(value) ||
+    x.course?.name.includes(value)
+))

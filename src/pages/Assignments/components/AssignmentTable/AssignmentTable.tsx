@@ -1,18 +1,74 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { getAssignmentColumns } from "./AssignmentColumns"
-import { Table } from '@components'
-import { IAssignment } from '@models'
-import { selectAssignments } from '@store'
+import { CourseSelector, Field, JtpSelector, Table } from '@components'
+import { IAssignment, ICourse, IJtp } from '@models'
+import { selectAssignments, selectCourses, selectJtps } from '@store'
+import { AssignmentDetailModal } from "../Modals"
+import { SelectChangeEvent } from "@mui/material"
 
 export const AssignmentTable = () => {
   const assignments: IAssignment[] = selectAssignments()
+  const jtps = selectJtps()
+  const courses = selectCourses()
+  const [value, setValue] = useState<string>('')
+  const [filtered, setFiltered] = useState<IAssignment[]>(assignments)
+  const [course, setCourse] = useState<ICourse>()
+  const [jtp, setJtp] = useState<IJtp>()
+
+  useEffect(() => {
+    let assignmentsFiltered = assignments
+    if(course) assignmentsFiltered = assignments.filter(x => x.course?.id === course?.id)
+    if(jtp) assignmentsFiltered = assignments.filter(x => x.jtp?.id === jtp?.id)
+    if(value) setValue('')
+
+    setFiltered(assignmentsFiltered)
+  }, [course, jtp])
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    let value = event.target.value.toString()
+    setValue(value)
+    value = value.toLocaleLowerCase()
+    let assignmentsFiltered = assignments.filter(x => x.name.toLocaleLowerCase().includes(value))
+
+    if(course) assignmentsFiltered = assignmentsFiltered
+      .filter(x => x.course?.name === course?.name)
+
+    if(jtp) assignmentsFiltered = assignmentsFiltered
+      .filter(x => x.jtp?.id === jtp.id)
+
+    setFiltered(assignmentsFiltered)
+  }
+
+  const handleCourse = (event: SelectChangeEvent<unknown>) => {
+    setCourse(courses.find(x => x.id === event.target.value as number))
+  }
+
+  const handleJtp = (event: SelectChangeEvent<unknown>) => {
+    setJtp(jtps.find(x => x.id === event.target.value as number))
+  }
 
   return (
-    <Table
-      columns={[]}
-      handleColumns={getAssignmentColumns}
-      loading={!assignments.length}
-      rows={assignments}
-    />
+    <>
+      <AssignmentDetailModal />
+      <Table
+        columns={[]}
+        handleColumns={getAssignmentColumns}
+        search={<Field variant='search' value={value} onChange={onChange} placeholder='Buscar...'/>}
+        filters={
+          <>
+            <CourseSelector
+              onChange={handleCourse}
+              value={course?.id || -1}
+            />
+            <JtpSelector
+              onChange={handleJtp}
+              value={jtp?.id || -1}
+            />
+          </>
+        }
+        loading={!assignments.length}
+        rows={(!!value || course || jtp) ? filtered : assignments}
+      />
+    </>
   )
 }

@@ -2,10 +2,13 @@ import {
   IAssignment,
   AssignmentAdapter,
   IAssignmentResponse,
+  ICourse,
   IStudent,
   StudentAdapter,
   IStudentResponse,
+  IJtp,
 } from '@models'
+import { fixString } from '@src/util'
 
 export interface ISubmittedResponse {
   assignment: IAssignmentResponse | null,
@@ -23,9 +26,11 @@ export interface ISubmittedResponse {
 }
 
 export interface ISubmitted {
-  id: number,
   assignment?: IAssignment,
   student?: IStudent,
+  jtp?: IJtp,
+  course?: ICourse,
+  id: number,
   members: number[],
   tags: string[],
   public: boolean,
@@ -41,7 +46,24 @@ export class Submitted {
   private submitted: ISubmitted
 
   constructor(submitted: ISubmitted) {
-    this.submitted = submitted
+      const { assignment } = submitted
+      
+      if (assignment) {
+        let _submitted = submitted
+        const {
+          course,
+          jtp,
+          ..._assignment
+        } = assignment
+
+        if (_assignment) _submitted.assignment = _assignment
+        if (!submitted.course) _submitted.course = course
+        if (!submitted.jtp) _submitted.jtp = jtp
+
+        this.submitted = _submitted
+      } else {
+        this.submitted = submitted
+      }
   }
 
   get date(): string {
@@ -63,7 +85,7 @@ export class SubmittedAdapter extends Submitted{
       date: new Date(response.dataSubmitted),
       qualification: parseFloat(response.qualification),
       average: response.average,
-      reflections: response.reflections,
+      reflections: fixString(response.reflections),
       studentPublic: response.studentPublic === 1,
       student: response.student ? new StudentAdapter(response.student).json : undefined
     })

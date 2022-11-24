@@ -6,11 +6,10 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   publicDir: "public",
-  server:{port: 3002},
+  server: { port: parseInt(process.env.PORT || '3002') },
   resolve: {
     alias: [
       { find: '@src', replacement: path.resolve(__dirname, 'src') },
-      { find: '@adapters', replacement: path.resolve(__dirname, 'src/adapters') },
       { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
       { find: '@const', replacement: path.resolve(__dirname, 'src/const')},
       { find: '@components', replacement: path.resolve(__dirname, 'src/components') },
@@ -20,10 +19,7 @@ export default defineConfig({
       { find: '@store', replacement: path.resolve(__dirname, 'src/store') },
       { find: '@styles', replacement: path.resolve(__dirname, 'src/styles') },
       { find: '@util', replacement: path.resolve(__dirname, 'src/util') },
-      //pages
       { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') },
-      { find: '@adminPages', replacement: path.resolve(__dirname, 'src/pages/Admin') },
-      { find: '@LoginPage', replacement: path.resolve(__dirname, 'src/pages/Login') },
     ],
   },
 })

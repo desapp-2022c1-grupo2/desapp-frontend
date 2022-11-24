@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { ModalProps } from './props'
-import { GoToBack } from '@components/GoTo'
+import { Button, ButtonProps } from '@components'
 import {
   Backdrop,
   ModalContainer,
@@ -9,6 +9,13 @@ import {
   ModalFooter,
   ModalHeader,
 } from './styles'
+import { CloseOutlined } from '@mui/icons-material'
+
+export const CloseButton = (props: ButtonProps) => (
+  <Button color='unahurBlack' sx={{ width: 'fit-content' }}{...props}>
+    <CloseOutlined />
+  </Button>
+)
 
 export const Modal = ({
   children,
@@ -38,10 +45,10 @@ export const Modal = ({
       <Backdrop onClick={onClose} />
       <ModalContainer>
         <ModalHeader>
-          <GoToBack onClick={onClose} text="Volver"/>
+          { title && <h4>{title}</h4> }
+          <CloseButton onClick={onClose} />
         </ModalHeader>
         <ModalContent>
-          { title && <h4>{title}</h4> }
           {children}
         </ModalContent>
         { footer && <ModalFooter>{footer}</ModalFooter> }

@@ -6,11 +6,12 @@ import {
   ICourse,
   IJtp,
 } from "@models"
+import { fixString } from "@src/util"
 
 export interface IAssignment {
+  course?: ICourse,
+  jtp?: IJtp,
   id: number,
-  course: ICourse,
-  jtp: IJtp,
   description: {
     short: string,
     long: string,
@@ -32,8 +33,8 @@ export interface IAssignment {
 
 export interface IAssignmentResponse {
   id: number,
-  jtp: IJtpResponse,
-  course: ICourseResponse,
+  jtp: IJtpResponse | null,
+  course: ICourseResponse | null,
   number: number,
   name: string,
   url: string,
@@ -87,24 +88,32 @@ export class AssignmentAdapter extends Assignment {
       var1, var2, var3, var4, var5,
       status,
       individualProcess,
+      name,
       ...rest
     } = assignment
     
     super({
       ...rest,
-      course: new CourseAdapter(course).json,
-      jtp: new JtpAdapter(jtp).json,
+      name: fixString(name),
+      course: course ? new CourseAdapter(course).json : undefined,
+      jtp: jtp ? new JtpAdapter(jtp).json : undefined,
       date: {
         start: new Date(startDate),
         end: new Date(endDate),
       },
       description: {
-        short: shortDescr,
-        long: description,
-        task: taskDescription,
+        short: fixString(shortDescr),
+        long: fixString(description),
+        task: fixString(taskDescription),
       },
       individualProcess: individualProcess === 1,
-      variables: [var1, var2, var3, var4, var5],
+      variables: [
+        fixString(var1),
+        fixString(var2),
+        fixString(var3),
+        fixString(var4),
+        fixString(var5)
+      ],
       status: status === 1,
 
     })

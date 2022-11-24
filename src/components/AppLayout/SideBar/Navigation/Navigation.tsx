@@ -31,12 +31,12 @@ export const Navigation = () => {
             icon: <ListAltOutlined />,
             to: paths.assignments.list,
             label: 'Lista de TPs',
-          //}, {
+          }, {
           //  icon: <AssessmentOutlined />,
           //  to: paths.assignments.stats,
           //  label: 'Estadísticas',
           //  tooltip: 'Estadísticas',
-          }, {
+          //}, {
             icon: <AssignmentTurnedInOutlined />,
             to: paths.assignments.evaluations,
             label: 'Entregas',

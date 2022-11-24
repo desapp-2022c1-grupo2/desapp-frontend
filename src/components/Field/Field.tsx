@@ -8,9 +8,9 @@ import {
 
 export const Field = ({ label, ...props}: FieldProps) => {
   return (
-    <FieldContainer className={props.className}>
+    <FieldContainer style={{ width: props.fullWidth ? '100%' : '' }}>
       <FieldLabel htmlFor={props.id || ''}>{label}</FieldLabel>
-      <Input className='' {...props}/>
+      <Input {...props}/>
     </FieldContainer>
   )
 }

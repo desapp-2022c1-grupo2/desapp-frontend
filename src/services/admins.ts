@@ -1,11 +1,11 @@
 import axios from "@util/axios"
-import { IAdmin } from "@models"
+import { Admin, AdminAdapter, IAdmin, IAdminResponse } from "@models"
 
-export const getAllAdmins = async (): Promise<IAdmin[]> => {
+export const fetchAllAdmins = async (): Promise<IAdmin[]> => {
   try {
     const response = await axios.get('/admin')
-    const adminList: IAdmin[] = await Promise.resolve(response.data)
-    return adminList
+    const data: IAdminResponse[] = await Promise.resolve(response.data)
+    return data.map(x => (new AdminAdapter(x).json))
   } catch (err) {
     console.error(err)
     return []
@@ -15,16 +15,22 @@ export const getAllAdmins = async (): Promise<IAdmin[]> => {
 export const getAdmin = async (id: number): Promise<IAdmin | undefined> => {
   try {
     const response = await axios.get(`/admin/${id}`)
-    const admin: IAdmin = await Promise.resolve(response.data)
-    return admin
+    const admin: IAdminResponse = await Promise.resolve(response.data)
+    return new AdminAdapter(admin).json
   } catch (err) {
     console.error(err)
   }
 }
 
-export const createAdmin = async (newAdmin: IAdmin) => {
+export const postAdmin = async (admin: IAdmin) => {
   try {
-    const response = await axios.post('/admin', newAdmin)
+    const response = await axios.post(
+      '/admin',
+      {
+        ...(new Admin(admin).makeRequest()),
+        password: 'administrador'
+      }
+    )
     return Promise.resolve(response.data)
   } catch (err) {
     console.error(err)
@@ -35,7 +41,7 @@ export const updateAdmin = async (admin: IAdmin) => {
   try {
     const response = await axios.patch(
       `/admin/${admin.id}`,
-      admin,
+      new Admin(admin).makeRequest(),
     )
     return Promise.resolve(response.data)
   } catch (err) {
@@ -45,7 +51,7 @@ export const updateAdmin = async (admin: IAdmin) => {
 
 export const deleteAdmin = async (admin: IAdmin) => {
   try {
-    const response = await axios.delete(`/jtp/${admin.id}`)
+    const response = await axios.delete(`/admin/${admin.id}`)
     return Promise.resolve(response.data)
   } catch (err) {
     console.error(err)

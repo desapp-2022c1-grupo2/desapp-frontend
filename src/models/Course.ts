@@ -1,3 +1,5 @@
+import { fixString } from "@src/util"
+
 export interface ICourseResponse {
   id: number,
   isPreviousCourse: number,
@@ -40,7 +42,7 @@ export class CourseAdapter extends Course {
   constructor(course: ICourseResponse){
     super({
       id: course.id,
-      name: course.name,
+      name: fixString(course.name),
       parent: course.parentCourse ? course.parentCourse : undefined,
       year: course.year ? course.year : undefined,
       isPreviousCourse: course.isPreviousCourse !== 0,

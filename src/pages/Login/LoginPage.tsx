@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React from 'react'
 import logo from '@assets/LogoUnahur.svg'
-import { setCredentials, login } from '@store'
-import { verifyCredentials } from '@services'
 import {
-  CredentialsError,
   SubmitButton,
   LoginContainer,
   LoginField,
@@ -12,57 +8,21 @@ import {
   Logo,
   Title,
 } from './styles'
+import { Alert } from '@components'
+import { useLogin } from './hooks'
 
 export const LoginPage = () => {
-  const dispatch = useDispatch()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [isSubmitButtonIsEnabled, setSubmitButton] = useState(false)
-  const [isThereCredentialError, setCredentialError] = useState(false)
-
-  const enableSubmitButton = () => { setSubmitButton(true) }
-  const disableSubmitButton = () => { setSubmitButton(false) }
-  const disableCredentialError = () => {setCredentialError(false) }
-  const enableCredentialError = () => {setCredentialError(true) }
-  const isEmailEmpty = () => email.length === 0
-  const isPassEmpty = () => password.length === 0
-  const clearInputs = () => { 
-    setEmail('')
-    setPassword('')
-  }
-
-  useEffect(
-    () => {
-      (isEmailEmpty() || isPassEmpty())
-        ? disableSubmitButton()
-        : enableSubmitButton()
-    },
-    [email, password]
-  )
-
-  const emailListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setEmail(event.currentTarget.value)
-    if(!isEmailEmpty()) { disableCredentialError() }
-  }
-  
-  const passwordListener = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setPassword(event.currentTarget.value)
-    if(!isPassEmpty()) { disableCredentialError() }
-  }
-
-  const handleLogin = async () => {
-    const isVerifiedUser = await verifyCredentials({ email, password })
-    if (isVerifiedUser) {
-      dispatch(setCredentials({ email, password }))
-      dispatch(login())
-    } else {
-      enableCredentialError()
-    }
-    clearInputs()
-  }
+  const {
+    email, handleEmail,
+    password, handlePassword,
+    keyUpPressLogin,
+    tryAuthenticate,
+    isThereCredentialError,
+    isSubmitButtonIsEnabled,
+  } = useLogin()
 
   return (
-    <LoginLayout onKeyUp={(e) => { if (isSubmitButtonIsEnabled && e.key === 'Enter') handleLogin()}} >
+    <LoginLayout onKeyUp={keyUpPressLogin} >
       <LoginContainer>
         <Logo src={logo} alt="logo-unahur"/>
         <Title>Ingresá a tu cuenta</Title>
@@ -71,20 +31,24 @@ export const LoginPage = () => {
           value={email}
           variant='email'
           placeholder='Ingresá tu correo'
-          onChange={emailListener}
+          onChange={handleEmail}
           />
         <LoginField
           label='Contraseña'
           value={password}
           variant='password'
           placeholder='Ingresá tu contraseña'
-          onChange={passwordListener}
+          onChange={handlePassword}
           />
-          { isThereCredentialError && <CredentialsError>Email o contraseña incorrectos</CredentialsError> }
+        <Alert
+          enable={isThereCredentialError}
+          severity='error'
+          text='Email o contraseña incorrectos'
+        />
         <SubmitButton
           disabled={!isSubmitButtonIsEnabled}
           color='unahurGreen'
-          onClick={handleLogin}
+          onClick={tryAuthenticate}
           variant='contained'
           text='Ingresar'
         />

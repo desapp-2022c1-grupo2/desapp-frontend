@@ -30,22 +30,24 @@ export const FullscreenModalContainer = styled.div`
   flex-direction: column;
   height: 100vh;
   text-align: center;
+  padding: 0 40px;
   width: 100%;
   z-index: 1301;
 `
 
 export const ModalContainer = styled(FullscreenModalContainer)`
-  align-items: space-evenly;
+  align-items: align-items;
   justify-content: space-evenly;
-  padding: 0 16px;
+  padding: 24px;
   
   ${devices.tablet} {
     justify-content: space-between;
     border-radius: 20px;
-    padding: 0 80px;
-    height: 600px;
+    max-height: 90vh;
+    padding: 40px;
+    height: auto;
     text-align: left;
-    width: 900px;
+    width: fit-content;
   }
 `
 
@@ -70,6 +72,12 @@ export const SmallModalContent = styled.div`
 export const ModalContent = styled.div`
   height: 100%;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 0;
+  max-width: 1200px;
 `
 
 export const ModalFooter = styled.div`
@@ -78,13 +86,14 @@ export const ModalFooter = styled.div`
   flex-wrap: wrap;
   gap: 0;
   justify-content: center;
-  padding: 24px 0;
+  padding: 16px 0;
   width: 100%;
 `
 
 export const ModalHeader = styled.div`
   align-items: center;
   display: flex;
-  justify-content: space-beetwen;
-  padding: 40px 0;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
 `

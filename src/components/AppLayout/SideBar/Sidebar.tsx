@@ -14,7 +14,7 @@ export const Sidebar = () => {
   const isSidebarOpen: boolean = selectSidebar()
   
   return (
-    <SidebarContainer isSidebarOpen={isSidebarOpen}>
+    <SidebarContainer>
       <CrossButton />
       <ToggleSidebar />
       { isSidebarOpen ? <Isologo /> : <Logo /> }

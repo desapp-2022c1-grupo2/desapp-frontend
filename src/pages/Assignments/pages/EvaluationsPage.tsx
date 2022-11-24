@@ -1,5 +1,14 @@
 import React from 'react'
 import { AppLayout } from "@components"
-import { SubmittedTable } from "../components"
+import { EvaluationTable } from "../components"
+import { SelectedProvider, ModalProvider } from '../context'
 
-export const EvaluationsPage = () => <AppLayout title="Evaluaciones" children={<SubmittedTable />} />
+export const EvaluationsPage = () => {
+  return (
+    <SelectedProvider>
+      <ModalProvider>
+        <AppLayout title="Evaluaciones" children={<EvaluationTable />} />
+      </ModalProvider>
+    </SelectedProvider>
+  )
+}

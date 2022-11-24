@@ -30,7 +30,7 @@ export const fetchJtp = async (id: number): Promise<IJtp | undefined> => {
 export const postJtp = async (newJtp: IJtp) => {
   try {
     const jtp: Jtp = new Jtp(newJtp) 
-    const response = await axios.post('/jtp', jtp.makeRequest())
+    const response = await axios.post('/jtp', { ...(jtp.makeRequest()), pasword: 'unahurjtp' })
     return Promise.resolve(response.data)
   } catch (err) {
     console.error(err)

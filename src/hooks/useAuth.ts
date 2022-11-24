@@ -3,6 +3,7 @@ import {
   getAdmins,
   getAssignments,
   getCourses,
+  getEvaluations,
   getJtps,
   getStudents,
   getSubmitted,
@@ -21,9 +22,10 @@ const updateStore = () => {
   dispatch(getJtps())
   dispatch(getStudents())
   dispatch(getSubmitted())
+  dispatch(getEvaluations())
 }
 
-const tryLoginFromLocalStorage = () => {
+const tryAuthenticateFromLocalStorage = () => {
   const dispatch = useDispatch()
   const user = localStorage.getItem("user")
   const token = localStorage.getItem("token")
@@ -39,7 +41,7 @@ export const useAuth = () => {
   const token = selectToken()
 
   if (token) { updateStore() }
-  else { tryLoginFromLocalStorage() }
+  else { tryAuthenticateFromLocalStorage() }
 
   return !!token
 }

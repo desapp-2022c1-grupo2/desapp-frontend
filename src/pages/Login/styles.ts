@@ -22,13 +22,13 @@ export const LoginContainer = styled.div`
 `
 
 export const Title = styled.h4`
- font-weight: 700;
- margin: 16px auto;
+  font-weight: 700;
+  margin: 16px auto;
 `
 
 export const LoginField = styled(Field)`
-margin: 8px 0;
-width: 100%;
+  margin: 8px 0;
+  width: 100%;
 `
 
 export const SubmitButton = styled(Button)`
@@ -40,10 +40,4 @@ export const SubmitButton = styled(Button)`
 export const Logo = styled.img`
   height: 112px;
   width: 102px;
-`
-
-export const CredentialsError = styled.p`
-  color: var(--unahurRed);
-  font-size: 1rem;
-  margin: 8px auto;
 `

@@ -1,5 +1,4 @@
 import React from 'react'
-import { AppLayout } from '@components'
-import { AccountContent } from './components'
+import { AdminAccountPage } from './AdminUser'
 
-export const AccountPage = () => <AppLayout title='Mi Cuenta' children={<AccountContent />}/>
+export const AccountPage = () => <AdminAccountPage />

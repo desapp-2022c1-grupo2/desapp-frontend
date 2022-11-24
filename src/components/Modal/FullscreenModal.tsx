@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { ModalProps } from './props'
-import { GoToBack } from '@components/GoTo'
+import { Button } from '@components'
 import {
   Backdrop,
   FullscreenModalContainer,
@@ -9,20 +9,28 @@ import {
   ModalFooter,
   ModalHeader,
 } from './styles'
+import { CloseOutlined } from '@mui/icons-material'
+import { ButtonProps } from '@mui/material'
 
-export const Modal = ({
+export const CloseButton = (props: ButtonProps) => (
+  <Button color='unahurBlack' {...props}>
+    <CloseOutlined />
+  </Button>
+)
+
+export const FullscreenModal = ({
   children,
   footer,
   open,
   onClose,
   title,
   ...props
-} : ModalProps ) => {
+}: ModalProps) => {
   const setupModal = () => {
-    if(props.className) {
+    if (props.className) {
       const allModals = document.getElementsByClassName(props.className)
       const root = document.getElementById('root')
-      for(let modal of allModals) {
+      for (let modal of allModals) {
         root && root.append(modal)
       }
     }
@@ -38,13 +46,13 @@ export const Modal = ({
       <Backdrop onClick={onClose} />
       <FullscreenModalContainer>
         <ModalHeader>
-          <GoToBack onClick={onClose} text="Volver"/>
+          {title && <h4>{title}</h4>}
+          <CloseButton onClick={onClose} />
         </ModalHeader>
         <ModalContent>
-          { title && <h4>{title}</h4> }
           {children}
         </ModalContent>
-        { footer && <ModalFooter>{footer}</ModalFooter> }
+        {footer && <ModalFooter>{footer}</ModalFooter>}
       </FullscreenModalContainer>
     </ModalDialog>
   )

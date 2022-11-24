@@ -6,8 +6,9 @@ import {
   IUser,
   IUserResponse,
   User,
-  UserList,
 } from "@models"
+import { deleteJtp, patchJtp } from "@src/services"
+import { fixString } from "@src/util"
 
 export interface IJtp extends IUser { course?: ICourse, }
 
@@ -35,7 +36,10 @@ export class Jtp extends User {
   }
   
   get course(): ICourse | undefined { return this._course }
+  set course(course: ICourse | undefined) { this._course = course }
   get json(): IJtp { return { ...super.json, course: this._course } }
+  async delete(): Promise<any> { return deleteJtp(this._id || -1) }
+  async patch(): Promise<any> { return patchJtp(this.json) }
 
   makeRequest(): IJtpResponse {
     return {
@@ -52,15 +56,7 @@ export class JtpAdapter extends Jtp {
     super({
       ...rest,
       course: course ? new CourseAdapter(course).json : undefined,
-      id: response.id,
-      name: { first: name, last: lastName }
+      name: { first: fixString(name), last: fixString(lastName) }
     })
-  }
-}
-
-export class JtpList extends UserList {
-  constructor(jtps: IJtp[]) {
-    super()
-    this.users = jtps.map(x => new Jtp(x))
   }
 }

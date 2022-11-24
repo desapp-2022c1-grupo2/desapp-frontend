@@ -6,13 +6,13 @@ import { IAssignment, IEvaluation, ISubmitted } from '@models'
 
 interface IState {
   all: IAssignment[],
-  submited: ISubmitted[],
+  submitted: ISubmitted[],
   evaluations: IEvaluation[],
 }
 
 const initialState: IState = {
   all: [],
-  submited: [],
+  submitted: [],
   evaluations: [],
 }
 
@@ -22,7 +22,12 @@ export const assignmentsSlice = createSlice({
   reducers: {
     getSubmitted(){},
     setSubmitted(state, { payload }: PayloadAction<ISubmitted[]>) {
-      state.submited = payload
+      state.submitted = payload
+    },
+    
+    getEvaluations(){},
+    setEvaluations(state, { payload }: PayloadAction<IEvaluation[]>) {
+      state.evaluations = payload
     },
     getAssignments(){},
     setAssignments(state, { payload }: PayloadAction<IAssignment[]>) {
@@ -34,6 +39,8 @@ export const assignmentsSlice = createSlice({
 export const {
   getAssignments,
   setAssignments,
+  getEvaluations,
+  setEvaluations,
   getSubmitted,
   setSubmitted,
 } = assignmentsSlice.actions
