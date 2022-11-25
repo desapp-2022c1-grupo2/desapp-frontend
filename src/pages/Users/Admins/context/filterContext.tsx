@@ -56,7 +56,6 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
     setFirstname(admin.firstname)
     setLastname(admin.lastname)
     setEmail(admin.email)
-    console.log(admin, '/', selected)
   }
 
   const unselect = () => {

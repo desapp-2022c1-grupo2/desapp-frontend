@@ -12,6 +12,7 @@ const LoginRoutes = () => (
   <BrowserRouter>
     <Routes>
       <Route {...routes.login}/>
+      <Route {...routes.passwordReset}/>
       <Route path='/*' element={<Navigate to='/login' />} />
     </Routes>
   </BrowserRouter>
@@ -32,6 +33,7 @@ const AppRoutes = () => (
       <Route {...routes.users.admins} />
       <Route {...routes.users.jtps} />
       <Route {...routes.users.students} />
+      <Route {...routes.passwordReset}/>
     </Routes>
   </BrowserRouter>
 )
