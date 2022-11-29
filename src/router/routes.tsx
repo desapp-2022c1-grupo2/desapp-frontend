@@ -16,7 +16,7 @@ export const paths = {
   account: '/account',
   overview: '/overview',
   login: '/login',
-  passwordReset: '/passwordReset/:resetId',
+  passwordReset: '/:role/validateReset/:resetId',
   assignments: {
     list: '/assignments/list',
     stats: '/assignments/stats',

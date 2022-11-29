@@ -1,9 +1,9 @@
 import axios from "@util/axios"
 
 
-export const passwordReset = async(resetId: any, password: any) => {
+export const passwordReset = async (resetId: any, password: any, role: string | undefined) => {
   try {
-    const response = await axios.post(`/passwordReset/validate/${resetId}`, {
+    const response = await axios.patch(`/${role}/validateReset/${resetId}`, {
       password: password
     })
     return Promise.resolve(response.data)

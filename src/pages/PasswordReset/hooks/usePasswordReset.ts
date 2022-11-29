@@ -3,7 +3,7 @@ import { verifyCredentials } from "@services"
 import { login, setCredentials } from "@store"
 import { useEffect, useState } from "react"
 import {passwordReset} from "@services/passwordReset";
-import {useParams} from "react-router-dom";
+import {useParams, useRoutes} from "react-router-dom";
 
 
 export const usePasswordReset = () => {
@@ -13,7 +13,7 @@ export const usePasswordReset = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [isSubmitButtonIsEnabled, setSubmitButton] = useState(false)
   const [isThereCredentialError, setCredentialError] = useState(false)
-  const {resetId} = useParams();
+  const {resetId, role} = useParams();
 
   const enableSubmitButton = () => { setSubmitButton(true) }
   const disableSubmitButton = () => { setSubmitButton(false) }
@@ -40,12 +40,12 @@ export const usePasswordReset = () => {
     if(!isConfirmPassEmpty() && arePasswordEquals()) { disableCredentialError() }
   }
 
-  const keyUpPressLogin = (event: React.KeyboardEvent<HTMLElement>) => {
-    if (isSubmitButtonIsEnabled && event.key === 'Enter') tryPasswordReset()
+  const keyUpPressLogin = async (event: React.KeyboardEvent<HTMLElement>) => {
+    if (isSubmitButtonIsEnabled && event.key === 'Enter') await tryPasswordReset()
   }
 
   const tryPasswordReset = async () => {
-    await passwordReset(resetId, confirmPassword)
+    role === "jtp" || role === "admin" ? await passwordReset(resetId, confirmPassword, role) : enableCredentialError();
     clearInputs()
   }
 
