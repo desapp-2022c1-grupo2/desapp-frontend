@@ -34,8 +34,6 @@ export function getAdminColumns(): GridColDef[] {
       disableColumnMenu: true,
       renderCell: (params) => {
         const admin = new Admin(params.row)
-        console.table(admin)
-  
         const handleUpdate = () => {
           select(admin)
           openUpdate()

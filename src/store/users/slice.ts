@@ -48,6 +48,10 @@ export const usersSlice = createSlice({
     deleteAdmin(state, { payload }: PayloadAction<IAdmin>){
       state.admins = state.admins.filter(x => x.id != payload.id)
     },
+    resetPassword(state, { payload }: PayloadAction<IJtp>){
+      state.jtps = state.jtps.filter(jtp => jtp.id != payload.id)
+      state.aux = payload
+    },
     setAdmins(state, { payload }: PayloadAction<IAdmin[]>) { state.admins = payload },
     setJtps(state, { payload }: PayloadAction<IJtp[]>) { state.jtps = payload },
     setStudents(state, { payload }: PayloadAction<IStudent[]>) { state.students = payload },
@@ -67,6 +71,7 @@ export const {
   updateAdmin,
   updateJtp,
   updateStudent,
+  resetPassword,
 } = usersSlice.actions
 
 export const user = usersSlice.reducer

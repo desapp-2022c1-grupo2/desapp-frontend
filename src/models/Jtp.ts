@@ -9,6 +9,7 @@ import {
 } from "@models"
 import { deleteJtp, patchJtp } from "@src/services"
 import { fixString } from "@src/util"
+import {resetPasswordForUser} from "@services/passwordReset";
 
 export interface IJtp extends IUser { course?: ICourse, }
 
@@ -40,6 +41,7 @@ export class Jtp extends User {
   get json(): IJtp { return { ...super.json, course: this._course } }
   async delete(): Promise<any> { return deleteJtp(this._id || -1) }
   async patch(): Promise<any> { return patchJtp(this.json) }
+  async resetPassword(): Promise<any> { await resetPasswordForUser(this.email, "JTP", this.id) }
 
   makeRequest(): IJtpResponse {
     return {
