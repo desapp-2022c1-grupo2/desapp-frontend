@@ -10,6 +10,7 @@ import {
 import { useUpdateJtp } from '@pages/Users/Jtps/hooks'
 import { FieldsRow } from './styles'
 import { JtpContext, ModalContext } from '../../context'
+import { PasswordResetButton } from '../PasswordResetButton'
 
 export const UpdateJtpModal = () => {
   const { isOpenUpdate } = useContext(ModalContext)
@@ -61,6 +62,7 @@ export const UpdateJtpModal = () => {
             value={course?.id || -1}
           />
         </FieldsRow>
+        <PasswordResetButton />
         <Alert severity='error' enable={isFormUncompleted}>Completa todos los campos</Alert>
       </Modal>
     </>

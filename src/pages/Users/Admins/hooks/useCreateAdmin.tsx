@@ -26,11 +26,11 @@ export const useCreateAdmin = () => {
     unselect()
   }
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (isFormUncompleted) return
     const admin = getAdmin()
 
-    enableAlert(admin)
+    await enableAlert(admin)
     handleClose()
   }
 

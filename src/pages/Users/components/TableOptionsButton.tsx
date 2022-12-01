@@ -1,17 +1,17 @@
 import React, { MouseEventHandler, useState } from "react"
-import { Button, DeleteOutlined, EditOutlined, MoreVert } from "@components"
+import { Button, DeleteOutlined, EditOutlined, MoreVert, SchoolOutlined } from "@components"
 import { Menu, MenuItem } from "@mui/material"
 
 interface actionsButtonMenuProps {
   handleUpdate?: MouseEventHandler<HTMLLIElement>,
   handleDelete?: MouseEventHandler<HTMLLIElement>,
-  handleView?: MouseEventHandler<HTMLLIElement>,
+  handleDetail?: MouseEventHandler<HTMLLIElement>,
 }
 
 export const TableOptionsButton = ({
   handleUpdate,
   handleDelete,
-  handleView,
+  handleDetail,
 }: actionsButtonMenuProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
@@ -29,8 +29,8 @@ export const TableOptionsButton = ({
     setAnchorEl(null)
   }
 
-  const openView = (event: React.MouseEvent<HTMLLIElement>) => {
-    if(handleView) handleView(event)
+  const openDetail = (event: React.MouseEvent<HTMLLIElement>) => {
+    if(handleDetail) handleDetail(event)
     setAnchorEl(null)
   }
 
@@ -60,7 +60,7 @@ export const TableOptionsButton = ({
     >
       { handleUpdate && <MenuItem onClick={openUpdate} key='update'><EditOutlined sx={{margin: '8px'}} /> Editar</MenuItem> }
       { handleDelete && <MenuItem onClick={openDelete} key='delete'><DeleteOutlined sx={{margin: '8px'}}/> Eliminar</MenuItem> }
-      { handleView && <MenuItem onClick={openView} key='more'><MoreVert sx={{margin: '8px'}}/> Ver más</MenuItem> }
+      { handleDetail && <MenuItem onClick={openDetail} key='detail'><SchoolOutlined sx={{margin: '8px'}}/> Ver más</MenuItem> }
     </Menu>
   </>
   )

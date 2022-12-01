@@ -1,5 +1,6 @@
 import { deleteAdmin, updateAdmin } from "@src/services"
 import { IUser, IUserResponse, User, UserAdapter } from "./User"
+import {resetPasswordForUser} from "@services/passwordReset";
 
 export interface IAdmin extends IUser{}
 
@@ -23,6 +24,7 @@ export class Admin extends User {
 
   async delete(): Promise<any> { deleteAdmin(this.json) }
   async patch(): Promise<any> { updateAdmin(this.json) }
+  async resetPassword(): Promise<any> { await resetPasswordForUser(this.email, "ADMIN", this.id) }
 }
 
 export class AdminAdapter extends UserAdapter {

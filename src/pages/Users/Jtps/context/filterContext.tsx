@@ -65,7 +65,6 @@ export const JtpProvider = ({ children }: { children: ReactNode }) => {
     setLastname(jtp.lastname)
     setEmail(jtp.email)
     setCourse(jtp.course)
-    console.log(jtp, '/', selected)
   }
 
   const unselect = () => {

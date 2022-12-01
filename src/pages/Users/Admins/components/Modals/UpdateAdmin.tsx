@@ -9,6 +9,7 @@ import {
 } from '@pages/Users/components'
 import { useUpdateAdmin } from '@pages/Users/Admins/hooks'
 import { AdminContext, ModalContext } from '../../context'
+import { PasswordResetButton } from "../PasswordResetButton";
 
 export const UpdateAdminModal = () => {
   const { isOpenUpdate } = useContext(ModalContext)
@@ -31,7 +32,7 @@ export const UpdateAdminModal = () => {
         className='modalEditAdmin'
         onClose={handleClose}
         open={isOpenUpdate}
-        title='Editar Jefe de trabajos Practicos'
+        title='Editar administrador'
         footer={<UpdateButton disabled={isFormUncompleted} onClick={handleUpdate} />}
       >
         <FirstnameField
@@ -50,6 +51,7 @@ export const UpdateAdminModal = () => {
           onChange={handleEmail}
           value={email}
         />
+        <PasswordResetButton />
         <Alert severity='error' enable={isFormUncompleted}>Completa todos los campos</Alert>
       </Modal>
     </>

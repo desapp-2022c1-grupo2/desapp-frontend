@@ -1,11 +1,9 @@
 import React, { useContext } from 'react'
 import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
-import { updateAdmin } from '@store'
 import { AdminContext, ModalContext } from '@pages/Users/Admins/context'
+import { Admin } from '@src/models'
 
-export const useUpdateAdmin = () => {
-  const dispatch = useDispatch()
+export const usePasswordResetAdmin = () => {
   const { closeUpdate } = useContext(ModalContext)
 
   const {
@@ -19,27 +17,26 @@ export const useUpdateAdmin = () => {
     unselect()
   }
 
-  const handleUpdate = async () => {
+  const handlePasswordReset = async () => {
     if (isFormUncompleted) return
     await enableAlert()
     handleClose()
   }
 
   const enableAlert = async () => {
-    const admin = getAdmin()
+    const admin: Admin = getAdmin();
     await toast.promise(
-      admin.patch(),
+      admin.resetPassword(),
       {
-        loading: <>Actualizando datos de {admin.fullName()}...</>,
-        success: <>Datos de {admin.fullName()} actualizados con éxito</>,
-        error: <>Error al modificar los datos de {admin.fullName()}</>
+        loading: `Reestableciendo contraseña de ${admin.fullName()}...`,
+        success: (msg) => `Contraseña de ${admin.fullName()} reestablecida con éxito`,
+        error: (err: any) => `Error al reestablecer contraseña ${err}`
       }, { id: admin.id.toString() }
     )
-    dispatch(updateAdmin(admin.json))
   }
 
   return {
     handleClose,
-    handleUpdate,
+    handlePasswordReset,
   }
 }

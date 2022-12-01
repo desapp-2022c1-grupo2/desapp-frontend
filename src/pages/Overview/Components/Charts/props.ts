@@ -1,10 +1,10 @@
 import { BarDatum } from '@nivo/bar'
 
 export interface barData extends BarDatum {
-  approved: number,
-  disapproved: number,
-  unrated: number,
-  tp: string
+  tp: string,
+  minimo: number,
+  promedio: number,
+  maximo: number,
 }
 
 export interface pieData extends Record<string, unknown> {

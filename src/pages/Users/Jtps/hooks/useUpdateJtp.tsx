@@ -19,9 +19,9 @@ export const useUpdateJtp = () => {
     unselect()
   }
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     if (isFormUncompleted) return
-    enableAlert()
+    await enableAlert()
     handleClose()
   }
 

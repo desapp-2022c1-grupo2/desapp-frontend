@@ -7,12 +7,13 @@ import {
 } from 'react-router-dom'
 import { useAuth } from '@src/hooks/useAuth'
 import { routes } from './routes'
-import { selectAuthenticatedUser, selectRole } from '@src/store'
+import { selectRole } from '@src/store'
 
 const LoginRoutes = () => (
   <BrowserRouter>
     <Routes>
       <Route {...routes.login}/>
+      <Route {...routes.passwordReset}/>
       <Route path='/*' element={<Navigate to='/login' />} />
     </Routes>
   </BrowserRouter>
@@ -32,6 +33,7 @@ const AppRoutes = () => {
         <Route {...routes.assignments.list} />
         <Route {...routes.assignments.stats} />
         <Route {...routes.assignments.evaluations} />
+        <Route {...routes.passwordReset}/>
         {
           role === 'admin' &&
           <>

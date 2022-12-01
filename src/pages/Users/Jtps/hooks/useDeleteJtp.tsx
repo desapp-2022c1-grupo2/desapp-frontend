@@ -26,8 +26,8 @@ export const useDeleteJtp = () => {
     unselect()
   }
 
-  const handleDelete = () => {
-    enableAlert()
+  const handleDelete = async () => {
+    await enableAlert()
     closeDelete()
   }
 

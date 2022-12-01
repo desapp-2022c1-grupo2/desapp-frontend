@@ -13,9 +13,9 @@ export const Bar = ({ data }: barProps) => (
     ]}
     data={data}
     keys={[
-      'menor',
+      'minimo',
       'promedio',
-      'mayor'
+      'maximo'
     ]}
     indexBy="tp"
     margin={{ top: 50, right: 130, bottom: 50, left: 60 }}

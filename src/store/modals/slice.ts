@@ -4,6 +4,7 @@ import {
   IJtp,
   IStudent,
 } from '@models'
+import {selectPasswordResetJtpModal} from "@src/store";
 
 interface userModals {
   logout: boolean,
@@ -12,6 +13,7 @@ interface userModals {
     delete: boolean,
     details: boolean,
     update: boolean,
+    passwordReset: boolean,
   },
   student: {
     selected?: IStudent,
@@ -23,6 +25,7 @@ interface userModals {
     selected?: IAdmin,
     delete: boolean,
     update: boolean,
+    passwordReset: boolean,
   },
   assignment: { details: boolean }
 }
@@ -58,8 +61,11 @@ export const modalsSlice = createSlice({
     setUpdateStudentModal(state, { payload }: PayloadAction<boolean>) { state.student.update = payload },
 
     unselectAdmin(state) { state.admin.selected = undefined },
-    unselectJtp(state) { state.student.selected = undefined },
-    unselectStudent(state) { state.student.selected = undefined }
+    unselectJtp(state) { state.jtp.selected = undefined },
+    unselectStudent(state) { state.student.selected = undefined },
+
+    setPasswordResetJtpModal(state, { payload }: PayloadAction<boolean>) { state.jtp.passwordReset = payload },
+    setPasswordResetAdminModal(state, { payload }: PayloadAction<boolean>) { state.admin.passwordReset = payload },
   }
 })
 
@@ -80,6 +86,8 @@ export const {
   unselectAdmin,
   unselectJtp,
   unselectStudent,
+  setPasswordResetJtpModal,
+  setPasswordResetAdminModal,
 } = modalsSlice.actions
 
 export const modals = modalsSlice.reducer

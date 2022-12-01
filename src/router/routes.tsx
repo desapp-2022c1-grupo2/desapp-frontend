@@ -10,11 +10,14 @@ import {
   LoginPage,
   OverviewPage,
 } from '@pages'
+import { PasswordResetPage } from "@pages/PasswordReset"
 
 export const paths = {
   account: '/account',
   overview: '/overview',
   login: '/login',
+  passwordReset: '/:role/validateReset/:resetId',
+  //passwordReset: '/passwordReset/:resetId',
   assignments: {
     list: '/assignments/list',
     stats: '/assignments/stats',
@@ -32,6 +35,7 @@ export const routes = {
   home: { path: '/', element: <OverviewPage /> },
   overview: { path: paths.overview, element: <OverviewPage /> },
   login: { path: paths.login, element: <LoginPage/> },
+  passwordReset: { path: paths.passwordReset, element: <PasswordResetPage/>, },
   assignments: {
     list: { path: paths.assignments.list, element: <AssignmentsPage /> },
     stats: { path: paths.assignments.stats, element: <StatsPage /> },

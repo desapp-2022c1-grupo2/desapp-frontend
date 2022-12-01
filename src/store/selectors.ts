@@ -52,3 +52,5 @@ export const selectJtpBySearch = (value: string) => useSelector<RootState, IJtp[
     x.email.includes(value) ||
     x.course?.name.includes(value)
 ))
+
+export const selectPasswordResetJtpModal = () => useSelector<RootState, boolean >((state) => state.modals.jtp.passwordReset)

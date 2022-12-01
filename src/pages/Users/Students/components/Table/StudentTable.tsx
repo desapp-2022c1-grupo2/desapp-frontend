@@ -5,6 +5,7 @@ import { selectCourses, selectStudents } from '@store'
 import {
   CreateStudentModal,
   DeleteStudentModal,
+  DetailStudentModal,
   UpdateStudentModal,
 } from "../Modals"
 import { getStudentColumns } from "./StudentColumns"
@@ -51,6 +52,7 @@ export const StudentTable = () => {
       <DeleteStudentModal />
       <UpdateStudentModal />
       <CreateStudentModal />
+      <DetailStudentModal />
       <Table
         buttons={<OpenCreateButton onClick={handleOpen} variant='text'/>}
         columns={[]}

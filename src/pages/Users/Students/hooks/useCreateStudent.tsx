@@ -26,11 +26,11 @@ export const useCreateStudent = () => {
     unselect()
   }
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (isFormUncompleted) return
     const student = getStudent()
 
-    enableAlert(student)
+    await enableAlert(student)
     handleClose()
   }
 

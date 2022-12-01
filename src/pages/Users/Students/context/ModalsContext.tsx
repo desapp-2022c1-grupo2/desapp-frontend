@@ -8,6 +8,9 @@ interface modalsContextValues {
   isOpenUpdate: boolean,
   isOpenCreate: boolean,
   isOpenDelete: boolean,
+  isOpenDetail: boolean,
+  openDetail: Function,
+  closeDetail: Function,
   openUpdate: Function,
   closeUpdate: Function,
   openCreate: Function,
@@ -20,12 +23,15 @@ const defaultValues: modalsContextValues = {
   isOpenUpdate: false,
   isOpenCreate: false,
   isOpenDelete: false,
-  openUpdate: () => { },
-  closeUpdate: () => { },
-  openCreate: () => { },
-  closeCreate: () => { },
-  openDelete: () => { },
-  closeDelete: () => { },
+  isOpenDetail: false,
+  openDetail: () => {},
+  closeDetail: () => {},
+  openUpdate: () => {},
+  closeUpdate: () => {},
+  openCreate: () => {},
+  closeCreate: () => {},
+  openDelete: () => {},
+  closeDelete: () => {},
 }
 
 export const ModalContext = createContext<modalsContextValues>(defaultValues)
@@ -34,7 +40,11 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [isOpenUpdate, setUpdateModal] = useState<boolean>(false)
   const [isOpenDelete, setDeleteModal] = useState<boolean>(false)
   const [isOpenCreate, setCreateModal] = useState<boolean>(false)
+  const [isOpenDetail, setDetailModal] = useState<boolean>(false)
 
+
+  const openDetail = () => { setDetailModal(true) }
+  const closeDetail = () => { setDetailModal(false) }
   const openUpdate = () => { setUpdateModal(true) }
   const closeUpdate = () => { setUpdateModal(false) }
   const openDelete = () => { setDeleteModal(true) }
@@ -47,12 +57,15 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
       value={{
         isOpenUpdate,
         isOpenDelete,
+        isOpenDetail,
         isOpenCreate,
         closeCreate,
         closeDelete,
+        closeDetail,
         closeUpdate,
         openCreate,
         openDelete,
+        openDetail,
         openUpdate,
       }}
     >

@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { GridColDef } from "@mui/x-data-grid"
-import { Button, Chip, VisibilityOutlined } from "@components"
+import { Chip } from "@components"
 import { Student } from "@models"
 import { useWindowSize } from "@src/hooks"
 import { ModalContext, StudentContext } from "../../context"
@@ -9,7 +9,7 @@ import { TableOptionsButton } from "@src/pages/Users/components"
 export function getStudentColumns(): GridColDef[] {
   const screen = useWindowSize()
   const { select } = useContext(StudentContext)
-  const { openDelete, openUpdate } = useContext(ModalContext)
+  const { openDelete, openDetail, openUpdate } = useContext(ModalContext)
 
   const columns: GridColDef[] = [
     {field: "name", headerName: "Estudiante", flex: 2,
@@ -54,7 +54,12 @@ export function getStudentColumns(): GridColDef[] {
         openDelete()
       }
 
-      return <TableOptionsButton handleUpdate={handleUpdate} handleDelete={handleDelete} />
+      const handleDetail = () => {
+        select(student)
+        openDetail()
+      }
+
+      return <TableOptionsButton handleUpdate={handleUpdate} handleDelete={handleDelete} handleDetail={handleDetail}/>
     }
   })
 

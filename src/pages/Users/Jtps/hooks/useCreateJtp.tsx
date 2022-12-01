@@ -26,11 +26,11 @@ export const useCreateJtp = () => {
     unselect()
   }
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (isFormUncompleted) return
     const jtp = getJtp()
 
-    enableAlert(jtp)
+    await enableAlert(jtp)
     handleClose()
   }
 

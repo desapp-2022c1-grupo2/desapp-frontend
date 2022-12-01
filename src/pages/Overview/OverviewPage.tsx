@@ -1,11 +1,11 @@
 import React from 'react'
 import { AppLayout, Box, FloatingCard } from '@components'
 import { Cards, EvaluationStats } from './Components'
-import { Pie, Bar } from './Components'
-import barJson from './Components/Charts/bar.json'
+import { Pie } from './Components'
+import { AssignmentsBar } from './AssignmentsBar'
 
 import { FullscreenModal } from '@components'
-import { selectEvaluations, selectSubmitted } from '@src/store'
+import { selectEvaluations } from '@src/store'
 
 export const OverviewPage = () => {
   const total = selectEvaluations().map(x => x.variables.reduce((a, b) => a + b, 0))
@@ -58,8 +58,8 @@ export const OverviewPage = () => {
           width='30%'
           height='400px'
         />
+        <AssignmentsBar />
       </Box>
     </AppLayout>
   )
 }
-//<FloatingCard title='APROBACIÓN POR TP' width='100%' height='300px' children={<Bar data={barJson}/>} />
