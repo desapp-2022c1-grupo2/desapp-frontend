@@ -1,16 +1,16 @@
 import axios from "@util/axios"
-import { ICourse } from "@models"
 import {
-  courseAdapter,
-  courseResponseAdapter,
+  ICourse,
   ICourseResponse,
-} from "@adapters"
+  CourseAdapter,
+  Course
+} from "@models"
 
 export const getAllCourses = async (): Promise<ICourse[]> => {
   try {
     const response = await axios.get('/course')
     const courseList: ICourseResponse[] = await Promise.resolve(response.data)
-    return courseList.map(course => courseAdapter(course))
+    return courseList.map(course => new CourseAdapter(course).json)
   } catch (err) {
     console.error(err)
     return []
@@ -21,7 +21,7 @@ export const getCourse = async (id: number): Promise<ICourse | undefined> => {
   try {
     const response = await axios.get(`/course/${id}`)
     const course: ICourseResponse = await Promise.resolve(response.data)
-    return courseAdapter(course)
+    return new CourseAdapter(course).json
   } catch (err) {
     console.error(err)
   }
@@ -31,7 +31,7 @@ export const createCourse = async (newCourse: ICourse) => {
   try {
     const response = await axios.post(
       '/course',
-      courseResponseAdapter(newCourse),
+      new Course(newCourse).makeRequest(),
     )
     return Promise.resolve(response.data)
   } catch (err) {
@@ -43,7 +43,7 @@ export const updateCourse = async (course: ICourse) => {
   try {
     const response = await axios.patch(
       `/course/${course.id}`,
-      courseResponseAdapter(course),
+      new Course(course).makeRequest(),
     )
     return Promise.resolve(response.data)
   } catch (err) {

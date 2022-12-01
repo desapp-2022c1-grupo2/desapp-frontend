@@ -16,26 +16,58 @@ interface unahurPaletteOptions {
   unahurWhite: PaletteColorOptions,
 }
 
+interface ColorOverrides {
+  unahurBlack: true,
+  unahurBlue: true,
+  unahurCyan: true,
+  unahurGreen: true,
+  unahurGreenAlt: true,
+  unahurGrey: true,
+  unahurOrange: true,
+  unahurRed: true,
+  unahurRedAlt: true,
+  unahurSoftGrey: true,
+  unahurSoftWhite: true,
+  unahurWhite: true,
+}
+
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: false;
+    sm: true;
+    md: false;
+    lg: false;
+    xl: false;
+    mobile: true;
+    tablet: true;
+    laptop: true;
+    desktop: true;
+  }
+}
+
 declare module '@mui/material/styles' {
   interface Palette extends unahurPaletteOptions {}
   interface PaletteOptions extends unahurPaletteOptions {}
 }
 
 declare module '@mui/material/Button' {
-  interface ButtonPropsColorOverrides {
-    unahurBlack: true,
-    unahurBlue: true,
-    unahurCyan: true,
-    unahurGreen: true,
-    unahurGreenAlt: true,
-    unahurGrey: true,
-    unahurOrange: true,
-    unahurRed: true,
-    unahurRedAlt: true,
-    unahurSoftGrey: true,
-    unahurSoftWhite: true,
-    unahurWhite: true,
-  }
+  interface ButtonPropsColorOverrides extends ColorOverrides {}
+}
+
+declare module '@mui/material/Chip' {
+  interface ChipPropsColorOverrides extends ColorOverrides {}
+}
+
+declare module '@mui/material/IconButton' {
+  interface IconButtonPropsColorOverrides extends ColorOverrides {}
+}
+
+declare module '@mui/material/Input' {
+  interface InputPropsColorOverrides extends ColorOverrides {}
+}
+
+declare module '@mui/material/Select' {
+  interface SelectColorOverrides extends ColorOverrides {}
 }
 
 export const theme = createTheme({
@@ -46,16 +78,25 @@ export const theme = createTheme({
     contrastThreshold: 3,
     tonalOffset: 0.2,
   },
+  breakpoints:{
+    values: {
+      sm: 425,
+      mobile: 425,
+      tablet: 768,
+      laptop: 1024,
+      desktop: 1200,
+    }
+  },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
           borderRadius: '10px',
-          fontSize: '1rem',
+          fontSize: '0.875rem',
           fontWeight: 400,
-          minHeight: '52px',
-          minWidth: '192px',
-          padding: '8px 16px',
+          minHeight: '16px',
+          minWidth: '48px',
+          padding: '16px 32px',
           textTransform: 'none',
           margin: '8px',
         },
@@ -68,8 +109,20 @@ export const theme = createTheme({
           minWidth: '320px',
           minHeight: '48px',
         },
-      }
+      },
     },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: '12px',
+          padding: '8px',
+          height: 'fit-content',
+        },
+      },
+      defaultProps: {
+        variant: 'outlined',
+      }
+    }
   },
 });
 

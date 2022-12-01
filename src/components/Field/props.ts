@@ -1,11 +1,11 @@
-import { InputProps } from "@components/Input"
+import { InputProps } from "@components"
+import { ChipProps } from "@mui/material"
 
 export interface FieldProps extends InputProps {
   label?: string,
 }
 
-export interface ReadOnlyFieldProps {
-  icon?: React.ReactNode,
-  label?: string,
+export interface ReadOnlyFieldProps extends ChipProps{
   text?: string,
+  fullwidth?: boolean,
 }

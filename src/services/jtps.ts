@@ -1,59 +1,55 @@
 import axios from "@util/axios"
-import { IJtp } from "@models"
 import {
-  jtpAdapter,
-  jtpResponseAdapter,
+  IJtp,
   IJtpResponse,
-} from "@adapters"
+  JtpAdapter,
+  Jtp,
+} from "@models"
 
-export const getAllJtps = async (): Promise<IJtp[]> => {
+export const fetchAllJtps = async (): Promise<IJtp[]> => {
   try {
     const response = await axios.get('/jtp')
-    const jtpList: IJtpResponse[] = await Promise.resolve(response.data)
-    return jtpList.map(jtp => jtpAdapter(jtp))
+    const data: IJtpResponse[] = await Promise.resolve<IJtpResponse[]>(response.data)
+    return data.map(x => (new JtpAdapter(x)).json)
   } catch (err) {
     console.error(err)
     return []
   }
 }
 
-export const getJtp = async (id: number): Promise<IJtp | undefined> => {
+export const fetchJtp = async (id: number): Promise<IJtp | undefined> => {
   try {
     const response = await axios.get(`/jtp/${id}`)
     const jtp: IJtpResponse = await Promise.resolve(response.data)
-    return jtpAdapter(jtp)
+    return new JtpAdapter(jtp).json
   } catch (err) {
     console.error(err)
   }
 }
 
-export const createJtp = async (newJtp: IJtp) => {
+export const postJtp = async (newJtp: IJtp) => {
   try {
-    const response = await axios.post(
-      '/jtp',
-      jtpResponseAdapter(newJtp),
-    )
+    const jtp: Jtp = new Jtp(newJtp) 
+    const response = await axios.post('/jtp', { ...(jtp.makeRequest()), pasword: 'unahurjtp' })
     return Promise.resolve(response.data)
   } catch (err) {
     console.error(err)
   }
 }
 
-export const updateJtp = async (jtp: IJtp) => {
+export const patchJtp = async (newData: IJtp) => {
   try {
-    const response = await axios.patch(
-      `/jtp/${jtp.id}`,
-      jtpResponseAdapter(jtp),
-    )
+    const jtp: Jtp = new Jtp(newData) 
+    const response = await axios.patch(`/jtp/${jtp.id}`, jtp.makeRequest())
     return Promise.resolve(response.data)
   } catch (err) {
     console.error(err)
   }
 }
 
-export const deleteJtp = async (jtp: IJtp) => {
+export const deleteJtp = async (id: number) => {
   try {
-    const response = await axios.delete(`/jtp/${jtp.id}`)
+    const response = await axios.delete(`/jtp/${id}`)
     return Promise.resolve(response.data)
   } catch (err) {
     console.error(err)

@@ -4,42 +4,59 @@ import {
   select,
   takeLatest,
 } from 'redux-saga/effects'
-import { setCredentials, setToken } from './slice'
-import { IAuth } from '@models'
-import { auth } from '@services'
+import { clearCredentials, setToken, setUser } from './slice'
+import { IAuth, ICredentials, IUser } from '@models'
+import { authenticate } from '@services'
 import { RootState } from '@store'
+import { 
+  isUserAlreadyAuthenticated,
+  cleanLocalStorage,
+  getUserFromLocalStorage,
+  setTokenInLocalStorage,
+  setUserInLocalStorage,
+} from '@util'
 
-function* authUser() {
+function* handleAuthentication() {
   try {
-    const user: IAuth = yield select((state: RootState) => state.auth)
-    if(user.token && user.email) {
-      yield put(setToken(user.token))
+    const auth: IAuth = yield select((state: RootState) => state.auth)
+    if(isUserAlreadyAuthenticated(auth)) {
+      const user = getUserFromLocalStorage()
+      yield put(setToken(auth.token))
+      yield put(setUser(user))
     } else {
-      const response: IAuth = yield call(auth, user)
-      localStorage.setItem('email', response.email)
-      localStorage.setItem('token', response.token || '')
+      const credentials: ICredentials = auth.credentials || { email: '' }
+      const response: IAuth = yield call(authenticate, credentials)
+      setTokenInLocalStorage(response.token)
+      setUserInLocalStorage(response.user)
+      yield put(clearCredentials())
       yield put(setToken(response.token))
-      yield put(setCredentials({
-        email: response.email,
-        password: '',
-        token: response.token,
-      }))
+      yield put(setUser(response.user))
+      location.reload()
     }
   } catch (err){
     console.error(err)
   }
 }
 
-function* logoutUser(){
+function* logout(){
   try {
-    localStorage.removeItem("email")
-    localStorage.removeItem("token")
+    cleanLocalStorage()
+  } catch (err){
+    console.error(err)
+  }
+}
+
+function* updateAuthenticatedUser(){
+  try {
+    const user: IUser = yield select((state: RootState) => state.auth.user)
+    setUserInLocalStorage(user)
   } catch (err){
     console.error(err)
   }
 }
 
 export function* authWatcher(){
-  yield takeLatest('auth/login', authUser)
-  yield takeLatest('auth/logout', logoutUser)
+  yield takeLatest('auth/login', handleAuthentication)
+  yield takeLatest('auth/logout', logout)
+  yield takeLatest('auth/updateUserInfo', updateAuthenticatedUser)
 }

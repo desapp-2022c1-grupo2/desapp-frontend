@@ -1,24 +1,52 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { getAssignments } from '@store/Assignments'
-import { getCourses } from '@store/courses'
-import { getJtps, getStudents } from '@store/users'
-import { login, setCredentials } from '@store/auth'
-import { selectToken } from '@store'
+import { useDispatch } from 'react-redux'
+import {
+  getAdmins,
+  getAssignments,
+  getAssignmentsByJtp,
+  getCourses,
+  getEvaluations,
+  getEvaluationsByJtp,
+  getJtps,
+  getStudents,
+  getStudentsByCourse,
+  getSubmitted,
+  getSubmittedByJtp,
+  login,
+  selectAuthenticatedUser,
+  selectToken,
+  setToken,
+  setUser,
+} from '@store'
 
-const setupData = () => {
+const updateStore = () => {
+  const user = selectAuthenticatedUser()
   const dispatch = useDispatch()
-  dispatch(getAssignments())
-  dispatch(getCourses())
-  dispatch(getJtps())
-  dispatch(getStudents())
+
+  if(user?.hasOwnProperty('course')) {
+    dispatch(getSubmittedByJtp())
+    dispatch(getEvaluationsByJtp())
+    dispatch(getAssignmentsByJtp())
+    dispatch(getStudentsByCourse())
+    dispatch(getCourses())
+  } else {
+    dispatch(getAdmins())
+    dispatch(getJtps())
+    dispatch(getSubmitted())
+    dispatch(getEvaluations())
+    dispatch(getAssignments())
+    dispatch(getCourses())
+    dispatch(getStudents())
+  }
 }
 
-const tryLoginFromLocalStorage = () => {
+const tryAuthenticateFromLocalStorage = () => {
   const dispatch = useDispatch()
-  const email = localStorage.getItem("email")
+  const user = localStorage.getItem("user")
   const token = localStorage.getItem("token")
-  if (email && token) {
-    dispatch(setCredentials({email, token}))
+  
+  if (token && user) {
+    dispatch(setUser(JSON.parse(user)))
+    dispatch(setToken(token))
     dispatch(login())
   }
 }
@@ -26,8 +54,8 @@ const tryLoginFromLocalStorage = () => {
 export const useAuth = () => {
   const token = selectToken()
 
-  if (token) { setupData() }
-  else { tryLoginFromLocalStorage() }
+  if (token) { updateStore() }
+  else { tryAuthenticateFromLocalStorage() }
 
   return !!token
 }

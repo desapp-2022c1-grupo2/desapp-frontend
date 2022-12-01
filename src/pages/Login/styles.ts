@@ -21,28 +21,23 @@ export const LoginContainer = styled.div`
   padding: 56px 24px;
 `
 
-export const LoginTitle = styled.h4`
- font-weight: 700;
- margin: 16px auto;
+export const Title = styled.h4`
+  font-weight: 700;
+  margin: 16px auto;
 `
 
 export const LoginField = styled(Field)`
-margin: 8px 0;
-width: 100%;
-`
-
-export const LoginConfirmButton = styled(Button)`
+  margin: 8px 0;
   width: 100%;
-  margin: 32px 0;
 `
 
-export const LoginLogo = styled.img`
+export const SubmitButton = styled(Button)`
+  cursor: pointer;
+  margin: 32px 0;
+  width: 100%;
+`
+
+export const Logo = styled.img`
   height: 112px;
   width: 102px;
-`
-
-export const Error = styled.p`
-  color: var(--unahurRed);
-  font-size: 1rem;
-  margin: 8px auto;
 `
