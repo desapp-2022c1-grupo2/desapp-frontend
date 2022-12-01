@@ -21,10 +21,10 @@ export const DeleteJtpModal = ({ clearSearchFilter }: modalProps) => {
       <Toaster toastOptions={{ duration: 3000 }} />
       <SmallModal
         className='modalDeleteJtp'
-        onClose={()=> { clearSearchFilter(); handleClose(); }}
+        onClose={()=> { handleClose(); }}
         open={isOpenDelete}
         title='Eliminar Jefe de Trabajos Practicos'
-        footer={<DeleteButton onClick={handleDelete}/>}
+        footer={<DeleteButton onClick={() => { clearSearchFilter(); handleDelete(); }}/>}
       >
         <Alert severity='error' enable={true}>
           Estas a punto de eliminar el/la JTP "<b>{selected.fullName()}</b>". <br /> Este cambio es permanente

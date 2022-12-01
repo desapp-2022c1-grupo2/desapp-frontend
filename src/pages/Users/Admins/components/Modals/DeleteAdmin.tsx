@@ -21,10 +21,10 @@ export const DeleteAdminModal = ({ clearSearchFilter }: modalProps) => {
       <Toaster toastOptions={{ duration: 3000 }} />
       <SmallModal
         className='modalDeleteAdmin'
-        onClose={() => { clearSearchFilter(); handleClose() }}
+        onClose={() => { handleClose() }}
         open={isOpenDelete}
         title='Eliminar Administrador'
-        footer={<DeleteButton onClick={handleDelete}/>}
+        footer={<DeleteButton onClick={() => {  clearSearchFilter(); handleDelete(); }}/>}
       >
         <Alert severity='error' enable={true}>
           Estas a punto de eliminar el administrador "<b>{selected.fullName()}</b>". <br /> Este cambio es permanente
