@@ -11,7 +11,11 @@ import {
 import { FieldsRow } from './styles'
 import { AdminContext, ModalContext } from '../../context'
 
-export const CreateAdminModal = () => {
+interface modalProps {
+  clearSearchFilter: Function
+}
+
+export const CreateAdminModal = ({ clearSearchFilter }: modalProps) => {
   const { isOpenCreate } = useContext(ModalContext)
   const {
     email, handleEmail,
@@ -32,7 +36,7 @@ export const CreateAdminModal = () => {
         onClose={handleClose}
         open={isOpenCreate}
         title='Agregar administrador'
-        footer={<CreateButton disabled={isFormUncompleted} onClick={handleCreate} />}
+        footer={<CreateButton disabled={isFormUncompleted} onClick={() => { clearSearchFilter(); handleCreate(); }} />}
       >
         <FirstnameField
           error={!firstname}

@@ -24,7 +24,8 @@ export const JtpTable = () => {
     setFiltered(jtps.filter(x => x.course?.name === course?.name))
     setValue('')
   }, [course])
-  
+
+  const clearSearchFilter = () => { setValue('') }
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     let value = event.target.value.toString()
@@ -47,9 +48,9 @@ export const JtpTable = () => {
 
   return (
     <>
-      <DeleteJtpModal />
-      <UpdateJtpModal />
-      <CreateJtpModal />
+      <DeleteJtpModal clearSearchFilter={clearSearchFilter}/>
+      <UpdateJtpModal clearSearchFilter={clearSearchFilter}/>
+      <CreateJtpModal clearSearchFilter={clearSearchFilter}/>
       <Table
         buttons={<OpenCreateButton onClick={handleOpen} variant='text'/>}
         columns={[]}

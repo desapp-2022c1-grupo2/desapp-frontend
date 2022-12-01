@@ -9,9 +9,13 @@ import {
 } from '@pages/Users/components'
 import { useUpdateAdmin } from '@pages/Users/Admins/hooks'
 import { AdminContext, ModalContext } from '../../context'
-import { PasswordResetButton } from "../PasswordResetButton";
+import { PasswordResetButton } from "../PasswordResetButton"
 
-export const UpdateAdminModal = () => {
+interface modalProps {
+  clearSearchFilter: Function
+}
+
+export const UpdateAdminModal = ({ clearSearchFilter }: modalProps) => {
   const { isOpenUpdate } = useContext(ModalContext)
   const {
     email, handleEmail,
@@ -33,7 +37,7 @@ export const UpdateAdminModal = () => {
         onClose={handleClose}
         open={isOpenUpdate}
         title='Editar administrador'
-        footer={<UpdateButton disabled={isFormUncompleted} onClick={handleUpdate} />}
+        footer={<UpdateButton disabled={isFormUncompleted} onClick={() => { clearSearchFilter(); handleUpdate(); }} />}
       >
         <FirstnameField
           required

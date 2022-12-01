@@ -25,7 +25,8 @@ export const StudentTable = () => {
     setFiltered(students.filter(x => x.courses.current.name === course?.name))
     setValue('')
   }, [course])
-  
+
+  const clearSearchFilter = () => { setValue('') }
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     let value = event.target.value.toString()
@@ -49,9 +50,9 @@ export const StudentTable = () => {
 
   return (
     <>
-      <DeleteStudentModal />
-      <UpdateStudentModal />
-      <CreateStudentModal />
+      <DeleteStudentModal clearSearchFilter={clearSearchFilter}/>
+      <UpdateStudentModal clearSearchFilter={clearSearchFilter}/>
+      <CreateStudentModal clearSearchFilter={clearSearchFilter}/>
       <DetailStudentModal />
       <Table
         buttons={<OpenCreateButton onClick={handleOpen} variant='text'/>}

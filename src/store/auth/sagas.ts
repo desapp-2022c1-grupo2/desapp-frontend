@@ -31,6 +31,7 @@ function* handleAuthentication() {
       yield put(clearCredentials())
       yield put(setToken(response.token))
       yield put(setUser(response.user))
+      location.reload()
     }
   } catch (err){
     console.error(err)

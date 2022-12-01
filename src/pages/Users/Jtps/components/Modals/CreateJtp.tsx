@@ -11,7 +11,11 @@ import {
 import { FieldsRow } from './styles'
 import { JtpContext, ModalContext } from '../../context'
 
-export const CreateJtpModal = () => {
+interface modalProps {
+  clearSearchFilter: Function
+}
+
+export const CreateJtpModal = ({ clearSearchFilter }: modalProps) => {
   const { isOpenCreate } = useContext(ModalContext)
   const {
     email, handleEmail,
@@ -24,7 +28,6 @@ export const CreateJtpModal = () => {
   const {
     handleClose,
     handleCreate,
-    handleOpen,
   } = useCreateJtp()
 
   return (
@@ -34,7 +37,7 @@ export const CreateJtpModal = () => {
         onClose={handleClose}
         open={isOpenCreate}
         title='Agregar nuevo Jefe de TP'
-        footer={<CreateButton disabled={isFormUncompleted} onClick={handleCreate} />}
+        footer={<CreateButton disabled={isFormUncompleted} onClick={()=> { clearSearchFilter(); handleCreate(); }} />}
       >
         <FieldsRow>
           <FirstnameField

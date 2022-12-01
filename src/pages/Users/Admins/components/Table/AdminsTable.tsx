@@ -17,6 +17,9 @@ export const AdminsTable = () => {
   const [value, setValue] = useState<string>('')
   const [filtered, setFiltered] = useState<IAdmin[]>(admins)
 
+  
+  const clearSearchFilter = () => { setValue('') }
+
   const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     let value = event.target.value.toString()
     setValue(value)
@@ -30,9 +33,9 @@ export const AdminsTable = () => {
 
   return (
     <>
-      <DeleteAdminModal />
-      <UpdateAdminModal />
-      <CreateAdminModal />
+      <DeleteAdminModal clearSearchFilter={clearSearchFilter}/>
+      <UpdateAdminModal clearSearchFilter={clearSearchFilter}/>
+      <CreateAdminModal clearSearchFilter={clearSearchFilter}/>
       <Table
         buttons={<OpenCreateButton onClick={handleOpen} variant='text'/>}
         columns={[]}

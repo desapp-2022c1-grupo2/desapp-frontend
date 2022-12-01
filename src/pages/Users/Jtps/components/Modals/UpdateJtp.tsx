@@ -12,7 +12,11 @@ import { FieldsRow } from './styles'
 import { JtpContext, ModalContext } from '../../context'
 import { PasswordResetButton } from '../PasswordResetButton'
 
-export const UpdateJtpModal = () => {
+interface modalProps {
+  clearSearchFilter: Function
+}
+
+export const UpdateJtpModal = ({ clearSearchFilter }: modalProps) => {
   const { isOpenUpdate } = useContext(ModalContext)
   const {
     email, handleEmail,
@@ -35,7 +39,7 @@ export const UpdateJtpModal = () => {
         onClose={handleClose}
         open={isOpenUpdate}
         title='Editar Jefe de trabajos Practicos'
-        footer={<UpdateButton disabled={isFormUncompleted} onClick={handleUpdate} />}
+        footer={<UpdateButton disabled={isFormUncompleted} onClick={()=> { clearSearchFilter(); handleUpdate(); }} />}
       >
         <FieldsRow>
           <FirstnameField

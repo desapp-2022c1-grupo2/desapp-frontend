@@ -6,6 +6,8 @@ import { AssignmentsBar } from './AssignmentsBar'
 
 import { FullscreenModal } from '@components'
 import { selectEvaluations } from '@src/store'
+import { SelectedProvider } from './context/SelectedContext'
+
 
 export const OverviewPage = () => {
   const total = selectEvaluations().map(x => x.variables.reduce((a, b) => a + b, 0))
@@ -31,6 +33,7 @@ export const OverviewPage = () => {
   ]
 
   return (
+    <SelectedProvider>
     <AppLayout title='Vista General'>
       <FullscreenModal onClose={function (event: React.MouseEvent<Element, MouseEvent>): void {
         throw new Error('Function not implemented.')
@@ -52,14 +55,9 @@ export const OverviewPage = () => {
           children={<Pie data={stats} />}
         />
         <EvaluationStats />
-        <FloatingCard
-          title='Calificaciones'
-          minWidth='256px'
-          width='30%'
-          height='400px'
-        />
         <AssignmentsBar />
       </Box>
     </AppLayout>
+    </SelectedProvider>
   )
 }

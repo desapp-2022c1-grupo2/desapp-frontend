@@ -7,19 +7,19 @@ import styled from 'styled-components'
 export const Bar = ({ data }: barProps) => (
   <ResponsiveBar
     colors={[
-      unahurPalette.unahurGreen.main,
       unahurPalette.unahurRed.main,
+      unahurPalette.unahurGreen.main,
       unahurPalette.unahurGrey.main
     ]}
     data={data}
     keys={[
       'minimo',
+      'maximo',
       'promedio',
-      'maximo'
     ]}
     indexBy="tp"
     margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-    padding={0.8}
+    padding={0.2}
     innerPadding={1}
     groupMode="grouped"
     valueScale={{ type: 'linear' }}

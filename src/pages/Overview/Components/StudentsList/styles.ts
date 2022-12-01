@@ -6,11 +6,13 @@ export const StudentListContainer = styled.div`
   box-shadow: var(--box-shadow);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
+  padding: 8px 0;
   align-items: center;
   max-height: 512px;
-  padding: 16px;
-  width: 256px;
+  overflow: hidden;
+  width: fit-content;
+  & div label { display: none; }
 `
 
 export const StudentQualificationContainer = styled.div`

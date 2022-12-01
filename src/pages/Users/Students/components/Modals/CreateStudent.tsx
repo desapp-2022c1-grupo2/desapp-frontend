@@ -3,7 +3,6 @@ import { Toaster } from 'react-hot-toast'
 import { Alert, CourseSelector, Modal } from '@components'
 import { useCreateStudent } from '@pages/Users/Students/hooks'
 import {
-  OpenCreateButton,
   CreateButton,
   FirstnameField,
   LastnameField,
@@ -12,7 +11,11 @@ import {
 import { FieldsRow } from './styles'
 import { StudentContext, ModalContext } from '../../context'
 
-export const CreateStudentModal = () => {
+interface modalProps {
+  clearSearchFilter: Function
+}
+
+export const CreateStudentModal = ({ clearSearchFilter }: modalProps) => {
   const { isOpenCreate } = useContext(ModalContext)
   const { handleClose, handleCreate } = useCreateStudent()
   const {
@@ -30,7 +33,7 @@ export const CreateStudentModal = () => {
         onClose={handleClose}
         open={isOpenCreate}
         title='Agregar nuevo estudiante'
-        footer={<CreateButton disabled={isFormUncompleted} onClick={handleCreate} />}
+        footer={<CreateButton disabled={isFormUncompleted} onClick={() => { clearSearchFilter(); handleCreate(); }} />}
       >
         <FieldsRow>
           <FirstnameField

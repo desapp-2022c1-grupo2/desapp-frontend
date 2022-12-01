@@ -40,7 +40,12 @@ export const usePasswordReset = () => {
   }
 
   const tryPasswordReset = async () => {
-    role === "jtp" || role === "admin" ? await passwordReset(resetId, confirmPassword, role) : enableNoPasswordMatch();
+    if(role === "jtp" || role === "admin") {
+      await passwordReset(resetId, confirmPassword, role)
+      location.href = '/login'
+    } else {
+      enableNoPasswordMatch();
+    }
     clearInputs()
   }
 

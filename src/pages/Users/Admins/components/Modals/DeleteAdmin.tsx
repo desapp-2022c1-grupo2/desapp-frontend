@@ -4,7 +4,11 @@ import { Alert, SmallModal } from '@components'
 import { DeleteButton } from '@pages/Users/components'
 import { useDeleteAdmin } from '@pages/Users/Admins/hooks'
 
-export const DeleteAdminModal = () => {
+interface modalProps {
+  clearSearchFilter: Function
+}
+
+export const DeleteAdminModal = ({ clearSearchFilter }: modalProps) => {
   const {
     handleClose,
     handleDelete,
@@ -17,7 +21,7 @@ export const DeleteAdminModal = () => {
       <Toaster toastOptions={{ duration: 3000 }} />
       <SmallModal
         className='modalDeleteAdmin'
-        onClose={() => { handleClose() }}
+        onClose={() => { clearSearchFilter(); handleClose() }}
         open={isOpenDelete}
         title='Eliminar Administrador'
         footer={<DeleteButton onClick={handleDelete}/>}

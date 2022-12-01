@@ -11,7 +11,11 @@ import { useUpdateStudent } from '@pages/Users/Students/hooks'
 import { FieldsRow } from './styles'
 import { StudentContext, ModalContext } from '../../context'
 
-export const UpdateStudentModal = () => {
+interface modalProps {
+  clearSearchFilter: Function
+}
+
+export const UpdateStudentModal = ({ clearSearchFilter }: modalProps) => {
   const { isOpenUpdate } = useContext(ModalContext)
   const {
     email, handleEmail,
@@ -34,7 +38,7 @@ export const UpdateStudentModal = () => {
         onClose={handleClose}
         open={isOpenUpdate}
         title='Editar Estudiante'
-        footer={<UpdateButton disabled={isFormUncompleted} onClick={handleUpdate} />}
+        footer={<UpdateButton disabled={isFormUncompleted} onClick={() => { clearSearchFilter(); handleUpdate(); }} />}
       >
         <FieldsRow>
           <FirstnameField

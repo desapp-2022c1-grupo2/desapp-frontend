@@ -4,7 +4,11 @@ import { Alert, SmallModal } from '@components'
 import { DeleteButton } from '@pages/Users/components'
 import { useDeleteStudent } from '@pages/Users/Students/hooks'
 
-export const DeleteStudentModal = () => {
+interface modalProps {
+  clearSearchFilter: Function
+}
+
+export const DeleteStudentModal = ({ clearSearchFilter }: modalProps) => {
   const {
     handleClose,
     handleDelete,
@@ -17,7 +21,7 @@ export const DeleteStudentModal = () => {
       <Toaster toastOptions={{ duration: 3000 }} />
       <SmallModal
         className='modalDeleteStudent'
-        onClose={() => { handleClose() }}
+        onClose={() => { clearSearchFilter(); handleClose(); }}
         open={isOpenDelete}
         title='Eliminar Jefe de Trabajos Practicos'
         footer={<DeleteButton onClick={handleDelete}/>}

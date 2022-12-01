@@ -6,7 +6,6 @@ import {
   IAdmin,
   IJtp,
   IStudent,
-  IUser,
 } from '@models'
 
 interface IUsers {
@@ -37,7 +36,7 @@ export const usersSlice = createSlice({
     deleteJtp(state, { payload }: PayloadAction<IJtp>){
       state.jtps = state.jtps.filter(jtp => jtp.id != payload.id)
     },
-    updateStudent(state, { payload }: PayloadAction<IStudent>){ 
+    updateStudent(state, { payload }: PayloadAction<IStudent>){
       state.students = state.students.map( x => (x.id === payload.id) ? payload : x)
     },
     deleteStudent(state, { payload }: PayloadAction<IStudent>){
@@ -51,7 +50,6 @@ export const usersSlice = createSlice({
     },
     resetPassword(state, { payload }: PayloadAction<IJtp>){
       state.jtps = state.jtps.filter(jtp => jtp.id != payload.id)
-      state.aux = payload
     },
     setAdmins(state, { payload }: PayloadAction<IAdmin[]>) { state.admins = payload },
     setJtps(state, { payload }: PayloadAction<IJtp[]>) { state.jtps = payload },
