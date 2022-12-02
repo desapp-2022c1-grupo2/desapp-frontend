@@ -1,22 +1,8 @@
-import React, { useEffect } from 'react'
-import { ModalProps } from './props'
-import { Button } from '@components'
-import {
-  Backdrop,
-  FullscreenModalContainer,
-  ModalContent,
-  ModalDialog,
-  ModalFooter,
-  ModalHeader,
-} from './styles'
-import { CloseOutlined } from '@mui/icons-material'
-import { ButtonProps } from '@mui/material'
+import React, {useEffect} from 'react'
+import {ModalProps} from './props'
+import {Backdrop, FullscreenModalContainer, ModalContent, ModalDialog, ModalFooter, ModalHeader,} from './styles'
+import {CloseButton} from "@src/components";
 
-export const CloseButton = (props: ButtonProps) => (
-  <Button color='unahurBlack' {...props}>
-    <CloseOutlined />
-  </Button>
-)
 
 export const FullscreenModal = ({
   children,

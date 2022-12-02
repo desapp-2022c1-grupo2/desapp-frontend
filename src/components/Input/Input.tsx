@@ -32,8 +32,8 @@ const PasswordInput = ({ hideIcon, ...props } : InputProps) => (
 )
 
 export const Input = ({ variant, ...props }: InputProps) => {
-  if (variant==='email') return <EmailInput color='unahurCyan' {...props}/>
-  if (variant==='search') return <SearchInput color='unahurCyan' {...props}/>
-  if (variant==='password') return <PasswordInput color='unahurCyan' {...props}/>
-  return <OutlinedInput color='unahurCyan' {...props}/>
+  if (variant==='email') return <EmailInput {...props}/>
+  if (variant==='search') return <SearchInput {...props}/>
+  if (variant==='password') return <PasswordInput {...props}/>
+  return <OutlinedInput {...props}/>
 }
