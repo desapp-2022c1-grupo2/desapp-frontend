@@ -1,6 +1,7 @@
 import React from 'react'
 import { cardProps } from './props'
 import { CardContainer } from './styles'
+import {Skeleton} from "@mui/material";
 
 export const Card = ({
   color,
@@ -9,7 +10,10 @@ export const Card = ({
 }: cardProps) => {
   return (
     <CardContainer color={color}>
-      <span>{value}</span>
+        {value ?
+            <span>{value}</span> :
+            <Skeleton variant={"text"} height={"100%"} width={'3rem'}/>
+        }
       <p>{label}</p>
     </CardContainer>
   )

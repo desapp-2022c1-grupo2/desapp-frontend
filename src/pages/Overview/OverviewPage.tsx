@@ -7,6 +7,7 @@ import { AssignmentsBar } from './AssignmentsBar'
 import { FullscreenModal } from '@components'
 import { selectEvaluations } from '@src/store'
 import { SelectedProvider } from './context/SelectedContext'
+import {Skeleton} from "@mui/material";
 
 
 export const OverviewPage = () => {
@@ -48,13 +49,18 @@ export const OverviewPage = () => {
         justifyContent='space-evenly'
       >
         <FloatingCard
-          title='PORCENTAJE DE APROBACIÓN'
-          width='40%'
-          height='348px'
-          minWidth='368px'
-          children={<Pie data={stats} />}
+            title='PORCENTAJE DE APROBACIÓN'
+            width='100%'
+            height='60%'
+            margin='24px'
+            minWidth='368px'
+            children={
+              <Box sx={{display: "flex", justifyContent: 'space-evenly', padding: 8, }}>
+                {total.length > 0 ? <Pie data={stats}/> : <Skeleton variant="circular" animation="wave" width={368} height={368} />}
+                <EvaluationStats/>
+              </Box>
+            }
         />
-        <EvaluationStats />
         <AssignmentsBar />
       </Box>
     </AppLayout>

@@ -5,6 +5,7 @@ import {
   EvaluationStatsContainer
 } from './styles'
 import { selectEvaluations, selectSubmitted } from '@store'
+import {Skeleton} from "@mui/material";
 
 interface assignmentCounterProps {
   small?: boolean,
@@ -17,7 +18,7 @@ const AssignmentCounter = ({color, count, label, small, vertical}: assignmentCou
   return (
     <AssignmentCounterContainer small={small} color={color} vertical={vertical}>
       <span> </span>
-      <h2>{count}</h2>
+        {count ? <h2>{count}</h2>: <Skeleton variant={"text"} width={"100%"}/>}
       <p>{label}</p>
     </AssignmentCounterContainer>
   )
