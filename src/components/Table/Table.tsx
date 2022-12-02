@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import {
-  GridToolbarContainer,
   GridToolbarExport,
   DataGrid,
   DataGridProps,
   GridColDef,
   GridToolbarColumnsButton,
-  GridToolbarDensitySelector,
+  GridToolbarDensitySelector, esES,
 } from '@mui/x-data-grid'
 import { ButtonsContainer, TableContainer } from './styles'
 import { Toolbar } from './Toolbar'
@@ -65,6 +64,7 @@ export const Table = ({
     <TableContainer>
       <Toolbar search={search} filters={filters} handleToggleFilters={handleToggleFilters} hideFilters={hideFilters}/>
       <DataGrid
+        localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         pagination={true}
         columns={col}
         components={hideFilters ? undefined : { Toolbar: Buttons }}
