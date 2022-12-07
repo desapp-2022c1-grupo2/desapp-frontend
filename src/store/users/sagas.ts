@@ -46,7 +46,7 @@ function* getStudentsByCourse() {
   try {
     const jtp: IJtp = yield select((state: RootState) => state.auth.user)
     const response: IStudent[] = yield call(fetchAllStudents)
-    const students = response.filter(x => x.courses.current.id == jtp.course?.id)
+    const students = response.filter(x => x.courses.current?.id == jtp.course?.id)
     yield put(setStudents(students))
   } catch (err){
     console.error(err)

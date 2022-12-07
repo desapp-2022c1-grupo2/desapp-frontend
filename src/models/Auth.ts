@@ -1,11 +1,6 @@
-import {
-  ICredentials,
-  IJtp,
-  IJtpResponse,
-  IAdminResponse,
-  JtpAdapter,
-  IAdmin
-} from "@models"
+import { IAdminResponse, IAdmin } from "./Admin"
+import { IJtp, IJtpResponse, JtpAdapter } from "./Jtp"
+import { ICredentials } from "./User"
 
 type IAuthUser<T, K> = T | K
 

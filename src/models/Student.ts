@@ -1,4 +1,5 @@
-import { Course, CourseAdapter, ICourse, ICourseResponse, IUser, IUserResponse, User } from "@models"
+import { Course, CourseAdapter, ICourse, ICourseResponse } from "./Course"
+import { IUser, IUserResponse, User } from "./User"
 import { deleteStudent, patchStudent } from "@src/services"
 import { fixString } from "@src/util"
 
@@ -12,7 +13,7 @@ export interface IStudent extends IUser {
   picture?: string,
   rondina?: number,
   courses: {
-    current: ICourse
+    current?: ICourse,
     others: number[],
     parent?: ICourse,
     lastChangeDate: Date,
@@ -28,7 +29,7 @@ export interface IStudentResponse extends IUserResponse {
   fecha_cambio_materia_cursada: string,
   habilitado: number
   materia2: string,
-  materia_cursada: ICourseResponse,
+  materia_cursada: ICourseResponse | null,
   materia_padre_cursada: ICourseResponse | null,
   password: string,
   phone: string | null,
@@ -47,7 +48,7 @@ export class Student extends User {
   private _picture?: string
   private _rondina?: number
   private _courses: {
-    current: ICourse,
+    current?: ICourse,
     others: number[],
     parent?: ICourse,
     lastChangeDate: Date,
@@ -76,8 +77,8 @@ export class Student extends User {
     }
   }
 
-  set course(course: ICourse) { this._courses.current = course }
-  get course(): ICourse { return this._courses.current }
+  get course(): ICourse | undefined { return this._courses.current }
+  set course(course: ICourse | undefined) { this._courses.current = course }
   get phone(): string { return this._phone || '' }
   get dni(): string | undefined { return this._dni }
   get birthdate(): Date | undefined { return this._birthdate }
@@ -113,7 +114,7 @@ export class Student extends User {
       password: this._password || 'student',
       birthDate: this._birthdate?.toDateString() || null,
       fecha_cambio_materia_cursada: this._courses.lastChangeDate.toDateString(),
-      materia_cursada: new Course(this._courses.current).makeRequest(),
+      materia_cursada: this._courses.current ? new Course(this._courses.current).makeRequest() : null,
       materia_padre_cursada: this._courses.parent ? new Course(this._courses.parent).makeRequest() : null,
       comision: this._comision || null,
       rondina: this._rondina || null,
@@ -157,7 +158,7 @@ export class StudentAdapter extends Student {
       name: { first: fixString(name), last: fixString(lastName) },
       birthdate: !!birthDate ? new Date(birthDate) : undefined,
       courses: {
-        current: new CourseAdapter(materia_cursada).json,
+        current: materia_cursada !== null ? new CourseAdapter(materia_cursada).json : undefined,
         others: materia2 ? materia2.split(',').map(x => parseInt(x)) : [],
         parent: materia_padre_cursada ? new CourseAdapter(materia_padre_cursada).json : undefined,
         lastChangeDate: new Date(fecha_cambio_materia_cursada),

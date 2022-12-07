@@ -1,5 +1,5 @@
-export * from './Select'
-export * from './CourseSelector'
 export * from './AssignmentSelector'
+export * from './CourseSelector'
 export * from './JtpSelector'
+export * from './Select'
 export * from './props'

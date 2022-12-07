@@ -5,9 +5,10 @@ import { AssignmentsBar } from './AssignmentsBar'
 import { selectEvaluations } from '@src/store'
 import { SelectedProvider } from './context/SelectedContext'
 import { Skeleton } from "@mui/material"
-
+import { useWindowSize } from '@src/hooks'
 
 export const OverviewPage = () => {
+  const { width } = useWindowSize()
   const total = selectEvaluations().map(x => x.variables.reduce((a, b) => a + b, 0))
 
   const approved = total.filter(x => x >= 4 && x !== 0).length
@@ -54,7 +55,7 @@ export const OverviewPage = () => {
             }
           />
           <EvaluationStats/>
-        <AssignmentsBar />
+        { width > 768 && <AssignmentsBar /> }
       </Box>
     </AppLayout>
     </SelectedProvider>

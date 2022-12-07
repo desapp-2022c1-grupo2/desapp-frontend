@@ -33,19 +33,11 @@ export const Bar = ({ data }: barProps) => {
             }}
             axisTop={null}
             axisRight={null}
-            axisBottom={{
-                tickSize: 5,
-                tickPadding: 5,
-                tickRotation: 0,
-                legend: 'Trabajo Práctico',
-                legendPosition: 'middle',
-                legendOffset: 32
-            }}
+            axisBottom={null}
             axisLeft={{
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: 'Nota',
                 legendPosition: 'middle',
                 legendOffset: -350
             }}

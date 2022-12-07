@@ -17,7 +17,7 @@ export const DetailStudentModal = () => {
       <Quote text={selected.about} />
       <TagsContainer>
         <ReadOnlyField icon={<CalendarMonthOutlined />} label='Nacimiento' text={selected.birthdate?.toDateString()} />
-        <ReadOnlyField icon={<ClassOutlined />} label='Materia' text={selected.course.name} />
+        <ReadOnlyField icon={<ClassOutlined />} label='Materia' text={selected.course?.name} />
         <ReadOnlyField icon={<EmailOutlined />} label='Correo' text={selected.email} />
         <ReadOnlyField icon={<BadgeOutlined />} label='DNI' text={selected.dni} />
         <ReadOnlyField icon={<PhoneOutlined />} label='Télefono' text={selected.json.phone} />

@@ -59,7 +59,7 @@ export const TableOptionsButton = ({
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         { handleAssignmentDetail && <MenuItem onClick={openAssignmentDetail} key='assignment'><AssignmentOutlined sx={{ margin: '8px' }} /> Ver TP relacionado</MenuItem> }
-        { handleStudentDetail && <MenuItem onClick={openStudentDetail} key='student'><SchoolOutlined sx={{ margin: '8px' }} /> Estudiante</MenuItem> }
+        { /* handleStudentDetail && <MenuItem onClick={openStudentDetail} key='student'><SchoolOutlined sx={{ margin: '8px' }} /> Estudiante</MenuItem> */ }
         { handleEvaluationDetail && <MenuItem onClick={openEvaluationDetail} key='evaluation'><AssignmentOutlined sx={{ margin: '8px' }} /> Ver Entrega</MenuItem> }
       </Menu>
     </>

@@ -22,7 +22,7 @@ export const StudentTable = () => {
   const [course, setCourse] = useState<ICourse>()
 
   useEffect(() => {
-    setFiltered(students.filter(x => x.courses.current.name === course?.name))
+    setFiltered(students.filter(x => x.courses.current?.name === course?.name))
     setValue('')
   }, [course])
 
@@ -39,7 +39,7 @@ export const StudentTable = () => {
     )
 
     if(course) studentsFiltered = studentsFiltered
-      .filter(x => x.courses.current.name === course?.name)
+      .filter(x => x.courses.current?.name === course?.name)
 
     setFiltered(studentsFiltered)
   }

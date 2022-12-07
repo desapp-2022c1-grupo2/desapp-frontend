@@ -1,16 +1,8 @@
-import {
-  Course,
-  CourseAdapter,
-  IAdmin,
-  ICourse,
-  ICourseResponse,
-  IUser,
-  IUserResponse,
-  User,
-} from "@models"
-import { deleteJtp, patchJtp } from "@src/services"
+import { Course, CourseAdapter, ICourse, ICourseResponse } from './Course'
+import { IUser, IUserResponse, User } from './User'
+import { deleteJtp, patchJtp } from "@services"
 import { fixString } from "@src/util"
-import {resetPasswordForUser} from "@services/passwordReset";
+import {resetPasswordForUser} from "@services/passwordReset"
 
 export interface IJtp extends IUser { course?: ICourse, }
 

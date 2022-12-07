@@ -1,6 +1,6 @@
-import { deleteAdmin, updateAdmin } from "@src/services"
+import { deleteAdmin, updateAdmin } from "@services"
 import { IUser, IUserResponse, User, UserAdapter } from "./User"
-import {resetPasswordForUser} from "@services/passwordReset";
+import {resetPasswordForUser} from "@services/passwordReset"
 
 export interface IAdmin extends IUser{}
 

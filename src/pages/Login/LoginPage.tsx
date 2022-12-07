@@ -9,7 +9,7 @@ import {
   Title,
 } from './styles'
 import { Alert } from '@components'
-import { useLogin } from './hooks'
+import { useLogin } from './useLogin'
 
 export const LoginPage = () => {
   const {

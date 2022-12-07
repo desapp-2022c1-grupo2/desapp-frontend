@@ -1,13 +1,8 @@
-import {
-  IAssignment,
-  AssignmentAdapter,
-  IAssignmentResponse,
-  ICourse,
-  IStudent,
-  StudentAdapter,
-  IStudentResponse,
-  IJtp,
-} from '@models'
+import { IAssignment, AssignmentAdapter, IAssignmentResponse } from './Assignment'
+import { ICourse } from './Course'
+import { IJtp } from './Jtp'
+import { IStudent, StudentAdapter, IStudentResponse } from './Student'
+
 import { fixString } from '@src/util'
 
 export interface ISubmittedResponse {

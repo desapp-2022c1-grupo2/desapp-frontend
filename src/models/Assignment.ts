@@ -1,11 +1,5 @@
-import {
-  IJtpResponse,
-  ICourseResponse,
-  CourseAdapter,
-  JtpAdapter,
-  ICourse,
-  IJtp,
-} from "@models"
+import { ICourseResponse, ICourse, CourseAdapter } from "./Course"
+import { IJtpResponse, JtpAdapter, IJtp } from "./Jtp"
 import { fixString } from "@src/util"
 
 export interface IAssignment {
