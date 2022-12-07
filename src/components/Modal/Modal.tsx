@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { ModalProps } from './props'
-import { Button, ButtonProps } from '@components'
 import {
   Backdrop,
   ModalContainer,
@@ -9,13 +8,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from './styles'
-import { CloseOutlined } from '@mui/icons-material'
-
-export const CloseButton = (props: ButtonProps) => (
-  <Button color='unahurBlack' sx={{ width: 'fit-content' }}{...props}>
-    <CloseOutlined />
-  </Button>
-)
+import {CloseButton} from "@components/Modal/CloseButton";
 
 export const Modal = ({
   children,
