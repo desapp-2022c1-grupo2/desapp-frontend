@@ -36,7 +36,7 @@ export const AssignmentsBar = () => {
         .sort((a, b) => a - b)
 
       return {
-        tp: `${assignment.id} ${assignment.name.length > 6 ? assignment.name.slice(0, 10) + '...' : assignment.name}`,
+        tp: `TP: ${assignment.id} - ${assignment.name}`,
         minimo: qualifications[0],
         promedio: parseInt((qualifications.reduce((a, b) => a + b, 0) / qualifications.length).toFixed(2)),
         maximo: qualifications.at(-1) || 0,
@@ -47,12 +47,12 @@ export const AssignmentsBar = () => {
   return (
     <Box
       sx={{
-        width: '100%',
         backgroundColor: 'var(--unahurWhite)',
         borderRadius: '20px',
         margin: '24px',
         boxShadow: 'var(--box-shadow)',
-        height: '400px',
+        height: 1500,
+        width: '100%',
       }}
     >
       <Bar data={qualifications} />
