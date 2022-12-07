@@ -17,9 +17,12 @@ interface assignmentCounterProps {
 const AssignmentCounter = ({color, count, label, small, vertical}: assignmentCounterProps) => {
   return (
     <AssignmentCounterContainer small={small} color={color} vertical={vertical}>
-      <span> </span>
-        {count ? <h2>{count}</h2>: <Skeleton variant={"text"} width={"100%"}/>}
-      <p>{label}</p>
+      <span />
+      {
+        count
+          ? <><h2>{count}</h2> <p>{label}</p></>
+          : <Skeleton variant={"text"} width={"100%"} />
+      }
     </AssignmentCounterContainer>
   )
 }

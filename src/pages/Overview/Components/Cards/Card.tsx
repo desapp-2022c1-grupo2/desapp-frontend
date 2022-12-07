@@ -10,11 +10,11 @@ export const Card = ({
 }: cardProps) => {
   return (
     <CardContainer color={color}>
-        {value ?
-            <span>{value}</span> :
-            <Skeleton variant={"text"} height={"100%"} width={'3rem'}/>
-        }
-      <p>{label}</p>
+      {
+        value
+          ? <><span>{value}</span> <p>{label}</p></>
+          : <Skeleton variant={"text"} height={"100%"} width={'150px'}/>
+      }
     </CardContainer>
   )
 }
