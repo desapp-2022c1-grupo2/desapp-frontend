@@ -1,58 +1,49 @@
 import React from 'react'
 import {
-  AdminAccountPage,
-  AdminAssignmentsPage,
-  AdminStudentsPage,
-  AdminJtpsPage,
+  AssignmentsPage,
+  AccountPage,
+  EvaluationsPage,
+  StatsPage,
+  AdminsPage,
+  StudentsPage,
+  JtpsPage,
   LoginPage,
+  OverviewPage,
 } from '@pages'
+import { PasswordResetPage } from "@pages/PasswordReset"
 
 export const paths = {
+  account: '/account',
+  overview: '/overview',
   login: '/login',
-  admin: {
-    home: '/admin',
-    jtps: '/admin/jtps',
-    assignments: '/admin/assignments',
-    students: '/admin/students',
-    account: '/admin/account'
+  passwordReset: '/:role/validateReset/:resetId',
+  //passwordReset: '/passwordReset/:resetId',
+  assignments: {
+    list: '/assignments/list',
+    stats: '/assignments/stats',
+    evaluations: '/assignments/evaluations',
   },
-};
+  users: {
+    admins: '/users/admins',
+    jtps: '/users/jtp',
+    students: '/users/students',
+  },
+}
 
 export const routes = {
-  login: {
-    path: paths.login,
-    exact: true,
-    element: <LoginPage/>,
+  account: { path: paths.account, element: <AccountPage /> },
+  home: { path: '/', element: <OverviewPage /> },
+  overview: { path: paths.overview, element: <OverviewPage /> },
+  login: { path: paths.login, element: <LoginPage/> },
+  passwordReset: { path: paths.passwordReset, element: <PasswordResetPage/>, },
+  assignments: {
+    list: { path: paths.assignments.list, element: <AssignmentsPage /> },
+    stats: { path: paths.assignments.stats, element: <StatsPage /> },
+    evaluations: { path: paths.assignments.evaluations, element: <EvaluationsPage /> },
   },
-  admin: {
-    home: {
-      path: paths.admin.home,
-      exact: true,
-      element: <AdminJtpsPage />,
-    },
-    jtps: {
-      path: paths.admin.jtps,
-      exact: true,
-      element: <AdminJtpsPage />,
-      label: "JTPs",
-    },
-    assignments: {
-      path: paths.admin.assignments,
-      exact: true,
-      element: <AdminAssignmentsPage />,
-      label: "Trabajos Practicos"
-    },
-    students: {
-      path: paths.admin.students,
-      exact: true,
-      element: <AdminStudentsPage />,
-      label: "Estudiantes"
-    },
-    account: {
-      path: paths.admin.account,
-      exact: true,
-      element: <AdminAccountPage />,
-      label: "Mi cuenta"
-    },
-  }
+  users: {
+    admins: { path: paths.users.admins, element: <AdminsPage /> },
+    jtps: { path: paths.users.jtps, element: <JtpsPage /> },
+    students: { path: paths.users.students, element: <StudentsPage /> },
+  },
 }

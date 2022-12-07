@@ -1,0 +1,23 @@
+[
+  {
+    "variable": "Variable 1",
+    "student": 8,
+    "average": 7
+  }, {
+    "variable": "Variable 2",
+    "student": 5,
+    "average": 7
+  }, {
+    "variable": "Variable 3",
+    "student": 9,
+    "average": 7
+  }, {
+    "variable": "Variable 4",
+    "student": 8,
+    "average": 8
+  }, {
+    "variable": "Variable 5",
+    "student": 8,
+    "average": 8
+  }
+]

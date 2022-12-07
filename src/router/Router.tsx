@@ -1,62 +1,56 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import {
   BrowserRouter,
   Navigate,
   Routes,
   Route,
 } from 'react-router-dom'
-import { IAuth } from '@models'
-import { requestLogin } from '@store/auth'
-import { RootState } from '@store' 
+import { useAuth } from '@src/hooks/useAuth'
 import { routes } from './routes'
+import { selectRole } from '@src/store'
 
-import { getAssignments } from '@store/Assignments'
-import { getCourses } from '@store/courses'
-import { getJtps, getStudents } from '@store/users'
-
-
-export const Router = () => {
-  const { isLogged } = useSelector<RootState, IAuth>((state) => state.auth)
-  const dispatch = useDispatch()
-
-  React.useEffect(
-    () => {
-      if(!isLogged) {
-        const localEmail = localStorage.getItem("email")
-        const localPass = localStorage.getItem("password")
-        if (localEmail && localPass) dispatch(requestLogin({ email: localEmail, password: localPass }))
-      } else {
-        dispatch(getAssignments())
-        dispatch(getCourses())
-        dispatch(getJtps())
-        dispatch(getStudents())
-      }
-    },
-    [isLogged]
-  )
-
-  const AdminRoutes = (
-    <Routes>
-      <Route {...routes.admin.home} />
-      <Route {...routes.admin.account} />
-      <Route {...routes.admin.assignments} />
-      <Route {...routes.admin.students} />
-      <Route {...routes.admin.jtps} />
-      <Route path='*' element={<Navigate to='/admin' />} />
-    </Routes>
-  )
-
-  const LogoutRoutes = (
+const LoginRoutes = () => (
+  <BrowserRouter>
     <Routes>
       <Route {...routes.login}/>
-      <Route path='*' element={<Navigate to='/login' />} />
+      <Route {...routes.passwordReset}/>
+      <Route path='/*' element={<Navigate to='/login' />} />
     </Routes>
-  )
+  </BrowserRouter>
+)
+
+const AppRoutes = () => {
+  const role = selectRole().toLocaleLowerCase()
 
   return (
-  <BrowserRouter>
-    { isLogged ? AdminRoutes : LogoutRoutes }
-  </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/login' element={<Navigate to='/overview' />} />
+        <Route path='/' element={<Navigate to='/overview' />} />
+        <Route {...routes.account} />
+        <Route {...routes.home} />
+        <Route {...routes.overview} />
+        <Route {...routes.assignments.list} />
+        <Route {...routes.assignments.stats} />
+        <Route {...routes.assignments.evaluations} />
+        <Route {...routes.passwordReset}/>
+        {
+          role === 'admin' &&
+          <>
+            <Route {...routes.users.admins} />
+            <Route {...routes.users.jtps} />
+            <Route {...routes.users.students} />
+          </>
+        }
+      </Routes>
+    </BrowserRouter>
   )
+}
+
+export const Router = () => {
+  const isLogged = useAuth()
+
+  return isLogged
+    ? <AppRoutes />
+    : <LoginRoutes />
 }

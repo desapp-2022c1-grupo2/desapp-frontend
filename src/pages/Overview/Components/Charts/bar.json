@@ -1,0 +1,23 @@
+[
+  {
+    "tp": "TP1",
+    "approved": 8,
+    "disapproved": 7,
+    "unrated": 7
+  }, {
+    "tp": "TP2",
+    "approved": 5,
+    "disapproved": 7,
+    "unrated": 7
+  }, {
+    "tp": "TP3",
+    "approved": 9,
+    "disapproved": 7,
+    "unrated": 7
+  }, {
+    "tp": "TP4",
+    "approved": 8,
+    "disapproved": 8,
+    "unrated": 7
+  }
+]

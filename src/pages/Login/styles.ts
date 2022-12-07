@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { Button, Field } from '@components'
 
 export const LoginLayout = styled.div`
+  background-color: var(--unahurBlack);
   align-items: center;
   display: flex;
   justify-content: center;
@@ -20,22 +21,23 @@ export const LoginContainer = styled.div`
   padding: 56px 24px;
 `
 
-export const LoginTitle = styled.h4`
- font-weight: 700;
- margin: 16px auto;
+export const Title = styled.h4`
+  font-weight: 700;
+  margin: 16px auto;
 `
 
 export const LoginField = styled(Field)`
-margin: 8px 0;
-width: 100%;
-`
-
-export const LoginConfirmButton = styled(Button)`
+  margin: 8px 0;
   width: 100%;
-  margin: 32px 0;
 `
 
-export const LoginLogo = styled.img`
+export const SubmitButton = styled(Button)`
+  cursor: pointer;
+  margin: 32px 0;
+  width: 100%;
+`
+
+export const Logo = styled.img`
   height: 112px;
   width: 102px;
 `

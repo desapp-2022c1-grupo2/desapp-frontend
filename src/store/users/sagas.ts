@@ -4,53 +4,30 @@ import {
   select,
   takeLatest,
 } from 'redux-saga/effects'
-import { setJtps, setStudents, onFinish } from './slice'
-import { IJtp, IStudent } from '@models'
+
 import {
-  getAllJtps,
-  createJtp,
-  deleteJtp,
-  getAllStudents,
-  updateJtp,
+  IAdmin,
+  IJtp,
+  IStudent,
+} from '@models'
+
+import {
+  fetchAllJtps,
+  fetchAllStudents,
+  fetchAllAdmins,
 } from '@services'
-import { RootState } from '@store'
+
+import {
+  setAdmins,
+  setJtps,
+  setStudents,
+} from './slice'
+import { RootState } from '..'
 
 function* getJtps() {
   try {
-    const response: IJtp[] = yield call(getAllJtps)
+    const response: IJtp[] = yield call(fetchAllJtps)
     yield put(setJtps(response))
-  } catch (err){
-    console.error(err)
-  }
-}
-
-function* postJtp() {
-  try {
-    const jtp: IJtp = yield select((state: RootState) => state.user.aux)
-    yield call(createJtp, jtp)
-    const response: IJtp[] = yield call(getAllJtps)
-    yield put(setJtps(response))
-    yield put(onFinish())
-  } catch (err){
-    console.error(err)
-  }
-}
-
-function* putJtp() {
-  try {
-    const jtp: IJtp = yield select((state: RootState) => state.user.aux)
-    yield call(updateJtp, jtp)
-    yield put(onFinish())
-  } catch (err){
-    console.error(err)
-  }
-}
- 
-function* deleteOneJtp() {
-  try {
-    const jtp: IJtp = yield select((state: RootState) => state.user.aux)
-    yield call(deleteJtp, jtp)
-    yield put(onFinish())
   } catch (err){
     console.error(err)
   }
@@ -58,17 +35,36 @@ function* deleteOneJtp() {
 
 function* getStudents() {
   try {
-    const response: IStudent[] = yield call(getAllStudents)
+    const response: IStudent[] = yield call(fetchAllStudents)
     yield put(setStudents(response))
   } catch (err){
     console.error(err)
   }
 }
 
+function* getStudentsByCourse() {
+  try {
+    const jtp: IJtp = yield select((state: RootState) => state.auth.user)
+    const response: IStudent[] = yield call(fetchAllStudents)
+    const students = response.filter(x => x.courses.current.id == jtp.course?.id)
+    yield put(setStudents(students))
+  } catch (err){
+    console.error(err)
+  }
+}
+
+function* getAdmins() {
+  try {
+    const response: IAdmin[] = yield call(fetchAllAdmins)
+    yield put(setAdmins(response))
+  } catch (err){
+    console.error(err)
+  }
+}
+
 export function* jtpWatcher(){
+  yield takeLatest('users/getAdmins', getAdmins)
   yield takeLatest('users/getJtps', getJtps)
   yield takeLatest('users/getStudents', getStudents)
-  yield takeLatest('users/createJtp', postJtp)
-  yield takeLatest('users/updateJtp', putJtp)
-  yield takeLatest('users/deleteJtp', deleteOneJtp)
+  yield takeLatest('users/getStudentsByCourse', getStudentsByCourse)
 }

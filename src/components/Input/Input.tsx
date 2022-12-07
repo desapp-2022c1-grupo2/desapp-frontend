@@ -10,7 +10,7 @@ import {
 const SearchInput = ({ hideIcon, ...props } : InputProps) => (
   <OutlinedInput
     startAdornment={!hideIcon && <SearchOutlined />}
-    type='search'
+    type='text'
     {...props}
   />
 )

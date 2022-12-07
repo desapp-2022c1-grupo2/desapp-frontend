@@ -1,5 +1,13 @@
+import { devices } from '@src/util/breakpoints';
 import styled from 'styled-components'
 import { ModalDialogProps } from './props'
+
+export const Backdrop = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 1300;
+`
 
 export const ModalDialog = styled.div<ModalDialogProps>`
   align-items: center;
@@ -13,32 +21,42 @@ export const ModalDialog = styled.div<ModalDialogProps>`
   top: 0;
   trasitions: 0.5s linear;
   width: 100%;
-  z-index: 1200;
+  z-index: 1300;
 `;
 
-export const ModalContainer = styled.div`
-  align-items: space-beetwen;
-  background-color: white;
-  border-radius: 20px;
+export const FullscreenModalContainer = styled.div`
+  background-color: var(--unahurWhite);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 0 80px;
-  height: 600px;
-  text-align: left;
-  width: 900px;
+  height: 100vh;
+  text-align: center;
+  padding: 0 40px;
+  width: 100%;
+  z-index: 1301;
 `
 
-export const SmallModalContainer = styled.div`
+export const ModalContainer = styled(FullscreenModalContainer)`
+  align-items: align-items;
+  justify-content: space-evenly;
+  padding: 24px;
+  
+  ${devices.tablet} {
+    justify-content: space-between;
+    border-radius: 20px;
+    max-height: 90vh;
+    padding: 40px;
+    height: auto;
+    text-align: left;
+    width: fit-content;
+  }
+`
+
+export const SmallModalContainer = styled(FullscreenModalContainer)`
   align-items: center;
-  background-color: white;
   border-radius: 20px;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   padding: 80px 80px 40px 80px;
   height: 400px;
-  text-align: center;
   width: 800px;
 `
 
@@ -54,20 +72,28 @@ export const SmallModalContent = styled.div`
 export const ModalContent = styled.div`
   height: 100%;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 0;
+  max-width: 1200px;
 `
 
 export const ModalFooter = styled.div`
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   gap: 0;
   justify-content: center;
-  padding: 24px;
+  padding: 16px 0;
   width: 100%;
 `
 
 export const ModalHeader = styled.div`
   align-items: center;
   display: flex;
-  justify-content: space-beetwen;
-  padding: 40px 0;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
 `
