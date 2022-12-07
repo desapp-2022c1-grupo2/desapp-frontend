@@ -15,7 +15,7 @@ export const AssignmentCounterContainer = styled.div<{ color?: string, small?: b
   display: flex;
   flex-direction: ${({ vertical }) =>  vertical ? 'column-reverse' : 'row'};
   gap: 8px;
-  justify-content: center;
+  justify-content: flex-start;
   padding: ${({ small }) =>  small ? '8px' : '16px'};
   width: 220px;
 

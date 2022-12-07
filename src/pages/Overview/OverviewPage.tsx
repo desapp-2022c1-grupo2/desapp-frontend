@@ -1,12 +1,10 @@
 import React from 'react'
 import { AppLayout, Box, FloatingCard } from '@components'
-import { Cards, EvaluationStats } from './Components'
-import { Pie } from './Components'
+import { Cards, EvaluationStats, Pie } from './Components'
 import { AssignmentsBar } from './AssignmentsBar'
-
-import { FullscreenModal } from '@components'
 import { selectEvaluations } from '@src/store'
 import { SelectedProvider } from './context/SelectedContext'
+import { Skeleton } from "@mui/material"
 
 
 export const OverviewPage = () => {
@@ -35,9 +33,6 @@ export const OverviewPage = () => {
   return (
     <SelectedProvider>
     <AppLayout title='Vista General'>
-      <FullscreenModal onClose={function (event: React.MouseEvent<Element, MouseEvent>): void {
-        throw new Error('Function not implemented.')
-      } } />
       <Cards />
       <Box
         display='flex'
@@ -48,13 +43,17 @@ export const OverviewPage = () => {
         justifyContent='space-evenly'
       >
         <FloatingCard
-          title='PORCENTAJE DE APROBACIÓN'
-          width='40%'
-          height='348px'
-          minWidth='368px'
-          children={<Pie data={stats} />}
-        />
-        <EvaluationStats />
+            title='PORCENTAJE DE APROBACIÓN'
+            width='40%'
+            height='368px'
+            minWidth='368px'
+            children={
+              total.length > 0
+                ? <Pie data={stats}/>
+                : <Skeleton variant="circular" animation="wave" width={320} height={320} />
+            }
+          />
+          <EvaluationStats/>
         <AssignmentsBar />
       </Box>
     </AppLayout>
