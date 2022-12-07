@@ -15,7 +15,7 @@ export const Cards = () => {
       <Card color='var(--unahurGreen)' value={count.assignments} label={`Trabajos\nPrácticos`}/>
       { count.jtps > 0 && <Card color='var(--unahurOrange)' value={count.jtps} label={`Jefes de TPs`}/> }
       <Card color='var(--unahurCyan)' value={count.students} label={`Alumnos`}/>
-      <Card color='var(--unahurRed)' value={15} label={`Posibles\ndesertores`}/>
+      {/*<Card color='var(--unahurRed)' value={15} label={`Posibles\ndesertores`}/>*/}
     </CardsContainer>
   )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { floatingCardProps } from './props'
 import {
   FLoatingCardContainer,
-  FLoatingCardContent,
+  FloatingCardContent,
   FloatingCardHeader,
 } from './styles'
 
@@ -20,9 +20,9 @@ export const FloatingCard = ({
           {tooltip}
         </FloatingCardHeader>
       }
-      <FLoatingCardContent {...props}>
+      <FloatingCardContent>
         {children}
-      </FLoatingCardContent>
+      </FloatingCardContent>
     </FLoatingCardContainer>
   )
 }

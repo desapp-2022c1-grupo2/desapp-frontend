@@ -8,7 +8,7 @@ export const FLoatingCardContainer = styled(Box)`
   gap: 8px;
 `
 
-export const FLoatingCardContent = styled.div<floatingCardStyles>`
+export const FloatingCardContent = styled.div<floatingCardStyles>`
   background-color: ${(props) => props.color || 'var(--unahurWhite)'};
   box-shadow: var(--box-shadow);
   border-radius: 20px;

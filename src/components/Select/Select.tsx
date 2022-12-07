@@ -25,7 +25,6 @@ export const Select = ({ placeholder, ...props } : SelectProps) => {
       <SelectLabel htmlFor={props.id || ''}>{props.label}</SelectLabel>
       <MuiSelect
         displayEmpty
-        color='unahurCyan'
         input={<Input />}
         onChange={handleChange}
         value={value}

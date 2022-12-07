@@ -4,7 +4,6 @@ import {
   IJtp,
   IStudent,
 } from '@models'
-import {selectPasswordResetJtpModal} from "@src/store";
 
 interface userModals {
   logout: boolean,
@@ -32,9 +31,9 @@ interface userModals {
 
 const initialState: userModals = {
   logout: false,
-  jtp: { delete: false, details: false, update: false },
+  jtp: { delete: false, details: false, update: false, passwordReset: false},
   student: { delete: false, details: false, update: false },
-  admin: { delete: false, update: false },
+  admin: { delete: false, update: false, passwordReset: false},
   assignment: { details: false }
 }
 
