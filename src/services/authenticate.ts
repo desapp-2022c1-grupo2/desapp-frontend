@@ -11,6 +11,7 @@ export const authenticate = async (credentials: ICredentials): Promise<IAuth> =>
       }
     })
     const data = await Promise.resolve<IAuthResponse>(response.data)
+    // TODO: Marcaba aca, que onda con la data?
     return new AuthAdapter(data).json
   } catch (err) {
     console.error(err)

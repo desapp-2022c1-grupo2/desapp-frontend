@@ -43,9 +43,11 @@ export class Auth {
 
 export class AuthAdapter extends Auth{
   constructor(auth: IAuthResponse){
+    console.log(auth.user)
     super({
       isAuthenticated: auth.access_token !== '',
       token: auth.access_token,
+    // TODO: Marcaba aca en auth.user (auth == undefined?)
       user: new JtpAdapter(auth.user).json,
     })
   }
