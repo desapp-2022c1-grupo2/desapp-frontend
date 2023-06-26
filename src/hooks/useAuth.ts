@@ -52,7 +52,7 @@ const tryAuthenticateFromLocalStorage = () => {
 }
 
 export const useAuth = () => {
-  const token = localStorage.getItem("token")
+  const token = selectToken()
 
   if (token) { updateStore() }
   else { tryAuthenticateFromLocalStorage() }
