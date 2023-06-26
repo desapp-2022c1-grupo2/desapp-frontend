@@ -19,8 +19,13 @@ export const AssignmentTable = () => {
   useEffect(() => {
     if(course) {
       setJtp(undefined)
-      setFiltered(assignments.filter(x => x.course?.id === course?.id))
+      setFiltered(assignments.filter(x => {
+          if (x.course){
+              return x.course.id === course.id;
+          }
+      }))
     }
+
     if(value) setValue('')
 
   }, [course])

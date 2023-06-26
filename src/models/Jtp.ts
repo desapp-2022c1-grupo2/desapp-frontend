@@ -54,6 +54,8 @@ export class Jtp extends User {
 
 export class JtpAdapter extends Jtp {
   constructor(response: IJtpResponse | IUserResponse) {
+    //TODO: Marcaba aca. response = undefined
+
     const { course, name, lastName, ...rest } = response
   
     super({
